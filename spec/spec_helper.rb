@@ -13,7 +13,7 @@ if !zeus_running?
 end
 
 # Checks for pending migrations before tests are run.
-ActiveRecord::Migration.check_pending! if defined?(ActiveRecord::Migration)
+# ActiveRecord::Migration.check_pending! if defined?(ActiveRecord::Migration)
 
 RSpec.configure do |config|
   # If true, the base class of anonymous controllers will be inferred
