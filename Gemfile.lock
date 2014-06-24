@@ -240,6 +240,7 @@ DEPENDENCIES
   jbuilder (~> 1.2)
   jquery-rails
   pg
+  pry (~> 0.9)
   rails (= 4.0.2)
   rails_layout
   rb-fchange
