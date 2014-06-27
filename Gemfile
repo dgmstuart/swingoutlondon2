@@ -65,6 +65,7 @@ group :development, :test do
   gem 'rspec-rails'
   gem 'thin'
   gem 'pry', '~> 0.9'
+  gem 'zeus', '~>0.15'
 end
 
 group :production do
