@@ -11,5 +11,6 @@ describe "adding an event", :type => :feature do
     end
 
     expect(page).to have_content "New event created"
+    expect(page).to have_content @event.url
   end
 end
