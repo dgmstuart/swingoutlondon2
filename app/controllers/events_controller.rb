@@ -12,6 +12,7 @@ class EventsController < ApplicationController
   # POST /events
   def create
     @event = Event.create(event_params)
+    flash[:success] = "New event created"
     redirect_to @event
   end
 

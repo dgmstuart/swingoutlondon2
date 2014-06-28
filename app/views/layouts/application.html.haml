@@ -13,6 +13,9 @@
 
   %body
 
+    - flash.each do |name, msg|
+      .alert-box{ class: name }= msg
+
     = yield
 
     = javascript_include_tag "application"
