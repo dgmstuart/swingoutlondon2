@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 ruby '2.1.2'
-gem 'rails', '4.0.2'
+gem 'rails', '4.1.0'
 
 # Use sqlite3 as the database for Active Record
 
@@ -51,7 +51,7 @@ group :development do
   gem 'binding_of_caller', :platforms=>[:mri_19, :mri_20, :rbx]
   gem 'guard-bundler'
   gem 'guard-rails'
-  gem 'guard-rspec'
+  gem 'guard-rspec', '~> 4.2'
   gem 'html2haml'
   gem 'hub', :require=>nil
   gem 'rails_layout'
@@ -62,10 +62,11 @@ end
 
 group :development, :test do
   gem 'fabrication'
-  gem 'rspec-rails'
+  gem 'rspec-rails', '~> 3.0'
+  gem 'spring-commands-rspec', '~> 1.0'
+  gem 'shoulda-matchers', '~> 2.6', require: false
   gem 'thin'
   gem 'pry', '~> 0.9'
-  gem 'zeus', '~>0.15'
 end
 
 group :production do

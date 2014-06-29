@@ -10,8 +10,7 @@ Database
 Tests
 -------
 
-    zeus start
-    bundle exec guard
+    guard
 
 OR
 

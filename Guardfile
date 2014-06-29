@@ -1,4 +1,4 @@
-guard :rspec, cmd: "zeus rspec" do
+guard :rspec, cmd: "spring rspec" do
   watch(%r{^spec/.+_spec\.rb$})
   watch(%r{^lib/(.+)\.rb$})     { |m| "spec/lib/#{m[1]}_spec.rb" }
   watch('spec/spec_helper.rb')  { "spec" }
@@ -16,7 +16,7 @@ guard :rspec, cmd: "zeus rspec" do
 end
 
 
-guard 'rails', cmd: "zeus server" do
+guard 'rails' do
   watch('Gemfile.lock')
   watch(%r{^(config|lib)/.*})
 end
