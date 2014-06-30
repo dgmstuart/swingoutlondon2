@@ -8,6 +8,7 @@
     %title= content_for?(:title) ? yield(:title) : "Swing Out London - Lindy Hop listings"
 
     = stylesheet_link_tag "application"
+    = stylesheet_link_tag "http://netdna.bootstrapcdn.com/font-awesome/3.0.2/css/font-awesome.css"
     = javascript_include_tag "vendor/modernizr"
     = csrf_meta_tag
 
@@ -16,6 +17,7 @@
     - flash.each do |name, msg|
       .alert-box{ class: name }= msg
 
-    = yield
+    .row
+      = yield
 
     = javascript_include_tag "application"

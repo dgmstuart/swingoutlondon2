@@ -1,4 +1,16 @@
 = form_for @event do |f|
   = f.label :url
   = f.text_field :url
-  = f.submit "Create event"
+
+  = f.label :frequency
+  = f.select :frequency, [ [ "Weekly", 1 ] , [ "Intermittent", 0 ] ]
+
+  = f.label :date
+  .row.date.collapse{ 'data-date-format' => "dd/mm/yyyy" }
+    .small-11.columns
+      =f.text_field :date
+    .small-1.columns
+      %span.postfix
+        %i.icon-calendar
+
+  = f.button "Create event"
