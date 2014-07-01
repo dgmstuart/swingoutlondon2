@@ -20,10 +20,11 @@ class EventsController < ApplicationController
     flash[:success] = "New event created"
 
     if @event.repeating?
-      number_created = @event.generate
-      flash[:success] += ". #{number_created + 1} instances created."
+      # TODO: Smelly - it isn't clear here that @event.generate is doing the creation
+      dates = [@event.date] + @event.generate
+      date_string = dates.map(&:to_s).join(", ") # TODO: Better way of doing this - in one step?
+      flash[:success] += ". #{dates.count} instances created: #{date_string}"
     end
-
 
     redirect_to @event
   end

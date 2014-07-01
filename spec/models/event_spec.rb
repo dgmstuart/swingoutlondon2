@@ -34,20 +34,29 @@ describe Event do
       end
     end
     context 'when an event repeats weekly' do
-      let(:event) { Fabricate.build(:event, frequency: 1) }
+      let(:event) { Fabricate.build(:event, frequency: 1, date: Date.new(2001,1,1)) }
+      let(:other_dates) { [
+          Date.new(2001,1, 8),
+          Date.new(2001,1,15),
+          Date.new(2001,1,22),
+        ]
+      }
       it "creates 3 events" do
         expect { event.generate }.to change{ Event.count }.from(0).to(3)
       end
-      it "creates those events for the next 4 weeks"
+      it "creates those events for the next 4 weeks" do
+        event.generate
+        expect( Event.all.map(&:date) ).to eq other_dates
+      end
+      it "returns the dates it generated events for" do
+        expect(event.generate).to eq other_dates
+      end
       it "creates copies of the event" do
-        # TODO - find a better way
+        # TODO - find a better way to do this equality comparison
         Event.all.each do |e|
           e.url = event.url
           e.frequency = event.frequency
         end
-      end
-      it "returns the number of events it created" do
-        expect(event.generate).to eq 3
       end
     end
   end
