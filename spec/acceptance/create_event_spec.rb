@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe "adding an event", type: :feature do
   it "allows an event to be created with a url" do
