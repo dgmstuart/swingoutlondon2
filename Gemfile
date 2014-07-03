@@ -51,7 +51,9 @@ group :development do
   gem 'binding_of_caller', :platforms=>[:mri_19, :mri_20, :rbx]
   gem 'guard-bundler'
   gem 'guard-rails'
-  gem 'guard-rspec', '~> 4.2'
+  gem 'guard-rspec', '~> 4.2', :require=>false
+  gem 'spring', '~> 1.1'
+  gem 'spring-commands-rspec', '~> 1.0'
   gem 'html2haml'
   gem 'hub', :require=>nil
   gem 'rails_layout'
@@ -61,17 +63,16 @@ group :development do
 end
 
 group :test do
-  gem 'rspec-rails', '~> 3.0'
-  gem 'spring-commands-rspec', '~> 1.0'
-  gem 'fabrication'
   gem 'shoulda-matchers', '~> 2.6', require: false
+  gem 'fabrication'
   gem 'capybara'
   gem 'database_cleaner', '1.3'
   gem 'email_spec'
-  gem 'simplecov'
+  gem 'simplecov', '~> 0.7.1' # Their github says to downgrade, since 0.8 has issues
 end
 
 group :development, :test do
+  gem 'rspec-rails', '~> 3.0'
   gem 'thin'
   gem 'pry', '~> 0.9'
 end

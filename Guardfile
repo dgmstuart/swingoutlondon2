@@ -16,7 +16,7 @@ guard :rspec, cmd: "spring rspec" do
 end
 
 
-guard 'rails' do
+guard :rails do
   watch('Gemfile.lock')
   watch(%r{^(config|lib)/.*})
 end
