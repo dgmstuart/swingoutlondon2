@@ -52,8 +52,6 @@ group :development do
   gem 'guard-bundler'
   gem 'guard-rails'
   gem 'guard-rspec', '~> 4.2', :require=>false
-  gem 'spring', '~> 1.1'
-  gem 'spring-commands-rspec', '~> 1.0'
   gem 'html2haml'
   gem 'hub', :require=>nil
   gem 'rails_layout'

@@ -1,6 +1,8 @@
 require 'simplecov'
 SimpleCov.start 'rails'
 
+require 'rspec/core' # Zeus won't work without this because otherwise something else (?) is defining Rspec (?) and doesn't have access to the configure method (???)
+
 RSpec.configure do |config|
   # These two settings work together to allow you to limit a spec run
   # to individual examples or groups you care about by tagging them with
