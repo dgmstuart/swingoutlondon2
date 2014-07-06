@@ -8,12 +8,6 @@
 
   = f.select :frequency, [ [ "Weekly", 1 ] , [ "Intermittent", 0 ] ], include_blank: true
 
-  = f.label :date
-  .row.date.collapse{ 'data-date-format' => "dd/mm/yyyy" }
-    .small-11.columns
-      =f.text_field :date, label: false
-    .small-1.columns
-      %span.postfix
-        %i.icon-calendar
+  = f.date_field :date
 
   = f.button "Create event"

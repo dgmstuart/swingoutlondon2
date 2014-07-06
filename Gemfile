@@ -43,7 +43,7 @@ gem 'jbuilder', '~> 1.2'
 
 gem 'figaro'
 gem 'foundation-rails'
-gem 'foundation_rails_helper'
+gem 'foundation_rails_helper', git: "https://github.com/dgmstuart/foundation_rails_helper.git", branch: 'master'
 gem 'date_validator'
 gem 'haml-rails'
 gem 'pg'

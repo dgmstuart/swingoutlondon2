@@ -16,7 +16,7 @@ describe "adding an event", type: :feature do
     expect(page).to have_content @event.url
   end
 
-  it "displays errors when the data is invalid", focus: true do
+  it "displays errors when the data is invalid" do
     visit '/events/new'
     within("#new_event") do
       fill_in 'event[url]', with: "foo"
