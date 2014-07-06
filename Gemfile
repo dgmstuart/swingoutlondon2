@@ -43,6 +43,8 @@ gem 'jbuilder', '~> 1.2'
 
 gem 'figaro'
 gem 'foundation-rails'
+gem 'foundation_rails_helper'
+gem 'date_validator'
 gem 'haml-rails'
 gem 'pg'
 
@@ -67,6 +69,7 @@ group :test do
   gem 'database_cleaner', '1.3'
   gem 'email_spec'
   gem 'simplecov', '~> 0.7.1' # Their github says to downgrade, since 0.8 has issues
+  gem 'timecop'
 end
 
 group :development, :test do

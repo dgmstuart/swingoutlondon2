@@ -16,17 +16,22 @@ class EventsController < ApplicationController
 
   # POST /events
   def create
-    @event = Event.create(event_params)
-    flash[:success] = "New event created"
+    @event = Event.new(event_params)
 
-    if @event.repeating?
-      # TODO: Smelly - it isn't clear here that @event.generate is doing the creation
-      dates = [@event.date] + @event.generate
-      date_string = dates.map(&:to_s).join(", ") # TODO: Better way of doing this - in one step?
-      flash[:success] += ". #{dates.count} instances created: #{date_string}"
+    if @event.save
+      flash[:success] = "New event created"
+
+      if @event.repeating?
+        # TODO: Smelly - it isn't clear here that @event.generate is doing the creation
+        dates = [@event.date] + @event.generate
+        date_string = dates.map(&:to_s).join(", ") # TODO: Better way of doing this - in one step?
+        flash[:success] += ". #{dates.count} instances created: #{date_string}"
+      end
+
+      redirect_to @event
+    else
+      render :new
     end
-
-    redirect_to @event
   end
 
 private

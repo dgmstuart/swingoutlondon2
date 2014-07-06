@@ -1,7 +1,11 @@
 class Event < ActiveRecord::Base
-  validates :url, presence: true
+  validates :url, presence: true, url: { allow_blank: true }
   validates :frequency, presence: true
-  validates :date, presence: true
+  validates :date, presence: true, date: {
+    after: Proc.new { Date.today- 6.months },
+    before: Proc.new { Date.today + 1.year },
+    allow_blank: true
+  }
 
   def repeating?
     return true if frequency == 1
@@ -14,7 +18,7 @@ class Event < ActiveRecord::Base
     dates.each do |date|
       new_event = dup
       new_event.date = date
-      new_event.save
+      new_event.save!
     end
     dates
   end

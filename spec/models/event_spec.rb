@@ -1,11 +1,15 @@
 require 'rails_helper'
 
 describe Event, 'Validations' do
-  it { should validate_presence_of(:url) }
+  # it { should validate_presence_of(:url) } # Sufficiently covered by url validation?
   it { should validate_presence_of(:frequency) }
-  it { should validate_presence_of(:date) }
+  # it { should validate_presence_of(:date) } # Sufficiently covered by date validation?
   it "validates that date is a date"
-  it "validates that url is a url"
+  it "validates that url is a url" do
+    expect( Fabricate.build(:event, url: "foo") ).to_not be_valid
+    expect( Fabricate.build(:event, url: "http://foo.com") ).to be_valid
+    expect( Fabricate.build(:event, url: "https://foo.co.uk") ).to be_valid
+  end
 end
 
 describe Event do
@@ -34,6 +38,8 @@ describe Event do
       end
     end
     context 'when an event repeats weekly' do
+      before { Timecop.freeze(Date.new(2001, 1, 1)) }
+      after { Timecop.return }
       let(:event) { Fabricate.build(:event, frequency: 1, date: Date.new(2001,1,1)) }
       let(:other_dates) { [
           Date.new(2001,1, 8),

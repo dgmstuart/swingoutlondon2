@@ -1,14 +1,17 @@
+- if @event.errors.any?
+  .alert-box.alert{ data: { alert: true } }
+    = "#{ pluralize(@event.errors.count, "error") } prevented this event from being saved"
+    =link_to "&times;".html_safe, "#", class: "close"
+
 = form_for @event do |f|
-  = f.label :url
   = f.text_field :url
 
-  = f.label :frequency
-  = f.select :frequency, [ [ "Weekly", 1 ] , [ "Intermittent", 0 ] ]
+  = f.select :frequency, [ [ "Weekly", 1 ] , [ "Intermittent", 0 ] ], include_blank: true
 
   = f.label :date
   .row.date.collapse{ 'data-date-format' => "dd/mm/yyyy" }
     .small-11.columns
-      =f.text_field :date
+      =f.text_field :date, label: false
     .small-1.columns
       %span.postfix
         %i.icon-calendar
