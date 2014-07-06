@@ -13,11 +13,34 @@
     = csrf_meta_tag
 
   %body
+    .off-canvas-wrap{ data: { offcanvas: true } }
+      .inner-wrap
+        %nav.tab-bar
+          %section.left-small
+            %a.left-off-canvas-toggle.menu-icon{ href: "#" }
+              %span
 
-    - flash.each do |name, msg|
-      .alert-box{ class: name }= msg
+          %section.middle.tab-bar-section
+            %h1.title Swing Out London
 
-    .row
-      = yield
+        %aside.left-off-canvas-menu
+          %ul.off-canvas-list
+            %li
+              %label Swing Out London
+            %li
+              =link_to "New Event", new_event_path
+            %li
+              =link_to "Events", events_path
+
+
+        %section.main-section
+          - flash.each do |name, msg|
+            .alert-box{ class: name }= msg
+
+          .row
+            .columns
+              = yield
+
+        %a.exit-off-canvas
 
     = javascript_include_tag "application"
