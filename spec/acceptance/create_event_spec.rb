@@ -26,8 +26,8 @@ describe "adding an event", type: :feature do
     end
     expect(page).to have_content "errors prevented this event from being saved"
     expect(page).to have_content "can't be blank" # Supposed to match on the Frequency field
-    expect(page).to have_content "Url must be a valid URL"
-    expect(page).to have_content "Date must be before"
+    expect(page).to have_content "must be a valid URL" # Supposed to match on the Url field
+    expect(page).to have_content "must be before" # Supposed to match on the date field
   end
 end
 
