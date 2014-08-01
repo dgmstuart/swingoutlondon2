@@ -1,7 +1,7 @@
 require 'rails_helper'
 
-describe "adding an event", type: :feature do
-  it "allows an event to be created with a url" do
+feature "adding an event", type: :feature do
+  scenario "User creates an event with a url" do
     @event = Fabricate.build(:event)
     visit '/events/new'
     within("#new_event") do
@@ -16,7 +16,7 @@ describe "adding an event", type: :feature do
     expect(page).to have_content @event.url
   end
 
-  it "displays errors when the data is invalid" do
+  scenario "User creates an event with invalid data" do
     visit '/events/new'
     within("#new_event") do
       fill_in 'event[url]', with: "foo"
@@ -31,10 +31,10 @@ describe "adding an event", type: :feature do
   end
 end
 
-describe "adding a weekly event", type: :feature do
+feature "adding a weekly event", type: :feature do
   before { Timecop.freeze(Date.new(2001, 1, 1)) }
   after { Timecop.return }
-  it "adds events for the next 4 weeks in the future" do
+  scenario "User creates events for the next 4 weeks in the future" do
     # TODO: DRY this up
     @event = Fabricate.build(:event)
     visit '/events/new'
