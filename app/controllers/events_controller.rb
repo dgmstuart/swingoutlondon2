@@ -12,6 +12,9 @@ class EventsController < ApplicationController
   # GET /events/new
   def new
     @event = Event.new
+    event_seed = EventSeed.new
+    event_seed.event_generators << EventGenerator.new
+    @event.event_seeds << event_seed
   end
 
   # POST /events
@@ -21,12 +24,12 @@ class EventsController < ApplicationController
     if @event.save
       flash[:success] = "New event created"
 
-      if @event.repeating?
-        # TODO: Smelly - it isn't clear here that @event.generate is doing the creation
-        dates = [@event.date] + @event.generate
-        date_string = dates.map(&:to_s).join(", ") # TODO: Better way of doing this - in one step?
-        flash[:success] += ". #{dates.count} instances created: #{date_string}"
-      end
+      # TODO: Smelly? - it isn't clear here that @event.generate is creating event instances as well as returning dates
+      # Should trigger ALL generators? Currently can only create one...
+      dates = @event.event_seeds.first.event_generators.first.generate
+
+      date_string = dates.map(&:to_s).join(", ") # TODO: Better way of doing this - in one step?
+      flash[:success] += ". #{dates.count} instances created: #{date_string}"
 
       redirect_to @event
     else
@@ -37,7 +40,13 @@ class EventsController < ApplicationController
 private
 
   def event_params
-    params.require(:event).permit(:url, :frequency, :date)
+    params.require(:event).permit(
+      :name,
+      event_seeds_attributes:
+        [ :url,
+          event_generators_attributes: [ :frequency, :start_date ]
+        ]
+    )
   end
 
 end

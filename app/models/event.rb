@@ -1,25 +1,10 @@
 class Event < ActiveRecord::Base
-  validates :url, presence: true, url: { allow_blank: true }
-  validates :frequency, presence: true
-  validates :date, presence: true, date: {
-    after: Proc.new { Date.today- 6.months },
-    before: Proc.new { Date.today + 1.year },
-    allow_blank: true
-  }
+  has_many :event_seeds
+  has_many :event_generators, through: :event_seeds
+  has_many :event_instances
 
-  def repeating?
-    return true if frequency == 1
-    return false
-  end
+  accepts_nested_attributes_for :event_seeds
 
-  def generate
-    raise "Can't generate non-repeating events" unless repeating?
-    dates = [*1..3].map { |n| date + n.weeks }
-    dates.each do |date|
-      new_event = dup
-      new_event.date = date
-      new_event.save!
-    end
-    dates
-  end
+  validates :name, presence: true
+  # TODO - need to separately reject totally missing generators/seeds?
 end

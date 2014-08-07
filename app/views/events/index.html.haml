@@ -1,5 +1,4 @@
 %ul
   - @events.each do |event|
     %li
-      = link_to event.url, event
-      = event.date
+      = link_to event.name, event

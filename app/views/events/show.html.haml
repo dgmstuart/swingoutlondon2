@@ -1,1 +1,5 @@
-%p= @event.url
+%p= @event.name
+%ul
+  - @event.event_instances.each do |event_instance|
+    = link_to event_instance.url
+    = link_to event_instance.date
