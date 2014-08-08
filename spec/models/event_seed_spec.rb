@@ -3,7 +3,7 @@ require 'rails_helper'
 describe EventSeed, 'Associations', :type => :model do
   it { should belong_to(:event) }
   it { should have_many(:event_generators) }
-  xit { should have_many(:event_instances) }
+  it { should have_many(:event_instances) }
 end
 
 describe EventSeed, 'Validations', :type => :model do

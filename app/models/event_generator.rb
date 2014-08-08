@@ -19,13 +19,7 @@ class EventGenerator < ActiveRecord::Base
       dates = [start_date]
     end
 
-    dates.each do |date|
-      # TODO - move into event_seed
-      event_seed_attributes = event_seed.attributes.tap { |x| x.delete "id" }
-      event_instance = EventInstance.new(event_seed_attributes)
-      event_instance.date = date
-      event_instance.save!
-    end
+    dates.each{ |date| EventInstance.create(event_seed: event_seed, date: date) }
     dates
   end
 end

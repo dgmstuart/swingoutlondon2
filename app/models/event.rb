@@ -1,7 +1,7 @@
 class Event < ActiveRecord::Base
   has_many :event_seeds
   has_many :event_generators, through: :event_seeds
-  has_many :event_instances
+  has_many :event_instances, through: :event_seeds
 
   accepts_nested_attributes_for :event_seeds
 
