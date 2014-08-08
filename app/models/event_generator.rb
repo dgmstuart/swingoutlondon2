@@ -13,13 +13,23 @@ class EventGenerator < ActiveRecord::Base
   end
 
   def generate
+    dates_to_generate.each do |date|
+      EventInstance.create(event_seed: event_seed, date: date)
+    end
+    dates_to_generate
+  end
+
+  def dates_to_generate
     if repeating?
-      dates = [*0..3].map { |n| start_date + n.weeks }
+      dates = next_n_dates(start_date, 4)
     else
       dates = [start_date]
     end
+  end
 
-    dates.each{ |date| EventInstance.create(event_seed: event_seed, date: date) }
-    dates
+private
+
+  def next_n_dates(start_date, n)
+    [*0..n-1].map { |m| start_date + m.weeks }
   end
 end
