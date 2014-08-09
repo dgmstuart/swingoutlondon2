@@ -13,3 +13,7 @@
 
  *= require_tree .
  */
+ .off-canvas-wrap,.inner-wrap{
+     height:100%;
+ }
+

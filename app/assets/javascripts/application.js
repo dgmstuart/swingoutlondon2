@@ -14,6 +14,10 @@
 //= require jquery_ujs
 //= require foundation
 //= require turbolinks
+//= require pickadate/picker.js
+//= require pickadate/picker.date
+//= require pickadate/legacy
 //= require_tree .
 
 $(function(){ $(document).foundation(); });
+$("input.date").pickadate();

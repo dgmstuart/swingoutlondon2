@@ -12,6 +12,6 @@
     = fs.fields_for :event_generators do |fg|
       = fg.select :frequency, [ [ "Weekly", 1 ] , [ "Intermittent", 0 ] ], include_blank: true
 
-      = fg.date_field :start_date
+      = fg.text_field :start_date, class: "date"
 
   = f.button "Create event"
