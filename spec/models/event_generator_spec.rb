@@ -2,6 +2,7 @@ require 'rails_helper'
 
 describe EventGenerator, 'Associations', :type => :model do
   it { should belong_to(:event_seed) }
+  it { should have_one(:event) }
   xit { should have_many(:event_instances) }
 end
 
@@ -30,7 +31,7 @@ describe EventGenerator, :type => :model do
   end
 
   describe "#generate" do
-    let(:event_seed) { Fabricate.create(:event_seed) }
+    let(:event_seed) { Fabricate.build(:event_seed_with_event) }
 
     context 'when an event is not repeating' do
       let(:event_generator) { Fabricate.build(:event_generator, event_seed: event_seed, frequency: 0) }

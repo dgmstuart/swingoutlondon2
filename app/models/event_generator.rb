@@ -1,5 +1,6 @@
 class EventGenerator < ActiveRecord::Base
   belongs_to :event_seed
+  has_one :event, through: :event_seed
   validates :frequency, presence: true
   validates :start_date, presence: true, date: {
     after: Proc.new { Date.today- 6.months },

@@ -1,5 +1,7 @@
 Swingoutlondon2::Application.routes.draw do
-  resources :events, only: [:index, :show, :new, :create]
+  resources :events, only: [:index, :show, :new, :create] do
+    resources :dates, only: [:new, :create]
+  end
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

@@ -1,4 +1,7 @@
 Fabricator(:event_seed) do
-  event_id 1
   url "http://foo.com"
+end
+
+Fabricator(:event_seed_with_event, from: :event_seed) do
+  event
 end

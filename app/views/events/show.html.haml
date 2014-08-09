@@ -3,3 +3,5 @@
   - @event.event_instances.each do |event_instance|
     = link_to event_instance.url
     = link_to event_instance.date
+
+= link_to "add date", new_event_date_path(@event)
