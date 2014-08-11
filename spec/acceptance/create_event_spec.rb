@@ -11,21 +11,31 @@ def url_field
 end
 
 
-feature "adding an event", type: :feature do
+feature "Admin adds an event", type: :feature do
   let(:event) { Fabricate.build(:event) }
   let(:event_seed) { Fabricate.build(:event_seed) }
   let(:event_generator) { Fabricate.build(:event_generator) }
 
-  scenario "User creates an event with a url" do
+  scenario "with a url" do
     when_i_create_a_new_event_with_valid_data
     then_the_event_should_be_displayed
     and_an_event_instance_should_show_in_the_event_instance_list
   end
 
-  scenario "User creates an event with invalid data" do
+  scenario "with invalid data" do
     when_i_create_an_event_with_invalid_data
     then_errors_should_be_displayed
   end
+
+  scenario "which repeats weekly" do
+    Timecop.freeze(Date.new(2001, 1, 1)) do
+      when_i_create_a_weekly_repeating_event
+      then_events_for_the_next_4_weeks_should_be_displayed
+      and_events_for_the_next_4_weeks_should_be_displayed_on_the_event_page
+    end
+  end
+
+  # STEPS:
 
   def when_i_create_a_new_event_with_valid_data
     visit '/events/new'
@@ -65,18 +75,6 @@ feature "adding an event", type: :feature do
     expect(page).to have_content "can't be blank", count: 2 # Supposed to match on the Frequency and name fields
     expect(page).to have_content "must be a valid URL" # Supposed to match on the Url field
     expect(page).to have_content "must be before" # Supposed to match on the date field
-  end
-end
-
-feature "adding a weekly event", type: :feature do
-  before { Timecop.freeze(Date.new(2001, 1, 1)) }
-  after { Timecop.return }
-  let(:event) { Fabricate.build(:event) }
-  let(:event_seed) { Fabricate.build(:event_seed) }
-  scenario "User creates events for the next 4 weeks in the future" do
-    when_i_create_a_weekly_repeating_event
-    then_events_for_the_next_4_weeks_should_be_displayed
-    and_events_for_the_next_4_weeks_should_be_displayed_on_the_event_page
   end
 
   def when_i_create_a_weekly_repeating_event

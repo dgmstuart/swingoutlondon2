@@ -1,8 +1,8 @@
 require 'rails_helper'
 
-feature "Adding dates to an event" do
+feature "Admin adds dates to an event:" do
   let(:event) { Fabricate.create(:event_with_seed) }
-  scenario "User adds two dates to a non-repeating event" do
+  scenario "two non-repeating dates" do
     given_an_event
     when_i_add_two_dates_to_the_event
     then_those_dates_should_display_on_the_events_page
