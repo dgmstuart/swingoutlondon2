@@ -19,6 +19,7 @@ feature "adding an event", type: :feature do
   scenario "User creates an event with a url" do
     when_i_create_a_new_event_with_valid_data
     then_the_event_should_be_displayed
+    and_an_event_instance_should_show_in_the_event_instance_list
   end
 
   scenario "User creates an event with invalid data" do
@@ -40,6 +41,12 @@ feature "adding an event", type: :feature do
 
   def then_the_event_should_be_displayed
     expect(page).to have_content "New event created"
+    expect(page).to have_content event_seed.url
+  end
+
+  def and_an_event_instance_should_show_in_the_event_instance_list
+    visit '/event_instances'
+    expect(page).to have_content event_generator.start_date
     expect(page).to have_content event_seed.url
   end
 

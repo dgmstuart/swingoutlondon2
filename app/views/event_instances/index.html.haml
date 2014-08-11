@@ -1,0 +1,6 @@
+%h1 Event Instances
+%ul
+  - @event_instances.each do |instance|
+    %li
+      = instance.url
+      = instance.date

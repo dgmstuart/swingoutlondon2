@@ -13,6 +13,7 @@ guard :rspec, cmd: "zeus rspec", all_after_pass: true, failed_mode: :none do
 
   watch('app/controllers/dates_controller.rb')  { "spec/acceptance/add_dates_spec.rb" }
   watch('app/controllers/events_controller.rb')  { ["spec/acceptance/create_event_spec.rb", "spec/acceptance/add_date_spec.rb"] }
+  watch('app/controllers/event_instances_controller.rb')  { ["spec/acceptance/create_event_spec.rb"] }
 
   # Capybara features specs
   watch(%r{^app/views/(.+)/.*\.(erb|haml|slim)$})     { |m| "spec/features/#{m[1]}_spec.rb" }
