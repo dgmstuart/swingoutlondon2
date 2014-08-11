@@ -2,5 +2,5 @@
 %ul
   - @event_instances.each do |instance|
     %li
-      = instance.url
-      = instance.date
+      =instance.date
+      =link_to instance.url
