@@ -76,7 +76,7 @@ feature "adding a weekly event", type: :feature do
   scenario "User creates events for the next 4 weeks in the future" do
     when_i_create_a_weekly_repeating_event
     then_events_for_the_next_4_weeks_should_be_displayed
-    and_events_for_the_next_4_weeks_should_be_displayed_in_the_events_list
+    and_events_for_the_next_4_weeks_should_be_displayed_on_the_event_page
   end
 
   def when_i_create_a_weekly_repeating_event
@@ -96,9 +96,15 @@ feature "adding a weekly event", type: :feature do
     display_4_events
   end
 
-  def and_events_for_the_next_4_weeks_should_be_displayed_in_the_events_list
+  def and_events_for_the_next_4_weeks_should_be_displayed_on_the_event_page
     visit "/events"
     click_link event.name
+    expect(page).to have_content(event_seed.url, count: 4)
+    display_4_events
+  end
+
+  def and_events_for_the_next_4_weeks_should_show_in_the_event_instance_list
+    visit '/event_instances'
     expect(page).to have_content(event_seed.url, count: 4)
     display_4_events
   end
