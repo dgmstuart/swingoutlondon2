@@ -8,6 +8,8 @@ feature "Admin adds dates to an event:" do
     then_those_dates_should_display_on_the_events_page
   end
 
+  scenario "User tries to add an invalid date"
+
   def given_an_event
     event
   end

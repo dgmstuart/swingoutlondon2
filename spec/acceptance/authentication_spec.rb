@@ -2,7 +2,7 @@ require 'rails_helper'
 
 feature "Logged Out User tries to access a page:" do
   before { Fabricate.create(:event, id: 1) }
-  before { Fabricate.create(:event_instance, event_seed: Fabricate.build(:event_seed)) }
+  before { Fabricate.create(:event_instance_with_dependencies) }
   [
     "event_instances"
   ].each do |page|
