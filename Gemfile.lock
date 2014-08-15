@@ -84,9 +84,6 @@ GEM
     execjs (2.2.1)
     fabrication (2.11.3)
     ffi (1.9.3)
-    figaro (0.7.0)
-      bundler (~> 1.0)
-      rails (>= 3, < 5)
     formatador (0.2.5)
     foundation-rails (5.3.0.1)
       railties (>= 3.1.0)
@@ -265,7 +262,6 @@ DEPENDENCIES
   devise (~> 3.3.0)
   email_spec
   fabrication
-  figaro
   foundation-rails
   foundation_rails_helper!
   guard-bundler

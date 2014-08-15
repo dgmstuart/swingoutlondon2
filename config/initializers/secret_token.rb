@@ -9,4 +9,4 @@
 
 # Make sure your secret_key_base is kept private
 # if you're sharing your code publicly.
-Swingoutlondon2::Application.config.secret_key_base = 'db87180a263a5de8faceda7da1d45256157afa3ca650f814915343385ada77c099afa72c9e3a6070dc23ec2c4169c15ffdc9b3fab7c6d4fde0528177eed8a017'
+Swingoutlondon2::Application.config.secret_key_base = Rails.application.secrets.secret_key_base

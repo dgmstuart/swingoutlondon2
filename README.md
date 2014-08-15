@@ -1,5 +1,9 @@
-README
+SETUP
 =======
+
+Secrets
+-------
+Create a `secrets.yml` file for the secret key base as per these instructions: http://edgeguides.rubyonrails.org/upgrading_ruby_on_rails.html#config/secrets.yml
 
 Database
 --------

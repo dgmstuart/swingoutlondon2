@@ -40,7 +40,6 @@ gem 'jbuilder', '~> 1.2'
 # Use debugger
 # gem 'debugger', group: [:development, :test]
 
-gem 'figaro'
 gem 'devise', '~> 3.3.0'
 gem 'foundation-rails'
 gem 'foundation_rails_helper', git: "https://github.com/dgmstuart/foundation_rails_helper.git", branch: 'master'
