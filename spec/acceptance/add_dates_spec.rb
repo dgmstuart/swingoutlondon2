@@ -1,6 +1,10 @@
 require 'rails_helper'
 
 feature "Admin adds dates to an event:" do
+  before do
+    user = Fabricate.create(:user)
+    login_as(user, scope: :user)
+  end
   let(:event) { Fabricate.create(:event_with_seed) }
   scenario "two non-repeating dates" do
     given_an_event

@@ -16,6 +16,11 @@ feature "Admin adds an event", type: :feature do
   let(:event_seed) { Fabricate.build(:event_seed) }
   let(:event_generator) { Fabricate.build(:event_generator) }
 
+  before do
+    user = Fabricate.create(:user)
+    login_as(user, scope: :user)
+  end
+
   scenario "with a url" do
     when_i_create_a_new_event_with_valid_data
     then_the_event_should_be_displayed

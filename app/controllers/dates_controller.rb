@@ -1,4 +1,6 @@
 class DatesController < ApplicationController
+  before_action :authenticate_user!
+
   # GET /events/:id/dates/new
   def new
     @event_generator = EventGenerator.new

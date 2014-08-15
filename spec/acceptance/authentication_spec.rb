@@ -21,7 +21,7 @@ feature "Logged Out User tries to access a page:" do
   }.each do |name, path|
     scenario name do
       visit path.call(event.to_param)
-      expect(page).to have_content('Sign in')
+      expect(page).to have_content('Log in')
     end
   end
   # TODO: The above are just GET - Also prevent PUT etc
@@ -31,12 +31,12 @@ feature "Logged Out User logs in" do
   let(:user) { Fabricate.create(:user) }
   scenario "with valid details" do
     when_i_sign_in_with_valid_details
-    then_i_should_not_be_logged_in
+    then_i_should_be_logged_in
   end
 
   scenario "with an invalid password" do
     when_i_sign_in_with_an_invalid_password
-    then_i_should_be_logged_in
+    then_i_should_not_be_logged_in
   end
 
   def when_i_sign_in_with_valid_details
@@ -52,18 +52,19 @@ feature "Logged Out User logs in" do
   end
 
   def then_i_should_not_be_logged_in
-    expect(page).to have_content('Sign in')
+    expect(page).to have_content('Log in')
   end
 
   def then_i_should_be_logged_in
-    expect(page).to have_content('Sign out')
+    expect(page).to have_content("Logged in as #{user.email}")
+    expect(page).to have_content('Log out')
   end
 
   def sign_in_with(email, password)
-    visit sign_in_path
+    visit "/users/sign_in"
     fill_in 'Email', with: email
     fill_in 'Password', with: password
-    click_button 'Sign up'
+    click_button 'Log in'
   end
 end
 

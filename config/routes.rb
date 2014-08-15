@@ -1,9 +1,12 @@
 Swingoutlondon2::Application.routes.draw do
+  devise_for :users
   resources :events, only: [:index, :show, :new, :create] do
     resources :dates, only: [:new, :create]
   end
 
   resources :event_instances, only: :index
+
+  root to: "event_instances#index"
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
