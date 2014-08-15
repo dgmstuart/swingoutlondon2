@@ -76,3 +76,6 @@ pickle-email-*.html
 
 # vim artifacts
 **.swp
+
+# markdown preview
+README.html

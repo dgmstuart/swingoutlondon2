@@ -3,7 +3,15 @@ SETUP
 
 Secrets
 -------
-Create a `secrets.yml` file for the secret key base as per these instructions: http://edgeguides.rubyonrails.org/upgrading_ruby_on_rails.html#config/secrets.yml
+Create a `secrets.yml` file for the following items as per these instructions: http://edgeguides.rubyonrails.org/upgrading_ruby_on_rails.html#config/secrets.yml
+
+  * `secret_key_base` - generate with `rake secret`
+  * `devise_secret_key` - generate with `rake secret`
+
+If deploying to heroku run the following to set up the secret keys on production:
+
+    heroku config:set SECRET_KEY_BASE=`rake secret`
+    heroku config:set DEVISE_SECRET_KEY=`rake secret`
 
 Database
 --------
