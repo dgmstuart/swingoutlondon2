@@ -31,7 +31,8 @@
             %li=link_to "Events", events_path
             %li=link_to "Event Instances", event_instances_path
             - if current_user # TODO: if here, should ALWAYS have a current user, since this is all logged-in functionality
-              %li=link_to "Logged in as #{current_user.email}", edit_user_registration_path
+              %li
+                %p="Logged in as #{current_user.email}"
               %li=link_to 'Log out', destroy_user_session_path, :method => :delete
             - else
               %li=link_to 'Log in', new_user_session_path

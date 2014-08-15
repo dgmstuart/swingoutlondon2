@@ -1298,4 +1298,15 @@ $alert-color: #D91E18;
 // $range-slider-handle-bg-hover-color: scale-color($primary-color, $lightness: -12%);
 // $range-slider-handle-cursor: pointer;
 
+
+
 @import 'foundation';
+
+.off-canvas-list li p {
+  display: block;
+  padding: $off-canvas-link-padding;
+  color: $off-canvas-link-color;
+  border-bottom: $off-canvas-link-border-bottom;
+
+  margin-bottom: 0;
+}
