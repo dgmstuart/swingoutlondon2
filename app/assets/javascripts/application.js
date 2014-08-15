@@ -21,3 +21,8 @@
 
 $(function(){ $(document).foundation(); });
 $("input.date").pickadate();
+
+$(window).on("load resize", function(){
+  height = Math.max($('.inner-wrap').height(), $(this).height());
+  $('.left-off-canvas-menu').height(height);
+});
