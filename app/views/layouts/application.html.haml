@@ -27,10 +27,10 @@
           %ul.off-canvas-list
             %li
               %label Swing Out London
-            %li=link_to "New Event", new_event_path
-            %li=link_to "Events", events_path
-            %li=link_to "Event Instances", event_instances_path
-            - if current_user # TODO: if here, should ALWAYS have a current user, since this is all logged-in functionality
+            - if current_user
+              %li=link_to "New Event", new_event_path
+              %li=link_to "Events", events_path
+              %li=link_to "Event Instances", event_instances_path
               %li
                 %p="Logged in as #{current_user.email}"
               %li=link_to 'Log out', destroy_user_session_path, :method => :delete
