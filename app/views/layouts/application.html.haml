@@ -40,7 +40,7 @@
 
         %section.main-section
           - flash.each do |name, msg|
-            .alert-box{ class: name }= msg
+            .alert-box{ class: name, data: { alert: true } }= msg
 
           .row
             .columns
