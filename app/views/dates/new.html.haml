@@ -1,7 +1,4 @@
-- if @event_generator.errors.any?
-  .alert-box.alert{ data: { alert: true } }
-    = "#{ pluralize(@event_generator.errors.count, "error") } prevented this event from being saved"
-    =link_to "&times;".html_safe, "#", class: "close"
+= render 'forms/errors', resource: @event_generator
 
 = form_for @event_generator, url: { action: "create" } do |f|
   = f.text_field :start_date, class: "date"

@@ -1,7 +1,4 @@
-- if @event.errors.any?
-  .alert-box.alert{ data: { alert: true } }
-    = "#{ pluralize(@event.errors.count, "error") } prevented this event from being saved"
-    =link_to "&times;".html_safe, "#", class: "close"
+= render 'forms/errors', resource: @event
 
 = form_for @event do |f|
   = f.text_field :name
