@@ -81,6 +81,7 @@ end
 
 group :production do
   gem 'unicorn'
+  gem 'rails_12factor' # To enable heroku logging and static assets
 end
 
 
