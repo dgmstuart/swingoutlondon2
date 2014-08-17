@@ -45,8 +45,9 @@ private
     params.require(:event).permit(
       :name,
       event_seeds_attributes:
-        [ :url,
-          event_generators_attributes: [ :frequency, :start_date ]
+        [ :url, :venue_id, :_destroy,
+          venue_attributes: [ :name, :address, :postcode, :url ],
+          event_generators_attributes: [ :frequency, :start_date, :_destroy ],
         ]
     )
   end

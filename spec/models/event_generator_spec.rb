@@ -7,6 +7,7 @@ describe EventGenerator, 'Associations', :type => :model do
 end
 
 describe EventGenerator, 'Validations', :type => :model do
+  it { should validate_presence_of(:event_seed) }
   it { should validate_presence_of(:frequency) }
   # it { should validate_presence_of(:date) } # Sufficiently covered by date validation?
   it "validates that date is a date"
@@ -31,10 +32,9 @@ describe EventGenerator, :type => :model do
   end
 
   describe "#generate" do
-    let(:event_seed) { Fabricate.build(:event_seed_with_event) }
-
     context 'when an event is not repeating' do
-      let(:event_generator) { Fabricate.build(:event_generator, event_seed: event_seed, frequency: 0) }
+      let(:event_generator) { Fabricate.build(:event_generator, frequency: 0) }
+      let(:event_seed) { event_generator.event_seed }
       it "generates one event instance" do
         expect { event_generator.generate }.to change{ EventInstance.count }.from(0).to(1)
       end
@@ -42,6 +42,7 @@ describe EventGenerator, :type => :model do
         # TODO - find a better way to do this equality comparison
         event_generator.generate
         expect(EventInstance.first.url).to eq event_seed.url
+        expect(EventInstance.first.venue).to eq event_seed.venue
       end
       it "returns the date it generated the event_instance for" do
         expect(event_generator.generate).to eq [event_generator.start_date]
@@ -51,7 +52,7 @@ describe EventGenerator, :type => :model do
     context 'when an event repeats weekly' do
       before { Timecop.freeze(Date.new(2001, 1, 1)) }
       after { Timecop.return }
-      let(:event_generator) { Fabricate.build(:event_generator, event_seed: event_seed, frequency: 1, start_date: Date.new(2001,1,1)) }
+      let(:event_generator) { Fabricate.build(:event_generator, frequency: 1, start_date: Date.new(2001,1,1)) }
       let(:dates) { [
           event_generator.start_date,
           Date.new(2001,1, 8),

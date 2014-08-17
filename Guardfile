@@ -1,4 +1,4 @@
-guard :rspec, cmd: "zeus rspec", all_after_pass: true, failed_mode: :none do
+guard :rspec, cmd: "zeus rspec --tag ~js", all_after_pass: true, failed_mode: :none do
   watch(%r{^spec/.+_spec\.rb$})
   watch(%r{^lib/(.+)\.rb$})     { |m| "spec/lib/#{m[1]}_spec.rb" }
   watch('spec/spec_helper.rb')  { "spec" }
@@ -11,9 +11,10 @@ guard :rspec, cmd: "zeus rspec", all_after_pass: true, failed_mode: :none do
   watch('config/routes.rb')                           { "spec/routing" }
   watch('app/controllers/application_controller.rb')  { "spec/controllers" }
 
-  watch('app/controllers/dates_controller.rb')  { "spec/acceptance/add_dates_spec.rb" }
-  watch('app/controllers/events_controller.rb')  { ["spec/acceptance/create_event_spec.rb", "spec/acceptance/add_date_spec.rb"] }
-  watch('app/controllers/event_instances_controller.rb')  { ["spec/acceptance/create_event_spec.rb"] }
+  watch('app/controllers/dates_controller.rb')           { "spec/acceptance/add_dates_spec.rb" }
+  watch('app/controllers/events_controller.rb')          { ["spec/acceptance/create_event_spec.rb", "spec/acceptance/add_date_spec.rb"] }
+  watch('app/controllers/event_instances_controller.rb') { ["spec/acceptance/create_event_spec.rb"] }
+  watch('app/controllers/venues_controller.rb')          { ["spec/acceptance/create_event_spec.rb"] }
 
   # Capybara features specs
   watch(%r{^app/views/(.+)/.*\.(erb|haml|slim)$})     { |m| "spec/acceptance/" }

@@ -45,11 +45,12 @@ gem 'foundation-rails'
 gem 'foundation_rails_helper', git: "https://github.com/dgmstuart/foundation_rails_helper.git", branch: 'master'
 gem 'date_validator'
 gem 'haml-rails'
+gem 'cocoon'
 gem 'pg'
 
 group :development do
   gem 'better_errors'
-  gem 'binding_of_caller', :platforms=>[:mri_19, :mri_20, :rbx]
+  gem 'binding_of_caller'
   gem 'guard-bundler'
   gem 'guard-rails'
   gem 'guard-rspec', '~> 4.2', :require=>false
@@ -65,6 +66,7 @@ group :test do
   gem 'shoulda-matchers', '~> 2.6', require: false
   gem 'fabrication'
   gem 'capybara'
+  gem 'selenium-webdriver', '~> 2.42.0'
   gem 'database_cleaner', '1.3'
   gem 'email_spec'
   gem 'simplecov', '~> 0.7.1' # Their github says to downgrade, since 0.8 has issues

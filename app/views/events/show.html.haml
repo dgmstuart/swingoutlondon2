@@ -1,7 +1,11 @@
 %p= @event.name
 %ul
   - @event.event_instances.each do |event_instance|
-    = link_to event_instance.url
-    = link_to event_instance.date
+    %li
+      %p= link_to event_instance.url
+      %p= event_instance.date
+      %p
+        Venue:
+        = event_instance.venue.name
 
 = link_to "add date", new_event_date_path(@event)

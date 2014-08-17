@@ -4,6 +4,7 @@ describe EventSeed, 'Associations', :type => :model do
   it { should belong_to(:event) }
   it { should have_many(:event_generators) }
   it { should have_many(:event_instances) }
+  it { should belong_to(:venue) }
 end
 
 describe EventSeed, 'Validations', :type => :model do
@@ -13,4 +14,5 @@ describe EventSeed, 'Validations', :type => :model do
     expect( Fabricate.build(:event_seed, url: "http://foo.com") ).to be_valid
     expect( Fabricate.build(:event_seed, url: "https://foo.co.uk") ).to be_valid
   end
+  it { should validate_presence_of :venue }
 end

@@ -6,6 +6,8 @@ Swingoutlondon2::Application.routes.draw do
 
   resources :event_instances, only: :index
 
+  resources :venues, only: [:new, :create]
+
   root to: "event_instances#index"
 
   # The priority is based upon order of creation: first created -> highest priority.

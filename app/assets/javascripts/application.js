@@ -17,6 +17,7 @@
 //= require pickadate/picker
 //= require pickadate/picker.date
 //= require pickadate/legacy
+//= require cocoon
 
 //= require_tree .
 

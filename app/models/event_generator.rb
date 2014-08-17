@@ -1,6 +1,8 @@
 class EventGenerator < ActiveRecord::Base
   belongs_to :event_seed
   has_one :event, through: :event_seed
+
+  validates :event_seed, presence: true
   validates :frequency, presence: true
   validates :start_date, presence: true, date: {
     after: Proc.new { Date.today- 6.months },
@@ -15,7 +17,7 @@ class EventGenerator < ActiveRecord::Base
 
   def generate
     dates_to_generate.each do |date|
-      EventInstance.create(event_seed: event_seed, date: date)
+      EventInstance.create!(event_seed: event_seed, date: date)
     end
     dates_to_generate
   end

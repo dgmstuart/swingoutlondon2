@@ -5,7 +5,12 @@ feature "Admin adds dates to an event:" do
     user = Fabricate.create(:user)
     login_as(user, scope: :user)
   end
-  let(:event) { Fabricate.create(:event_with_seed) }
+
+  let(:event) do
+    Fabricate.create(:event) do
+      event_seeds(count: 1)
+    end
+  end
   scenario "two non-repeating dates" do
     given_an_event
     when_i_add_two_dates_to_the_event
@@ -24,6 +29,7 @@ feature "Admin adds dates to an event:" do
 
   def when_i_add_two_dates_to_the_event
     visit "/events"
+
     click_link event.name
 
     click_link "add date"
