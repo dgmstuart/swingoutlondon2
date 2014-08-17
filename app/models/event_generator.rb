@@ -1,6 +1,7 @@
 class EventGenerator < ActiveRecord::Base
   belongs_to :event_seed
   has_one :event, through: :event_seed
+  has_many :event_instances, through: :event_seed
 
   validates :event_seed, presence: true
   validates :frequency, presence: true
