@@ -1,7 +1,7 @@
 class EventInstance < ActiveRecord::Base
-  belongs_to :event_seed
+  belongs_to :event_seed, inverse_of: :event_instances
   has_one :event, through: :event_seed
-  belongs_to :venue
+  belongs_to :venue, inverse_of: :event_instances
 
   validates :event_seed, presence: true
   validates :date, presence: true, date: {
