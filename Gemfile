@@ -66,7 +66,7 @@ group :test do
   gem 'shoulda-matchers', '~> 2.6', require: false
   gem 'fabrication'
   gem 'capybara'
-  gem 'selenium-webdriver', '~> 2.42.0'
+  gem 'poltergeist'
   gem 'database_cleaner', '1.3'
   gem 'email_spec'
   gem 'simplecov', '~> 0.7.1' # Their github says to downgrade, since 0.8 has issues
