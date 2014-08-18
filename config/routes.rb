@@ -6,7 +6,7 @@ Swingoutlondon2::Application.routes.draw do
 
   resources :event_instances, only: :index
 
-  resources :venues, only: [:new, :create]
+  resources :venues, only: [ :index ]
 
   root to: "event_instances#index"
 

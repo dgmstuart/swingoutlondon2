@@ -17,10 +17,11 @@ feature "Logged Out User tries to access a page:" do
     "list_events"    => ->(id) { "/events" },
     "new_event"      => ->(id) { "/events/new" },
     "show_event"     => ->(id) { "/events/#{id}" },
+    "list_venues"    => ->(id) { "/venues" },
   }.each do |name, path|
     scenario name do
       visit path.call(event.to_param)
-      expect(page).to have_content('Log in')
+      expect(page).to have_content('You need to sign in')
     end
   end
   # TODO: The above are just GET - Also prevent PUT etc

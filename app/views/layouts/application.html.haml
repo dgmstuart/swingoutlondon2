@@ -31,6 +31,7 @@
               %li=link_to "New Event", new_event_path
               %li=link_to "Events", events_path
               %li=link_to "Event Instances", event_instances_path
+              %li=link_to "Venues", venues_path
               %li
                 %p="Logged in as #{current_user.email}"
               %li=link_to 'Log out', destroy_user_session_path, :method => :delete

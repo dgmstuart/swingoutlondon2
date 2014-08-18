@@ -161,6 +161,11 @@ feature "Admin adds an event", type: :feature do
     expect(page).to have_content venue.name
   end
 
+  def and_the_venue_should_be_displayed_in_the_venues_list
+    visit "/venues"
+    expect(page).to have_content venue.name
+  end
+
   # FIELDS
 
   def start_date_field
