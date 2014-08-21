@@ -50,34 +50,79 @@ describe EventGenerator, :type => :model do
 
     end
     context 'when an event repeats weekly' do
-      before { Timecop.freeze(Date.new(2001, 1, 1)) }
-      after { Timecop.return }
-      let(:event_generator) { Fabricate.build(:event_generator, frequency: 1, start_date: Date.new(2001,1,1)) }
-      let(:dates) { [
-          event_generator.start_date,
-          Date.new(2001,1, 8),
-          Date.new(2001,1,15),
-          Date.new(2001,1,22),
-        ]
-      }
-      it "creates 4 event instances" do
-        expect { event_generator.generate }.to change{ EventInstance.count }.from(0).to(4)
-      end
-      it "creates those event instances for the next 4 weeks" do
-        event_generator.generate
-        expect( EventInstance.all.map(&:date) ).to eq dates
-      end
-      it "returns the dates it generated event instances for" do
-        expect(event_generator.generate).to eq dates
-      end
-      it "creates copies of the event seed" do
-        # TODO - find a better way to do this equality comparison
-        EventInstance.all.each do |e|
-          e.url = event.url
+      {
+        "and the start date is today" => Date.new(2001,1,1),
+        "and the start date is far in the past" => Date.new(2001,1,1) - (52*7),
+        # "and the start date is a different date far in the past" => Date.new(2000,1,2),
+      }.each_pair do |context, start_date|
+        context context do
+          before { Timecop.freeze(Date.new(2001, 1, 1)) }
+          after { Timecop.return }
+          let(:event_generator) { Fabricate.build(:event_generator, frequency: 1, start_date: start_date) }
+          let(:dates) { [
+              event_generator.start_date,
+              Date.new(2001,1, 8),
+              Date.new(2001,1,15),
+              Date.new(2001,1,22),
+            ]
+          }
+          it "creates 4 event instances" do
+            expect { event_generator.generate }.to change{ EventInstance.count }.from(0).to(4)
+          end
+          it "creates those event instances for the next 4 weeks" do
+            event_generator.generate
+            expect( EventInstance.all.map(&:date) ).to eq dates
+          end
+          it "returns the dates it generated event instances for" do
+            expect(event_generator.generate).to eq dates
+          end
+          it "creates copies of the event seed" do
+            # TODO - find a better way to do this equality comparison
+            EventInstance.all.each do |e|
+              e.url = event.url
+              e.venue_id = event.venue_id
+            end
+          end
         end
       end
     end
   end
+  describe "#next_date" do
+    context "when the event is not weekly" do
+      let(:generator) { Fabricate.build(:event_generator, frequency: 0) }
+      it "raises an error " do
+        expect{ generator.next_date }.to raise_error
+      end
+    end
+    context "when the event is weekly" do
+      before { Timecop.freeze(Date.new(2001, 1, 1)) }
+      after { Timecop.return }
+      let(:generator) { Fabricate.build(:event_generator, frequency: 0) }
+
+      context "and the start_date is today" do
+        before { generator.start_date = Date.new(2001,1,1) }
+        it "returns the start_date " do
+          expect(generator.next_date).to eq generator.start_date
+        end
+      end
+      context 'and the start_date is in the future' do
+        before { generator.start_date = Date.new(2001,1,12)}
+        it "returns the start_date" do
+          expect(generator.next_date).to eq generator.start_date
+        end
+      end
+      context 'and the start_date is one week ago today' do
+        before { generator.start_date = Date.new(2001,12, 26)}
+        it "returns the start_date" do
+          expect(generator.next_date).to eq generator.start_date
+        end
+      end
+
+
+    end
+
+  end
+
 end
 
 
