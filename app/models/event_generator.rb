@@ -38,7 +38,7 @@ class EventGenerator < ActiveRecord::Base
       return nil unless repeating?
     end
 
-    offset = ( start_date - Date.today) % 7
+    offset = ( start_date - Date.today ) % 7
     Date.today + offset
 
     # TODO: test this alternate approach:
