@@ -88,36 +88,53 @@ describe EventGenerator, :type => :model do
     end
   end
   describe "#next_date" do
+    subject(:next_date) { generator.next_date }
+
+    let(:today) { Date.new(2001, 1, 1) }
+    before { Timecop.freeze(today) }
+    after { Timecop.return }
+
     context "when the event is not weekly" do
       let(:generator) { Fabricate.build(:event_generator, frequency: 0) }
-      it "raises an error " do
-        expect{ generator.next_date }.to raise_error
+      context 'and the start_date is in the past' do
+        before { generator.start_date = today - 10 }
+        it { is_expected.to be_nil }
       end
-    end
-    context "when the event is weekly" do
-      before { Timecop.freeze(Date.new(2001, 1, 1)) }
-      after { Timecop.return }
-      let(:generator) { Fabricate.build(:event_generator, frequency: 0) }
-
-      context "and the start_date is today" do
-        before { generator.start_date = Date.new(2001,1,1) }
-        it "returns the start_date " do
-          expect(generator.next_date).to eq generator.start_date
-        end
+      context 'and the start_date is today' do
+        before { generator.start_date = today }
+        it { is_expected.to eq today }
       end
       context 'and the start_date is in the future' do
-        before { generator.start_date = Date.new(2001,1,12)}
-        it "returns the start_date" do
-          expect(generator.next_date).to eq generator.start_date
-        end
+        before { generator.start_date = today + 10 }
+        it { is_expected.to eq generator.start_date }
+      end
+    end
+
+    context "when the event is weekly" do
+      let(:generator) { Fabricate.build(:event_generator, frequency: 1) }
+
+      context "and the start_date is today" do
+        before { generator.start_date = today }
+        it { is_expected.to eq today }
+      end
+      context 'and the start_date is in the future' do
+        before { generator.start_date = today + 10 }
+        it { is_expected.to eq generator.start_date }
       end
       context 'and the start_date is one week ago today' do
-        before { generator.start_date = Date.new(2001,12, 26)}
-        it "returns the start_date" do
-          expect(generator.next_date).to eq generator.start_date
-        end
+        before { generator.start_date = today - 7}
+        it { is_expected.to eq today }
       end
-
+      context 'and the start_date is one week and one day ago' do
+        before { generator.start_date = today - 8 }
+        let(:six_days_in_the_future) { today + 6}
+        it { is_expected.to eq six_days_in_the_future }
+      end
+      context 'and the start_date is one week less one day ago' do
+        before { generator.start_date = today - 6 }
+        let(:tomorrow) { today + 1 }
+        it { is_expected.to eq tomorrow }
+      end
 
     end
 

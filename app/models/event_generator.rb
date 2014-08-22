@@ -31,6 +31,24 @@ class EventGenerator < ActiveRecord::Base
     end
   end
 
+  def next_date
+    if starts_today_or_in_the_future?
+      return start_date
+    else
+      return nil unless repeating?
+    end
+
+    offset = ( start_date - Date.today) % 7
+    Date.today + offset
+
+    # TODO: test this alternate approach:
+    # offset = ( ( start_date.wday - Date.today.wday) % 7 )
+  end
+
+  def starts_today_or_in_the_future?
+    start_date >= Date.today
+  end
+
 private
 
   def next_n_dates(start_date, n)
