@@ -23,14 +23,6 @@ class EventGenerator < ActiveRecord::Base
     dates_to_generate
   end
 
-  def dates_to_generate
-    if repeating?
-      dates = next_n_dates(next_date, 4)
-    else
-      dates = [next_date]
-    end
-  end
-
   def next_date
     if starts_today_or_in_the_future?
       return start_date
@@ -50,6 +42,16 @@ class EventGenerator < ActiveRecord::Base
   end
 
 private
+
+  def dates_to_generate
+    return [] if next_date.nil?
+    if repeating?
+      n = 4
+    else
+      n = 1
+    end
+    next_n_dates(next_date, n)
+  end
 
   def next_n_dates(initial_date, n)
     [*0..n-1].map { |m| initial_date + m.weeks }

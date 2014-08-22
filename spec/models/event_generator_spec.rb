@@ -32,33 +32,44 @@ describe EventGenerator, :type => :model do
   end
 
   describe "#generate" do
+    let(:today) { Date.new(2001, 1, 1) }
+    before { Timecop.freeze(today) }
+    after { Timecop.return }
+
     context 'when an event is not repeating' do
-      let(:event_generator) { Fabricate.build(:event_generator, frequency: 0) }
-      let(:event_seed) { event_generator.event_seed }
-      it "generates one event instance" do
-        expect { event_generator.generate }.to change{ EventInstance.count }.from(0).to(1)
-      end
-      it "creates a copy of the event seed" do
-        # TODO - find a better way to do this equality comparison
-        event_generator.generate
-        expect(EventInstance.first.url).to eq event_seed.url
-        expect(EventInstance.first.venue).to eq event_seed.venue
-      end
-      it "returns the date it generated the event_instance for" do
-        expect(event_generator.generate).to eq [event_generator.start_date]
+      let(:event_generator) { Fabricate.build(:event_generator, frequency: 0, start_date: start_date) }
+
+      context 'and the start_date is in the future' do
+        let(:start_date) { today + 1 }
+        let(:event_seed) { event_generator.event_seed }
+        it "generates one event instance" do
+          expect { event_generator.generate }.to change{ EventInstance.count }.from(0).to(1)
+        end
+        it "creates a copy of the event seed" do
+          # TODO - find a better way to do this equality comparison
+          event_generator.generate
+          event_instance = EventInstance.first
+          expect(event_instance.url).to   eq event_seed.url
+          expect(event_instance.venue).to eq event_seed.venue
+        end
+        it "returns the date it generated the event_instance for" do
+          expect(event_generator.generate).to eq [event_generator.start_date]
+        end
       end
 
+      context 'and the start_date is in the past' do
+        let(:start_date) { today - 1 }
+        it "doesn't generate any event_instances" do
+          expect { event_generator.generate }.to_not change{ EventInstance.count }
+        end
+      end
     end
     context 'when an event repeats weekly' do
       {
         "and the start date is today" => Date.new(2001,1,1),
         "and the start date is far in the past but on the same day" => Date.new(2001,1,1) - (52*7),
-        # "and the start date is a different date far in the past" => Date.new(2000,1,2),
       }.each_pair do |context, start_date|
         context context do
-          let(:today) { Date.new(2001, 1, 1) }
-          before { Timecop.freeze(today) }
-          after { Timecop.return }
           let(:event_generator) { Fabricate.build(:event_generator, frequency: 1, start_date: start_date) }
           let(:dates) { [
               today,
