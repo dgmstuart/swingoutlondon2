@@ -24,7 +24,7 @@ gem 'jquery-rails'
 gem 'turbolinks'
 
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
-gem 'jbuilder', '~> 1.2'
+# gem 'jbuilder', '~> 1.2'
 
   # bundle exec rake doc:rails generates the API under doc/api.
 
@@ -41,12 +41,12 @@ gem 'jbuilder', '~> 1.2'
 # gem 'debugger', group: [:development, :test]
 
 gem 'devise', '~> 3.3.0'
-gem 'foundation-rails'
+gem 'foundation-rails', '~> 5.3.0'
 gem 'foundation_rails_helper', git: "https://github.com/dgmstuart/foundation_rails_helper.git", branch: 'master'
-gem 'date_validator'
-gem 'haml-rails'
-gem 'cocoon'
-gem 'pg'
+gem 'date_validator', '~> 0.7.0'
+gem 'haml-rails', '~> 0.5.3'
+gem 'cocoon', '~> 1.2.6'
+gem 'pg', '~> 0.17.1'
 
 group :development do
   gem 'better_errors'
@@ -64,13 +64,13 @@ end
 
 group :test do
   gem 'shoulda-matchers', '~> 2.6', require: false
-  gem 'fabrication'
-  gem 'capybara'
-  gem 'poltergeist'
+  gem 'fabrication', '~> 2.11.3'
+  gem 'capybara', '~> 2.4.1'
+  gem 'poltergeist', '~> 1.5.1'
   gem 'database_cleaner', '1.3'
-  gem 'email_spec'
-  gem 'simplecov', '~> 0.7.1' # Their github says to downgrade, since 0.8 has issues
-  gem 'timecop'
+  # gem 'email_spec', '~> 1.5.1' not used yet
+  gem 'simplecov', '~> 0.9.0' # Their github says to downgrade, since 0.8 has issues
+  gem 'timecop', '~> 0.7.1'
 end
 
 group :development, :test do
