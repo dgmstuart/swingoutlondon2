@@ -52,15 +52,16 @@ describe EventGenerator, :type => :model do
     context 'when an event repeats weekly' do
       {
         "and the start date is today" => Date.new(2001,1,1),
-        "and the start date is far in the past" => Date.new(2001,1,1) - (52*7),
+        "and the start date is far in the past but on the same day" => Date.new(2001,1,1) - (52*7),
         # "and the start date is a different date far in the past" => Date.new(2000,1,2),
       }.each_pair do |context, start_date|
         context context do
-          before { Timecop.freeze(Date.new(2001, 1, 1)) }
+          let(:today) { Date.new(2001, 1, 1) }
+          before { Timecop.freeze(today) }
           after { Timecop.return }
           let(:event_generator) { Fabricate.build(:event_generator, frequency: 1, start_date: start_date) }
           let(:dates) { [
-              event_generator.start_date,
+              today,
               Date.new(2001,1, 8),
               Date.new(2001,1,15),
               Date.new(2001,1,22),

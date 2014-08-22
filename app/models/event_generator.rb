@@ -25,9 +25,9 @@ class EventGenerator < ActiveRecord::Base
 
   def dates_to_generate
     if repeating?
-      dates = next_n_dates(start_date, 4)
+      dates = next_n_dates(next_date, 4)
     else
-      dates = [start_date]
+      dates = [next_date]
     end
   end
 
@@ -41,7 +41,7 @@ class EventGenerator < ActiveRecord::Base
     offset = ( start_date - Date.today ) % 7
     Date.today + offset
 
-    # TODO: test this alternate approach:
+    # TODO: test this alternate approach for performance:
     # offset = ( ( start_date.wday - Date.today.wday) % 7 )
   end
 
@@ -51,7 +51,7 @@ class EventGenerator < ActiveRecord::Base
 
 private
 
-  def next_n_dates(start_date, n)
-    [*0..n-1].map { |m| start_date + m.weeks }
+  def next_n_dates(initial_date, n)
+    [*0..n-1].map { |m| initial_date + m.weeks }
   end
 end
