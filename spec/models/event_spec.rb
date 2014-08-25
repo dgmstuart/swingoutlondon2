@@ -17,12 +17,8 @@ describe Event, :type => :model do
     let(:initial_low) { nil }
     let(:initial_high) { nil }
     before do
-      allow(Event).to receive(:all) do
-        [
-          Fabricate(:event, name: "#{initial_low}#{high_string}"),
-          Fabricate(:event, name: "#{initial_high}#{low_string}"),
-        ]
-      end
+      Fabricate.create(:event, name: "#{initial_low}#{high_string}")
+      Fabricate.create(:event, name: "#{initial_high}#{low_string}")
     end
     subject(:first_item_name) { Event.all.sort.first.name }
     let(:lowest_string) { "#{initial_high}#{low_string}" }

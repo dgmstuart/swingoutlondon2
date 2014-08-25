@@ -8,19 +8,16 @@ class Event < ActiveRecord::Base
   validates :name, presence: true
   # TODO - need to separately reject totally missing generators/seeds?
 
-  def <=>(other_event)
-    base_name <=> other_event.base_name
-  end
+  scope :sort, -> { order("regexp_replace(LOWER(name), E'#{non_sort_strings_regex}', '')") }
 
-protected
-
-  # Returns the name without initial characters which are irrelevant for sorting
-  def base_name
+  # Matches on initial characters which are irrelevant for sorting
+  def self.non_sort_strings_regex
     initial_chars = %W(
-      \"
-      \'
-      \(
+      \\\"
+      \\\'
+      \\\(
     ).join
-    name.downcase.sub(/^the |[#{initial_chars}]/i,"")
+
+    "^the |[#{initial_chars}]"
   end
 end
