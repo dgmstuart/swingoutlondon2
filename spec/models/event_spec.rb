@@ -11,5 +11,51 @@ describe Event, 'Validations', :type => :model do
 end
 
 describe Event, :type => :model do
+  describe "#<=>" do
+    let(:high_string) { "Love Conquers All" }
+    let(:low_string) { "Lion The Witch and the Wardrobe" }
+    let(:initial_low) { nil }
+    let(:initial_high) { nil }
+    before do
+      allow(Event).to receive(:all) do
+        [
+          Fabricate(:event, name: "#{initial_low}#{high_string}"),
+          Fabricate(:event, name: "#{initial_high}#{low_string}"),
+        ]
+      end
+    end
+    subject(:first_item_name) { Event.all.sort.first.name }
+    let(:lowest_string) { "#{initial_high}#{low_string}" }
 
+    high_initial_strings = [
+      "The ",
+      "the ",
+    ]
+    high_initial_strings.each do |his|
+      context "when one name begins with #{his}" do
+        let(:initial_high) { his }
+        it "should sort events ignoring an initial '#{his}'"  do
+          expect(first_item_name).to eq lowest_string
+        end
+      end
+    end
+
+    low_initial_strings = %W(
+      \"
+      \'
+      \(
+    )
+    low_initial_strings.each do |lis|
+      context "when one name begins with #{lis}" do
+        let(:initial_low) { lis }
+        it { is_expected.to eq lowest_string }
+      end
+    end
+
+    context "when names are in mixed case" do
+      let(:high_string) { "Bananas" }
+      let(:low_string) { "alphabet" }
+      it { is_expected.to eq lowest_string }
+    end
+  end
 end
