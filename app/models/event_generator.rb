@@ -17,7 +17,6 @@ class EventGenerator < ActiveRecord::Base
   end
 
   def generate
-    puts id
     dates_to_generate.each do |date|
       EventInstance.create!(event_seed: event_seed, date: date)
     end
