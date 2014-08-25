@@ -152,6 +152,6 @@ describe EventGenerator, :type => :model do
     end
   end
 
+  # describe ".generate_all" do # NOT TESTED - too trivial? https://stackoverflow.com/questions/25475252/how-to-test-a-rails-model-class-method-which-calls-a-method-on-all-members
+
 end
-
-

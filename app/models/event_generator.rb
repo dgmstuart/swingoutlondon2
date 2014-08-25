@@ -17,6 +17,7 @@ class EventGenerator < ActiveRecord::Base
   end
 
   def generate
+    puts id
     dates_to_generate.each do |date|
       EventInstance.create!(event_seed: event_seed, date: date)
     end
@@ -39,6 +40,10 @@ class EventGenerator < ActiveRecord::Base
 
   def starts_today_or_in_the_future?
     start_date >= Date.today
+  end
+
+  def self.generate_all
+    all.each(&:generate)
   end
 
 private
