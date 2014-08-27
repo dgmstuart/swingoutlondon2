@@ -12,6 +12,7 @@
 //
 //= require jquery
 //= require jquery_ujs
+//= require select2
 //= require foundation
 //= require turbolinks
 //= require pickadate/picker
@@ -22,9 +23,15 @@
 //= require_tree .
 
 $(function(){ $(document).foundation(); });
+
+// Add a datepicker to all date fields:
 $("input.date").pickadate();
+
+// Add a search box to all select fields:
+$("select").select2()
 
 $(window).on("load resize", function(){
   height = Math.max($('.inner-wrap').height(), $(this).height());
   $('.left-off-canvas-menu').height(height);
+  $('.main-section').height(height);
 });

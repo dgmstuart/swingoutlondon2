@@ -10,6 +10,7 @@
  *
  *= require_self
  *= require foundation_and_overrides
+ *= require select2-foundation5.css
  *= require pickadate/default
  *= require pickadate/default.date
 

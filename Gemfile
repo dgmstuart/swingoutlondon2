@@ -48,6 +48,8 @@ gem 'haml-rails', '~> 0.5.3'
 gem 'cocoon', '~> 1.2.6'
 gem 'pg', '~> 0.17.1'
 
+gem 'select2-rails'
+
 group :development do
   gem 'better_errors'
   gem 'binding_of_caller'
