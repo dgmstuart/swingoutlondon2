@@ -17,6 +17,8 @@ class EventsController < ApplicationController
     event_seed = EventSeed.new
     event_seed.event_generators << EventGenerator.new
     @event.event_seeds << event_seed
+
+    setup_venues
   end
 
   # POST /events
@@ -35,11 +37,16 @@ class EventsController < ApplicationController
 
       redirect_to @event
     else
+      setup_venues
       render :new
     end
   end
 
 private
+
+  def setup_venues
+    @venues = Venue.all.sorted
+  end
 
   def event_params
     params.require(:event).permit(

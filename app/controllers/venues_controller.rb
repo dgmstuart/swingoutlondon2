@@ -3,7 +3,7 @@ before_action :authenticate_user!
 
 # GET /venues/
 def index
-  @venues = Venue.all
+  @venues = Venue.all.sorted
 end
 
 #   # GET /venues/new

@@ -7,7 +7,7 @@
     = fs.text_field :url
 
     #venue
-      = fs.collection_select :venue_id, Venue.all, :id, :name, prompt: "Please select a venue"
+      = fs.collection_select :venue_id, @venues, :id, :name, prompt: "Please select a venue"
       = link_to_add_association "New venue", fs, :venue, class: "button small radius"
 
     = fs.fields_for :event_generators do |fg|
