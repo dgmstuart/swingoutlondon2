@@ -12,6 +12,9 @@ class EventInstance < ActiveRecord::Base
 
   default_scope -> { order(date: :asc) }
 
+  def name
+    event.name
+  end
   def url
     @url || event_seed.url
   end

@@ -13,14 +13,34 @@ describe EventInstance, 'Validations', :type => :model do
 end
 
 describe EventInstance, :type => :model do
-  let(:event_seed) { Fabricate.build(:event_seed) }
+  let(:event_instance_attribute)         { event_instance.public_send(attribute) }
+  let(:event_seed_attribute)  { event_instance.event_seed.public_send(attribute) }
+  let(:event_attribute) { event_instance.event_seed.event.public_send(attribute) }
   [
     :url,
     :venue,
-  ].each do | attribute |
-    it "should inherit #{attribute} from the event seed" do
-      event_instance = Fabricate.build(:event_instance, event_seed: event_seed, attribute => nil)
-      expect(event_instance.public_send(attribute)).to eq event_seed.public_send(attribute)
+  ].each do | attrib |
+    context "when #{attrib} is nil" do
+      let(:attribute) { attrib }
+      let(:event_instance) { Fabricate.build(:event_instance, attribute => nil) }
+      it "should inherit #{attrib} from the event seed" do
+        expect(event_instance_attribute).to eq event_seed_attribute
+      end
     end
   end
+
+  [
+    :name,
+  ].each do | attrib |
+    context "when #{attrib} is nil" do
+      let(:attribute) { attrib }
+      # The has_many :through relationship doesn't work with built Fabricators, so it has to be created in the db
+      let(:event_instance) { Fabricate.create(:event_instance) }
+      it "should inherit #{attrib} from the event" do
+        expect(event_instance_attribute).to eq event_attribute
+      end
+    end
+  end
+
+
 end
