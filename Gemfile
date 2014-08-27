@@ -48,7 +48,8 @@ gem 'haml-rails', '~> 0.5.3'
 gem 'cocoon', '~> 1.2.6'
 gem 'pg', '~> 0.17.1'
 
-gem 'select2-rails'
+gem 'pickadate-rails', '~> 3.5.3'
+gem 'select2-rails', '~> 3.5.9'
 
 group :development do
   gem 'better_errors'
