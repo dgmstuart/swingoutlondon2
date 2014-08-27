@@ -20,7 +20,7 @@ describe Event, :type => :model do
       Fabricate.create(:event, name: "#{initial_low}#{high_string}")
       Fabricate.create(:event, name: "#{initial_high}#{low_string}")
     end
-    subject(:first_item_name) { Event.all.sort.first.name }
+    subject(:first_item_name) { Event.all.sorted.first.name }
     let(:lowest_string) { "#{initial_high}#{low_string}" }
 
     high_initial_strings = [

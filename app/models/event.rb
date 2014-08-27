@@ -8,7 +8,7 @@ class Event < ActiveRecord::Base
   validates :name, presence: true
   # TODO - need to separately reject totally missing generators/seeds?
 
-  scope :sort, -> { order("regexp_replace(LOWER(name), E'#{non_sort_strings_regex}', '')") }
+  scope :sorted, -> { order("regexp_replace(LOWER(name), E'#{non_sort_strings_regex}', '')") }
 
   # Matches on initial characters which are irrelevant for sorting
   def self.non_sort_strings_regex
