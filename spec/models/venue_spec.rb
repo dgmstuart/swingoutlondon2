@@ -10,5 +10,5 @@ describe Venue, 'Validations', :type => :model do
 end
 
 describe Venue, :type => :model do
-
+  it_should_behave_like "sortable"
 end
