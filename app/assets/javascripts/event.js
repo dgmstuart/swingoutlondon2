@@ -8,12 +8,14 @@ $(document).ready(function() {
     function() {
       $("#venue label").hide();
       $("#venue select").hide();
+      $("#venue .select2-container").hide();
       $("#venue a.add_fields").hide();
     });
   $('#venue').bind("cocoon:after-remove",
     function() {
       $("#venue label").show();
       $("#venue select").show();
+      $("#venue .select2-container").show();
       $("#venue a.add_fields").show();
     });
 });

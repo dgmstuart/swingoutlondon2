@@ -28,7 +28,7 @@ $(function(){ $(document).foundation(); });
 $("input.date").pickadate();
 
 // Add a search box to all select fields:
-$("select").select2()
+$("select").select2();
 
 $(window).on("load resize", function(){
   height = Math.max($('.inner-wrap').height(), $(this).height());
