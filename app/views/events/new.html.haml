@@ -4,7 +4,7 @@
   = f.text_field :name
 
   = f.fields_for :event_seeds do |fs|
-    = fs.text_field :url
+    = fs.url_field :url
 
     #venue
       = fs.collection_select :venue_id, @venues, :id, :name, prompt: "Please select a venue"
