@@ -17,10 +17,13 @@ class EventGenerator < ActiveRecord::Base
   end
 
   def generate
-    dates_to_generate.each do |date|
-      EventInstance.create!(event_seed: event_seed, date: date)
+    dates_to_generate.select do |date|
+      if not EventInstance.find_by(event_seed: event_seed, date: date)
+        EventInstance.create!(event_seed: event_seed, date: date)
+      else
+        false
+      end
     end
-    dates_to_generate
   end
 
   def next_date

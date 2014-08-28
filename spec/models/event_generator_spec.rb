@@ -55,6 +55,16 @@ describe EventGenerator, :type => :model do
         it "returns the date it generated the event_instance for" do
           expect(event_generator.generate).to eq [event_generator.start_date]
         end
+
+        context 'and an instance already exists for the same date' do
+          before { event_generator.generate }
+          it "does nothing" do
+            expect { event_generator.generate }.to_not change{ EventInstance.count }
+          end
+          it "returns an empty array" do
+            expect(event_generator.generate).to eq []
+          end
+        end
       end
 
       context 'and the start_date is in the past' do
@@ -96,6 +106,12 @@ describe EventGenerator, :type => :model do
             end
           end
         end
+      end
+
+      context 'and one event_instance already exists' do
+        it "skips one event"
+        it "returns 3 dates"
+        it "etc"
       end
     end
   end
