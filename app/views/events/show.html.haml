@@ -4,11 +4,11 @@
     %li
       = link_to event_instance.date, event_instance.url
       - if event_instance.cancelled?
-        = button_to cancellation_path(event_instance, cancelled: false), :method => :patch, class: "button tiny" do
+        = cancellation_button_for event_instance, false, class: "button tiny" do
           Cancelled
           %span.close &times;
       - else
-        = button_to "Cancel", cancellation_path(event_instance, cancelled: true), :method => :patch, class: "button tiny alert"
+        = cancellation_button_for event_instance, true, "Cancel", class: "button tiny alert"
       %p
         Venue:
         = event_instance.venue.name
