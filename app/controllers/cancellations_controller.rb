@@ -1,5 +1,5 @@
 class CancellationsController < ApplicationController
-  # before_action :authenticate_user!
+  before_action :authenticate_user!
 
   # PATCH /cancellations/:id
   def update
