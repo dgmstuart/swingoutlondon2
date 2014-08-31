@@ -15,6 +15,7 @@ guard :rspec, cmd: "zeus rspec --tag ~js", all_after_pass: true, failed_mode: :n
   watch('app/controllers/events_controller.rb')          { ["spec/acceptance/create_event_spec.rb", "spec/acceptance/add_date_spec.rb"] }
   watch('app/controllers/event_instances_controller.rb') { ["spec/acceptance/create_event_spec.rb"] }
   watch('app/controllers/venues_controller.rb')          { ["spec/acceptance/create_event_spec.rb"] }
+  watch('app/controllers/cancellations_controller.rb')   { ["spec/acceptance/cancel_event_spec.rb"] }
 
   watch('app/models/concerns/sortable.rb')          { ["spec/models/event_spec.rb", "spec/models/venue_spec.rb"] }
 

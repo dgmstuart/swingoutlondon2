@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140816234409) do
+ActiveRecord::Schema.define(version: 20140831163345) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -25,12 +25,13 @@ ActiveRecord::Schema.define(version: 20140816234409) do
   end
 
   create_table "event_instances", force: true do |t|
-    t.date     "date",          null: false
-    t.integer  "event_seed_id", null: false
+    t.date     "date",                          null: false
+    t.integer  "event_seed_id",                 null: false
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "url"
     t.integer  "venue_id"
+    t.boolean  "cancelled",     default: false
   end
 
   create_table "event_seeds", force: true do |t|

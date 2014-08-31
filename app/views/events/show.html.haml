@@ -7,5 +7,8 @@
       %p
         Venue:
         = event_instance.venue.name
+      - if event_instance.cancelled?
+        %p Cancelled
+      = button_to "Cancel", cancellation_path(event_instance), :method => :patch
 
 = link_to "add date", new_event_date_path(@event)

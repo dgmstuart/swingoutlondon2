@@ -4,3 +4,5 @@
     %li
       =instance.date
       =link_to instance.name, instance.url
+      - if instance.cancelled?
+        Cancelled

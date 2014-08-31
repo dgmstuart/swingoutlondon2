@@ -12,7 +12,7 @@ describe EventInstance, 'Validations', :type => :model do
   it "validates that date is a date"
 end
 
-describe EventInstance, :type => :model do
+describe EventInstance, 'Inheritance', :type => :model do
   let(:event_instance_attribute)         { event_instance.public_send(attribute) }
   let(:event_seed_attribute)  { event_instance.event_seed.public_send(attribute) }
   let(:event_attribute) { event_instance.event_seed.event.public_send(attribute) }
@@ -41,6 +41,4 @@ describe EventInstance, :type => :model do
       end
     end
   end
-
-
 end
