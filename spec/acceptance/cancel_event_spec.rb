@@ -38,7 +38,10 @@ feature "Admin cancels an event", type: :feature do
   end
 
   def then_that_date_should_be_displayed_as_cancelled
-    expect(event_instance_group_on_event_page(event_instance.date)).to have_content "Cancelled"
+    within event_instance_group_on_event_page(event_instance.date) do
+      expect(page).to have_content "Cancelled"
+      expect(page).to_not have_button "Cancel"
+    end
   end
 
   def and_that_date_should_be_displayed_as_cancelled_in_the_event_instance_list

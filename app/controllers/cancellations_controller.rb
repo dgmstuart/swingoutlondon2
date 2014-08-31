@@ -7,6 +7,7 @@ class CancellationsController < ApplicationController
     event_instance.update(cancelled: true)
 
     # TODO: case where update fails
-    redirect_to event_path(event_instance.event)
+
+    redirect_to :back
   end
 end

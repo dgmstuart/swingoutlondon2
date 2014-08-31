@@ -17,6 +17,8 @@ guard :rspec, cmd: "zeus rspec --tag ~js", all_after_pass: true, failed_mode: :n
   watch('app/controllers/venues_controller.rb')          { ["spec/acceptance/create_event_spec.rb"] }
   watch('app/controllers/cancellations_controller.rb')   { ["spec/acceptance/cancel_event_spec.rb"] }
 
+  watch('app/views/events/show.html.haml')  { ["spec/acceptance/create_event_spec.rb", "spec/acceptance/cancel_event_spec.rb"] }
+
   watch('app/models/concerns/sortable.rb')          { ["spec/models/event_spec.rb", "spec/models/venue_spec.rb"] }
 
   # Capybara features specs

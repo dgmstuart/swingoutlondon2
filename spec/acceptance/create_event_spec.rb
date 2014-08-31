@@ -68,7 +68,7 @@ feature "Admin adds an event", type: :feature do
   def then_the_event_should_be_displayed
     expect(page).to have_content "New event created"
     expect(page).to have_content event.name
-    expect(page).to have_link event_seed.url
+    expect(page).to have_link(event_generator.start_date, href: event_seed.url)
   end
 
   def and_an_event_instance_should_be_displayed_in_the_event_instance_list
@@ -116,7 +116,10 @@ feature "Admin adds an event", type: :feature do
   def and_events_for_the_next_4_weeks_should_be_displayed_on_the_event_page
     visit "/events"
     click_link event.name
-    expect(page).to have_content(event_seed.url, count: 4)
+    expect(page).to have_link("2001-01-03", href: event_seed.url)
+    expect(page).to have_link("2001-01-10", href: event_seed.url)
+    expect(page).to have_link("2001-01-17", href: event_seed.url)
+    expect(page).to have_link("2001-01-24", href: event_seed.url)
     display_4_events
   end
 
