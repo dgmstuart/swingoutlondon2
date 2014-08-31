@@ -51,6 +51,8 @@ gem 'pg', '~> 0.17.1'
 gem 'pickadate-rails', '~> 3.5.3'
 gem 'select2-rails', '~> 3.5.9'
 
+gem 'foundation-icons-sass-rails'
+
 group :development do
   gem 'better_errors'
   gem 'binding_of_caller'

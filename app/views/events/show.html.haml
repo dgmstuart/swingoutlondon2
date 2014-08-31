@@ -1,17 +1,20 @@
-%p= @event.name
-%ul
+%h1= "Event: #{@event.name}"
+%h2= "Instances:"
+%ul.no-bullet
   - @event.event_instances.each do |event_instance|
-    %li
-      = link_to event_instance.date, event_instance.url
-      - if event_instance.cancelled?
-        = cancellation_button_for event_instance, false, class: "button tiny" do
-          Cancelled
-          %span.close &times;
-      - else
-        = cancellation_button_for event_instance, true, "Cancel", class: "button tiny alert"
-      %p
-        Venue:
+    %li.row
+      .small-10.medium-8.columns
+        = link_to event_instance.date, event_instance.url
+        %strong Venue:
         = event_instance.venue.name
-
+      .small-2.medium-4.columns
+        - if event_instance.cancelled?
+          = cancellation_button_for event_instance, false, class: "button tiny cancel" do
+            %span.button-text Cancelled
+            %i.fi-check
+        - else
+          = cancellation_button_for event_instance, true, class: "button tiny alert un-cancel" do
+            %span.button-text Cancel
+            %i.fi-x
 
 = link_to "add date", new_event_date_path(@event)

@@ -1301,6 +1301,7 @@ $alert-color: #D91E18;
 
 
 @import 'foundation';
+@import 'foundation-icons';
 
 .off-canvas-list li p {
   display: block;
@@ -1309,4 +1310,14 @@ $alert-color: #D91E18;
   border-bottom: $off-canvas-link-border-bottom;
 
   margin-bottom: 0;
+}
+
+// TODO: work out how to move this into events.scss.css
+@media #{$small-only} {
+  button.tiny {
+    &.cancel, &.un-cancel {
+      .button-text { display: none }
+      padding: 0.625rem;
+    }
+  }
 }
