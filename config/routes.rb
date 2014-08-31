@@ -4,7 +4,7 @@ Swingoutlondon2::Application.routes.draw do
     resources :dates, only: [:new, :create]
   end
 
-  resources :event_instances, only: :index
+  resources :event_instances, only: [:index, :destroy]
 
   resources :cancellations, only: :update
 
