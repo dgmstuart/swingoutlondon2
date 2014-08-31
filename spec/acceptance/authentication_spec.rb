@@ -24,7 +24,9 @@ feature "Logged Out User tries to access a page:" do
       expect(page).to have_content('You need to sign in')
     end
   end
-  # TODO: The above are just GET - Also prevent PUT etc
+  # TODO: The above are just GET - Also prevent PUT etc:
+  #   create_event
+  #   cancel_event
 end
 
 feature "Logged Out User logs in" do

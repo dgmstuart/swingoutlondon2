@@ -3,8 +3,9 @@ class CancellationsController < ApplicationController
 
   # PATCH /cancellations/:id
   def update
+    # TODO: should I be using strong parameters here?
     event_instance = EventInstance.find(params[:id])
-    event_instance.update(cancelled: true)
+    event_instance.update(cancelled: params[:cancelled])
 
     # TODO: case where update fails
 
