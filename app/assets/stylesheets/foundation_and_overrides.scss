@@ -1312,12 +1312,17 @@ $alert-color: #D91E18;
   margin-bottom: 0;
 }
 
-// TODO: work out how to move this into events.scss.css
+// TODO: work out how to move these into events.scss.css
 @media #{$small-only} {
-  button.tiny {
-    &.cancel, &.un-cancel {
+  .actions {
+    button.tiny {
       .button-text { display: none }
       padding: 0.625rem;
+      margin-bottom: 5px;
+      width: 35px;
     }
   }
+}
+.event_instances {
+  @extend .no-bullet;
 }

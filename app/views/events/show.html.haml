@@ -1,22 +1,24 @@
 %h1= "Event: #{@event.name}"
 %h2= "Instances:"
-%ul.no-bullet
+%ul.event_instances
   - @event.event_instances.each do |event_instance|
     %li.row
       .small-10.medium-8.columns
         = link_to event_instance.date, event_instance.url
         %strong Venue:
         = event_instance.venue.name
-      .small-2.medium-4.columns
+      .small-2.medium-4.columns.actions
         - if event_instance.cancelled?
-          = cancellation_button_for event_instance, false, class: "button tiny cancel" do
+          = cancellation_button_for event_instance, false, class: "button tiny un-cancel" do
             %span.button-text Cancelled
             %i.fi-check
         - else
-          = cancellation_button_for event_instance, true, class: "button tiny alert un-cancel" do
+          = cancellation_button_for event_instance, true, class: "button tiny warn cancel" do
             %span.button-text Cancel
             %i.fi-x
 
-        = button_to "Bin", event_instance_path(event_instance), method: :delete, data: { confirm: "Are you sure you want to delete this instance?" }
+        = button_to event_instance_path(event_instance), class: "button tiny alert delete", method: :delete do
+          %span.button-text Bin
+          %i.fi-trash
 
 = link_to "add date", new_event_date_path(@event)

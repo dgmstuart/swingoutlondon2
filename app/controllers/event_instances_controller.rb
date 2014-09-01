@@ -9,6 +9,8 @@ class EventInstancesController < ApplicationController
     event_instance = EventInstance.find(params[:id])
     event_instance.destroy
 
+    flash[:info] = "Event instance deleted: #{event_instance.name} on #{event_instance.date}"
+
     redirect_to :back
   end
 end
