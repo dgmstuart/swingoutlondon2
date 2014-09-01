@@ -32,13 +32,13 @@ feature "Admin adds dates to an event:" do
 
     click_link event.name
 
-    click_link "add date"
+    click_link "Add date"
     fill_in "event_generator[start_date]", with: "23/12/2014"
-    click_button "done"
+    click_button "Done"
 
-    click_link "add date"
+    click_link "Add date"
     fill_in "event_generator[start_date]", with: "24/12/2014"
-    click_button "done"
+    click_button "Done"
   end
 
   def then_those_dates_should_display_on_the_events_page
@@ -50,9 +50,9 @@ feature "Admin adds dates to an event:" do
     visit "/events"
     click_link event.name
 
-    click_link "add date"
+    click_link "Add date"
     fill_in "event_generator[start_date]", with: "12/23/2014"
-    click_button "done"
+    click_button "Done"
   end
 
   def then_errors_should_be_displayed

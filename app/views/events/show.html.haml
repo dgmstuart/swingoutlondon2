@@ -24,4 +24,6 @@
           %span.button-text Bin
           %i.fi-trash
 
-= link_to "add date", new_event_date_path(@event)
+= link_to new_event_date_path(@event), class: "button" do
+  Add date
+  %i.fi-calendar
