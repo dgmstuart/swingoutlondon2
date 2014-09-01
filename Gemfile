@@ -1,9 +1,10 @@
 source 'https://rubygems.org'
 
 ruby '2.1.2'
-gem 'rails', '4.1.4'
+gem 'rails', '4.1.5'
 
-# Use sqlite3 as the database for Active Record
+# Use postgresql as the database for Active Record
+gem 'pg', '~> 0.17.1'
 
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 4.0'
@@ -12,13 +13,13 @@ gem 'sass-rails', '~> 4.0'
 gem 'uglifier', '>= 1.3.0'
 
 # Use CoffeeScript for .js.coffee assets and views
-gem 'coffee-rails', '~> 4.0.0'
+# gem 'coffee-rails', '~> 4.0.0'
 
 # See https://github.com/sstephenson/execjs#readme for more supported runtimes
 # gem 'therubyracer', platforms: :ruby
 
 # Use jquery as the JavaScript library
-gem 'jquery-rails'
+gem 'jquery-rails' #, '> 3.1.1' - when it's available
 
 # Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
 gem 'turbolinks'
@@ -43,15 +44,14 @@ gem 'turbolinks'
 gem 'devise', '~> 3.3.0'
 gem 'foundation-rails', '~> 5.3.0'
 gem 'foundation_rails_helper', git: "https://github.com/dgmstuart/foundation_rails_helper.git", branch: 'master'
+gem 'foundation-icons-sass-rails'
 gem 'date_validator', '~> 0.7.0'
 gem 'haml-rails', '~> 0.5.3'
-gem 'cocoon', '~> 1.2.6'
-gem 'pg', '~> 0.17.1'
 
+# Gems to include javascript libraries:
+gem 'cocoon', '~> 1.2.6'
 gem 'pickadate-rails', '~> 3.5.3'
 gem 'select2-rails', '~> 3.5.9'
-
-gem 'foundation-icons-sass-rails'
 
 group :development do
   gem 'better_errors'
