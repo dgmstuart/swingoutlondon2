@@ -74,7 +74,8 @@ feature "Admin adds an event", type: :feature do
   def and_an_event_instance_should_be_displayed_in_the_event_instance_list
     visit '/event_instances'
     expect(page).to have_content event_generator.start_date
-    expect(find_link(event.name)[:href]).to eq event_seed.url
+    expect(page).to have_link event.name
+    expect(page).to have_link "View Site", href: event_seed.url
   end
 
   def when_i_create_an_event_with_invalid_data

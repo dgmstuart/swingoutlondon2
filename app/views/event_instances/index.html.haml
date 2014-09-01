@@ -1,8 +1,14 @@
 %h1 Event Instances
 %ul.no-bullet
   - @event_instances.each do |instance|
-    %li
-      =instance.date
-      =link_to instance.name, instance.url
-      - if instance.cancelled?
-        Cancelled
+    %li.row
+      .small-10.medium-8.columns
+        =instance.date
+        =link_to instance.name, instance.event
+        - if instance.cancelled?
+          Cancelled
+      .small-2.medium-4.columns.actions
+        = link_to instance.url, class: "button tiny" do
+          View Site
+          %i.fi-arrow-right
+
