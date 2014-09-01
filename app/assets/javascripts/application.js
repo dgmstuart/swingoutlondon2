@@ -14,7 +14,6 @@
 //= require jquery_ujs
 //= require select2
 //= require foundation
-//= require turbolinks
 //= require pickadate/picker
 //= require pickadate/picker.date
 //= require pickadate/legacy
