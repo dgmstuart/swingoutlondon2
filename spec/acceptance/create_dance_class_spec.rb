@@ -3,7 +3,7 @@ require 'rails_helper'
 feature "Admin adds a dance_class", type: :feature do
   given(:existing_venue) { Fabricate(:venue) }
 
-  let(:dance_class) { Fabricate.build(:dance_class, day: 2) }
+  let(:dance_class) { Fabricate.build(:dance_class) }
 
   before do
     user = Fabricate.create(:user)
@@ -32,17 +32,17 @@ feature "Admin adds a dance_class", type: :feature do
   end
 
   def fill_dance_class_fields_with_valid_data
-    fill_in "dance_class[day]", with: dance_class.day
+    select "Tuesday", from: "dance_class[day]"
   end
 
   def then_the_dance_class_should_be_displayed
-    expect(page).to have_text "Tuesdays" # i.e. day: 2
+    expect(page).to have_text "Tuesdays"
     expect(page).to have_text existing_venue.name
   end
 
   def and_the_dance_class_should_be_displayed_in_the_list_of_dance_classes
     visit '/dance_classes'
-    expect(page).to have_text "Tuesdays" # i.e. day: 2
+    expect(page).to have_text "Tuesdays"
     expect(page).to have_text existing_venue.name
   end
 end
