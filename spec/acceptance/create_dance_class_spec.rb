@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 feature "Admin adds a dance_class", type: :feature do
-  given(:existing_venue) { Fabricate(:venue) }
+  given(:existing_venue) { Fabricate.create(:venue) }
 
   let(:dance_class) { Fabricate.build(:dance_class) }
 

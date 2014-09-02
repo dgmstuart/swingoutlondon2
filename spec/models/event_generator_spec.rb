@@ -108,9 +108,8 @@ describe EventGenerator, :type => :model do
 
           context 'and one event_instance already exists' do
             let(:existing_date) { Date.new(2001,1,15) }
-            # TODO: This is working, but I feel like it shouldn't be when the event_instance is only Built, not created.
             # TODO: is this sufficient, or does it need more tests?
-            before { Fabricate(:event_instance, date: existing_date, event_seed: event_generator.event_seed) }
+            before { Fabricate.create(:event_instance, date: existing_date, event_seed: event_generator.event_seed) }
             it "skips one event" do
               expect { event_generator.generate }.to change{ EventInstance.count }.from(1).to(4)
             end
