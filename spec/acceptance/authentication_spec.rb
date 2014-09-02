@@ -17,6 +17,9 @@ feature "Logged Out User tries to access a page:" do
     "list_events"    => ->(id) { "/events" },
     "new_event"      => ->(id) { "/events/new" },
     "show_event"     => ->(id) { "/events/#{id}" },
+    # "list_dance_classes"    => ->(id) { "/dance_classes" },
+    "new_dance_class"      => ->(id) { "/dance_classes/new" },
+    # "show_dance_class"     => ->(id) { "/dance_classes/#{id}" },
     "list_venues"    => ->(id) { "/venues" },
   }.each do |name, path|
     scenario name do

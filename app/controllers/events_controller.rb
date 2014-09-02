@@ -44,10 +44,6 @@ class EventsController < ApplicationController
 
 private
 
-  def setup_venues
-    @venues = Venue.all.sorted
-  end
-
   def event_params
     params.require(:event).permit(
       :name,

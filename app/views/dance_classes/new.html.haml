@@ -1,0 +1,7 @@
+= #render 'forms/errors', resource: @dance_class
+
+= form_for @dance_class do |f|
+  = f.text_field :day
+  = f.collection_select :venue_id, @venues, :id, :name, prompt: "Please select a venue"
+
+  = f.button "Create dance class"

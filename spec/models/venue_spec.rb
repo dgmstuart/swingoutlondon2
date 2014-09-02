@@ -3,6 +3,7 @@ require 'rails_helper'
 describe Venue, 'Associations', :type => :model do
   it { should have_many(:event_seeds) }
   it { should have_many(:event_instances) }
+  it { should have_many(:dance_classes) }
 end
 
 describe Venue, 'Validations', :type => :model do
