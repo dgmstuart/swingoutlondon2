@@ -1,3 +1,4 @@
+[ ![Codeship Status for dgmstuart/swingoutlondon2](https://codeship.io/projects/8a8d8a90-16bb-0132-1b16-5e9521f3a2db/status)](https://codeship.io/projects/33943)
 SETUP
 =======
 
