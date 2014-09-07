@@ -45,7 +45,7 @@ $(".sieve_search_box").on("search", function() {
 });
 
 $(window).on("load resize", function(){
-  nav_bar_height = 45
+  nav_bar_height = 45;
   content_height = Math.max($('.inner-wrap').height(), $(this).height());
   $('.main-section').height(content_height - 45);
 });
