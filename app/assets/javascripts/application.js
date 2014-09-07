@@ -30,24 +30,23 @@ $("input.date").pickadate();
 // Add a search box to all select fields:
 $("select").select2();
 
-// Sieve items in lists:
-$(document).ready(function() {
-  $("ul.sieve").sieve({
-    itemSelector: "li",
-    searchTemplate: "<div class='row'><label class='columns small-12 medium-8 large-6'>Search: <input type='search' class='sieve_search_box'></label></div>"
-  });
-
-  // Make the (X) button (displayed on search boxes in Chrome) reload the list as well as clearing the field
-  // TODO: this triggers both on 'Enter' and on clicking the (X)
-  $(".sieve_search_box").on("search", function() {
-    $(this).trigger("change");
-  });
+// disable autozoom when input is focused
+// TODO: NOT WORKING?? Hard to tell...
+// http://stackoverflow.com/a/24085157/1035431
+var $viewportMeta = $('head > meta[name="viewport"]');
+var $viewportMeta = $('meta[name="viewport"]');
+$('input, select, textarea').bind('focus blur', function(event) {
+  $viewportMeta.attr('content', 'width=device-width,initial-scale=1,maximum-scale=' + (event.type == 'blur' ? 10 : 1));
 });
 
+// Sieve items in lists:
+$("ul.sieve").sieve({
+  itemSelector: "li",
+  searchTemplate: "<div class='row'><label class='columns small-12 medium-8 large-6'>Search: <input type='search' class='sieve_search_box'></label></div>"
+});
 
-
-$(window).on("load resize", function(){
-  height = Math.max($('.inner-wrap').height(), $(this).height());
-  $('.left-off-canvas-menu').height(height);
-  $('.main-section').height(height);
+// Make the (X) button (displayed on search boxes in Chrome) reload the list as well as clearing the field
+// TODO: this triggers both on 'Enter' and on clicking the (X)
+$(".sieve_search_box").on("search", function() {
+  $(this).trigger("change");
 });
