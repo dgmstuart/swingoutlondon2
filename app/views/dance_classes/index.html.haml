@@ -1,5 +1,7 @@
 %h2 Dance Classes
-- @dance_classes.each do |dance_class|
-  = dance_class.day_name.pluralize
-  at
-  = dance_class.venue.name
+%ul.no-bullet
+  - @dance_classes.each do |dance_class|
+    %li
+      = dance_class.day_name.pluralize
+      at
+      = dance_class.venue.name
