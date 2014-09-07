@@ -1315,7 +1315,7 @@ $input-font-size: rem-calc(16);
 // TODO: work out how to move these into events.scss.css
 @media #{$small-only} {
   .actions {
-    button.tiny {
+    .button.tiny {
       .button-text { display: none }
       padding: 0.625rem;
       margin-bottom: 5px;
