@@ -32,8 +32,19 @@ $("select").select2();
 
 // Sieve items in lists:
 $(document).ready(function() {
-  $("ul.sieve").sieve({ itemSelector: "li" });
+  $("ul.sieve").sieve({
+    itemSelector: "li",
+    searchTemplate: "<div class='row'><label class='columns small-12 medium-8 large-6'>Search: <input type='search' class='sieve_search_box'></label></div>"
+  });
+
+  // Make the (X) button (displayed on search boxes in Chrome) reload the list as well as clearing the field
+  // TODO: this triggers both on 'Enter' and on clicking the (X)
+  $(".sieve_search_box").on("search", function() {
+    $(this).trigger("change");
+  });
 });
+
+
 
 $(window).on("load resize", function(){
   height = Math.max($('.inner-wrap').height(), $(this).height());
