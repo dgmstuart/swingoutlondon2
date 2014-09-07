@@ -27,6 +27,12 @@
    height: 100%;
  }
 
+// Remove rounded corners - particularly from iOS. Without this prefix labels won't work
+ input {
+     -webkit-appearance: none;
+     border-radius: 0;
+ }
+
 // Prevent iOS resizing text
  body { -webkit-text-size-adjust:100%; }
 
