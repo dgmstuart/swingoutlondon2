@@ -30,15 +30,6 @@ $("input.date").pickadate();
 // Add a search box to all select fields:
 $("select").select2();
 
-// disable autozoom when input is focused
-// TODO: NOT WORKING?? Hard to tell...
-// http://stackoverflow.com/a/24085157/1035431
-var $viewportMeta = $('head > meta[name="viewport"]');
-var $viewportMeta = $('meta[name="viewport"]');
-$('input, select, textarea').bind('focus blur', function(event) {
-  $viewportMeta.attr('content', 'width=device-width,initial-scale=1,maximum-scale=' + (event.type == 'blur' ? 10 : 1));
-});
-
 // Sieve items in lists:
 $("ul.sieve").sieve({
   itemSelector: "li",

@@ -25,4 +25,8 @@
 
  html, body, .off-canvas-wrap, .inner-wrap, .main-section{
    height: 100%;
-}
+ }
+
+// Prevent iOS resizing text
+ body { -webkit-text-size-adjust:100%; }
+
