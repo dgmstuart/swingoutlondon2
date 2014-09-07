@@ -23,10 +23,6 @@
    background-color: $colour-jaffa;
  }
 
- html, body, .off-canvas-wrap, .inner-wrap, .main-section{
-   height: 100%;
- }
-
 // Remove rounded corners - particularly from iOS. Without this prefix labels won't work
  input {
      -webkit-appearance: none;
