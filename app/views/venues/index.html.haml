@@ -1,4 +1,5 @@
 %h2 Venues
+= render partial: "common/sieve_search_box"
 %ul.no-bullet.sieve
   - @venues.each do | venue |
     %li= venue.name

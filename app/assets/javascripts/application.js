@@ -31,20 +31,11 @@ $("input.date").pickadate();
 $("select").select2();
 
 // Sieve items in lists:
-$("ul.sieve").sieve({
-  itemSelector: "li",
-  searchTemplate:
-    "<div class='row'>" +
-      "<label class='columns small-12 medium-8 large-6'>Search:" +
-      "<div class='row collapse'>" +
-        "<div class='small-2 large-1 columns'>" +
-          "<span class='prefix'><i class='fi-magnifying-glass'></i></span>" +
-        "</div>" +
-        "<div class='small-10 large-11 columns'>" +
-          "<input type='search' placeholder='Search...' class='sieve_search_box'></label>" +
-        "</div>" +
-      "</div>" +
-    "</div>"
+$(document).ready(function() {
+  $("ul.sieve").sieve({
+    itemSelector: "li",
+    searchTemplate: $("#sieve_search_box")
+  });
 });
 
 // Make the (X) button (displayed on search boxes in Chrome) reload the list as well as clearing the field
