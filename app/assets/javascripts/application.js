@@ -17,6 +17,7 @@
 //= require pickadate/picker
 //= require pickadate/picker.date
 //= require pickadate/legacy
+//= require jquery.sieve
 //= require cocoon
 
 //= require_tree .
@@ -28,6 +29,11 @@ $("input.date").pickadate();
 
 // Add a search box to all select fields:
 $("select").select2();
+
+// Sieve items in lists:
+$(document).ready(function() {
+  $("ul.sieve").sieve({ itemSelector: "li" });
+});
 
 $(window).on("load resize", function(){
   height = Math.max($('.inner-wrap').height(), $(this).height());
