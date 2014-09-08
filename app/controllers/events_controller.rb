@@ -13,29 +13,19 @@ class EventsController < ApplicationController
 
   # GET /events/new
   def new
-    @event = Event.new
-    event_seed = EventSeed.new
-    event_seed.event_generators << EventGenerator.new
-    @event.event_seeds << event_seed
+    @create_event_form = CreateEventForm.new
 
     setup_venues
   end
 
   # POST /events
   def create
-    @event = Event.new(event_params)
+    @create_event_form = CreateEventForm.new
 
-    if @event.save
-      flash[:success] = "New event created"
+    if @create_event_form.create_event(create_event_params)
 
-      # TODO: Smelly? - it isn't clear here that @event.generate is creating event instances as well as returning dates
-      # Should trigger ALL generators? Currently can only create one...
-      dates = @event.event_seeds.first.event_generators.first.generate
-
-      date_string = dates.map(&:to_s).join(", ") # TODO: Better way of doing this - in one step?
-      flash[:success] += ". #{dates.count} instances created: #{date_string}"
-
-      redirect_to @event
+      flash[:success] = @create_event_form.success_message
+      redirect_to @create_event_form.event, success:  @create_event_form.success_message
     else
       setup_venues
       render :new
@@ -43,15 +33,15 @@ class EventsController < ApplicationController
   end
 
 private
-
-  def event_params
+  # TODO: Since we're using a form object, this might be redundant, but I'm not sure
+  def create_event_params
     params.require(:event).permit(
       :name,
-      event_seeds_attributes:
-        [ :url, :venue_id, :_destroy,
-          venue_attributes: [ :name, :address, :postcode, :url ],
-          event_generators_attributes: [ :frequency, :start_date, :_destroy ],
-        ]
+      :url,
+      :frequency,
+      :start_date,
+      :venue_id,
+      venue_attributes: [ :name, :address, :postcode, :url ]
     )
   end
 

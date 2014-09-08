@@ -11,13 +11,15 @@ guard :rspec, cmd: "zeus rspec --tag ~js", all_after_pass: true, failed_mode: :n
   watch('config/routes.rb')                           { "spec/routing" }
   watch('app/controllers/application_controller.rb')  { "spec/controllers" }
 
-  # Test controllers through acceptance specs:
+  # Test controllers, views and forms through acceptance specs:
   watch('app/controllers/dates_controller.rb')           { "spec/acceptance/add_dates_spec.rb" }
   watch('app/controllers/events_controller.rb')          { ["spec/acceptance/create_event_spec.rb", "spec/acceptance/add_date_spec.rb"] }
   watch('app/controllers/event_instances_controller.rb') { ["spec/acceptance/create_event_spec.rb"] }
   watch('app/controllers/venues_controller.rb')          { ["spec/acceptance/create_event_spec.rb"] }
   watch('app/controllers/cancellations_controller.rb')   { ["spec/acceptance/cancel_event_spec.rb"] }
   watch('app/controllers/dance_classes_controller.rb')   { ["spec/acceptance/create_dance_class_spec.rb"] }
+
+  watch('app/forms/create_event_form.rb')                 { ["spec/acceptance/create_event_spec.rb"] }
 
   watch(%r{^app/views/(.+)/.*\.(erb|haml|slim)$})     { |m| "spec/acceptance/" }
 

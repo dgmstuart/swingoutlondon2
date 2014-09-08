@@ -4,7 +4,6 @@ class EventSeed < ActiveRecord::Base
   has_many :event_instances
   belongs_to :venue, inverse_of: :event_seeds
 
-  accepts_nested_attributes_for :event_generators
   accepts_nested_attributes_for :venue
 
   validates :url, presence: true, url: { allow_blank: true }

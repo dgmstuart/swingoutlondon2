@@ -1,18 +1,16 @@
-= render 'forms/errors', resource: @event
+= render 'forms/errors', resource: @create_event_form
 
-= form_for @event do |f|
+= form_for @create_event_form do |f|
   = f.text_field :name
 
-  = f.fields_for :event_seeds do |fs|
-    = fs.url_field :url
+  = f.url_field :url
 
-    #venue
-      = fs.collection_select :venue_id, @venues, :id, :name, prompt: "Please select a venue"
-      = link_to_add_association "New venue", fs, :venue, class: "button small radius"
+  #venue
+    = f.collection_select :venue_id, @venues, :id, :name, prompt: "Please select a venue"
+    = link_to_add_association "New venue", f, :venue, class: "button small radius"
 
-    = fs.fields_for :event_generators do |fg|
-      = fg.select :frequency, [ [ "Weekly", 1 ] , [ "Intermittent", 0 ] ], include_blank: true
+  = f.select :frequency, [ [ "Weekly", 1 ] , [ "Intermittent", 0 ] ], include_blank: true
 
-      = fg.text_field :start_date, class: "date"
+  = f.text_field :start_date, class: "date"
 
   = f.button "Create event"
