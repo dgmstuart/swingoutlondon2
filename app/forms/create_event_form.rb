@@ -7,12 +7,12 @@ class CreateEventForm
 
   delegate :name, to: :event
   delegate :url, :venue, :venue_id, :build_venue, to: :event_seed
+  delegate :frequency, :start_date, to: :event_generator
+
   class << self
+    # Required to make the venue form work (via cocoon)
     delegate :reflect_on_association, to: EventSeed
   end
-
-  attr_accessor :frequency
-  attr_accessor :start_date
 
   attr_reader :success_message
 
@@ -28,9 +28,21 @@ class CreateEventForm
 
 
   def create_event(params)
-    event.attributes = params.slice(:name)
-    event_seed.attributes = params.slice(:url, :venue_id, :venue_attributes)
+    event.attributes           = params.slice(:name)
+    event_seed.attributes      = params.slice(:url, :venue_id)
     event_generator.attributes = params.slice(:frequency, :start_date)
+
+    if venue_id.nil? && not(params[:venue].nil?)
+      # TODO: should be @venue?
+      # TODO: Need a more strong-params-esque way of handling venue params?
+      venue = event_seed.build_venue(params[:venue])
+      if venue.valid?
+        venue.save!
+      else
+        return false
+      end
+    end
+
     if valid?
       event.save!
       event_seed.save!

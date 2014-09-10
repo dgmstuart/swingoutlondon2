@@ -22,13 +22,12 @@ RSpec.feature "Admin adds an event", type: :feature do
 
   scenario "with missing data" do
     when_i_create_an_event_with_missing_data
-    then_missing_data_errors_should_be_displayed(4) # All fields except Venue
+    then_missing_data_errors_should_be_displayed(4,1)
   end
 
   scenario "with invalid data" do
-    when_i_create_an_event_with_missing_data
-    then_missing_data_errors_should_be_displayed(2) # Name, Frequency
-    and_invalid_data_errors_should_be_displayed
+    when_i_create_an_event_with_invalid_data
+    then_invalid_data_errors_should_be_displayed
   end
 
   scenario "which repeats weekly" do
@@ -101,12 +100,13 @@ RSpec.feature "Admin adds an event", type: :feature do
     end
   end
 
-  def then_missing_data_errors_should_be_displayed(n)
-    expect(page).to have_content "#{n} errors prevented this event from being saved"
+  def then_missing_data_errors_should_be_displayed(n, m)
+    expect(page).to have_content "#{n+m} errors prevented this event from being saved"
     expect(page).to have_content "can't be blank", count: n
+    expect(page).to have_content "Please select", count: m
   end
 
-  def and_invalid_data_errors_should_be_displayed
+  def then_invalid_data_errors_should_be_displayed
     expect(page).to have_content "must be a valid URL" # Supposed to match on the Url field
     expect(page).to have_content "must be before" # Supposed to match on the date field
   end
@@ -201,4 +201,9 @@ RSpec.feature "Admin adds an event", type: :feature do
   def venue_select
     "event[venue_id]"
   end
+
+  def venue_field(field)
+    "event[venue][#{field}]"
+  end
+
 end

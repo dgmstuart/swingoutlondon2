@@ -23,7 +23,6 @@ class EventsController < ApplicationController
     @create_event_form = CreateEventForm.new
 
     if @create_event_form.create_event(create_event_params)
-
       flash[:success] = @create_event_form.success_message
       redirect_to @create_event_form.event, success:  @create_event_form.success_message
     else
@@ -41,7 +40,7 @@ private
       :frequency,
       :start_date,
       :venue_id,
-      venue_attributes: [ :name, :address, :postcode, :url ]
+      venue: [ :name, :address, :postcode, :url ]
     )
   end
 
