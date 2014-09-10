@@ -6,6 +6,7 @@
   = f.url_field :url
 
   #venue
+    -# FIXME - form errors don't get applied to the rendered element because of select2
     = f.collection_select :venue_id, @venues, :id, :name, prompt: "Please select a venue"
     = link_to_add_association "New venue", f, :venue, class: "button small radius"
 

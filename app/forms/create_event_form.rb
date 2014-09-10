@@ -32,15 +32,8 @@ class CreateEventForm
     event_seed.attributes      = params.slice(:url, :venue_id)
     event_generator.attributes = params.slice(:frequency, :start_date)
 
-    if venue_id.nil? && not(params[:venue].nil?)
-      # TODO: should be @venue?
-      # TODO: Need a more strong-params-esque way of handling venue params?
-      venue = event_seed.build_venue(params[:venue])
-      if venue.valid?
-        venue.save!
-      else
-        return false
-      end
+    if new_venue?(params[:venue])
+      return false unless create_venue(params[:venue])
     end
 
     if valid?
@@ -61,7 +54,20 @@ class CreateEventForm
     end
   end
 
+  def new_venue?(venue_params)
+    venue_id.nil? && not(venue_params.nil?)
+  end
 
+  def create_venue(venue_params)
+    # TODO: Need a more strong-params-esque way of handling venue params?
+    venue = event_seed.build_venue(venue_params)
+    if venue.valid?
+      venue.save!
+      true
+    else
+      false
+    end
+  end
 
   def self.model_name
     ActiveModel::Name.new(self, nil, "Event")
