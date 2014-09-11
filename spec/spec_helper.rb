@@ -1,6 +1,7 @@
 require 'simplecov'
 SimpleCov.start :rails do
   add_group "Validators", "app/validators"
+  add_group "Forms", "app/forms"
 end
 
 require 'rspec/core' # Zeus won't work without this because otherwise something else (?) is defining Rspec (?) and doesn't have access to the configure method (???)
