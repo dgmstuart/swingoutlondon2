@@ -12,8 +12,13 @@ Capybara.javascript_driver = :poltergeist
 # spec/support/ and its subdirectories.
 Dir[Rails.root.join("spec/support/**/*.rb")].each { |f| require f }
 
-# Requires shared examples for models
-Dir[Rails.root.join("spec/models/shared_examples/*.rb")].each { |f| require f }
+# Requires shared examples
+[
+  "models",
+  "forms",
+].each do |dir|
+  Dir[Rails.root.join("spec/#{dir}/shared_examples/*.rb")].each { |f| require f }
+end
 
 # Checks for pending migrations before tests are run.
 ActiveRecord::Migration.maintain_test_schema!
