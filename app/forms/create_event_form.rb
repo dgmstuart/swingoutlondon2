@@ -6,8 +6,10 @@ class CreateEventForm
   end
 
   delegate :name, to: :event
-  delegate :url, :venue, :venue_id, :build_venue, to: :event_seed
+  delegate :url, :venue_id, to: :event_seed
+  delegate :venue, :build_venue, to: :event_seed
   delegate :frequency, :start_date, to: :event_generator
+
 
   class << self
     # Required to make the venue form work (via cocoon)
@@ -33,7 +35,12 @@ class CreateEventForm
     event_generator.attributes = params.slice(:frequency, :start_date)
 
     if new_venue?(params[:venue])
-      return false unless create_venue(params[:venue])
+      create_venue_form = CreateVenueForm.new
+      if create_venue_form.create_venue(params[:venue])
+        event_seed.venue = create_venue_form.venue
+      else
+        return false
+      end
     end
 
     if valid?
@@ -58,21 +65,6 @@ class CreateEventForm
     venue_id.nil? && not(venue_params.nil?)
   end
 
-  def create_venue(venue_params)
-    # TODO: Need a more strong-params-esque way of handling venue params?
-    venue = event_seed.build_venue(venue_params)
-    if venue.valid?
-      venue.save!
-      true
-    else
-      false
-    end
-  end
-
-  def self.model_name
-    ActiveModel::Name.new(self, nil, "Event")
-  end
-
   def event
     @event ||= Event.new
   end
@@ -83,5 +75,26 @@ class CreateEventForm
 
   def event_generator
     @event_generator ||= event_seed.event_generators.build
+  end
+
+  class CreateVenueForm
+    def create_venue(venue_params)
+      # TODO: Need a more strong-params-esque way of handling venue params?
+      venue.attributes = venue_params
+      if venue.valid?
+        venue.save!
+        true
+      else
+        false
+      end
+    end
+
+    def venue
+      @venue ||= Venue.new
+    end
+  end
+
+  def self.model_name
+    ActiveModel::Name.new(self, nil, "Event")
   end
 end
