@@ -17,18 +17,16 @@
  *= require_tree .
  */
 
- $colour-jaffa: #F27935;
+$colour-jaffa: #F27935;
 
- button.warn {
-   background-color: $colour-jaffa;
- }
+button.warn {
+  background-color: $colour-jaffa;
+}
 
 // Remove rounded corners - particularly from iOS. Without this prefix labels won't work
- input {
-     -webkit-appearance: none;
-     border-radius: 0;
- }
+input {
+  border-radius: 0;
+}
 
 // Prevent iOS resizing text
- body { -webkit-text-size-adjust:100%; }
-
+body { -webkit-text-size-adjust:100%; }
