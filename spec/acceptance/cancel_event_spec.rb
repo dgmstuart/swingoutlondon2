@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-feature "Admin cancels an event", type: :feature do
+RSpec.feature "Admin cancels an event", type: :feature do
   given(:event_instance) { Fabricate.create(:event_instance) }
 
   before do
@@ -43,7 +43,7 @@ feature "Admin cancels an event", type: :feature do
 end
 
 
-feature "Admin un-cancels an event", type: :feature do
+RSpec.feature "Admin un-cancels an event", type: :feature do
   given(:event_instance) { Fabricate.create(:event_instance, cancelled: true) }
 
   before do

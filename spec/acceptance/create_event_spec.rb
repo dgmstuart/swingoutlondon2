@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-feature "Admin adds an event", type: :feature do
+RSpec.feature "Admin adds an event", type: :feature do
   let(:event_generator) { Fabricate.build(:event_generator) }
   let(:event_seed) { event_generator.event_seed }
   let(:event) { event_seed.event }

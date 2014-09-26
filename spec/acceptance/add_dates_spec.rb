@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-feature "Admin adds dates to an event:" do
+RSpec.feature "Admin adds dates to an event:" do
   before do
     user = Fabricate.create(:user)
     login_as(user, scope: :user)

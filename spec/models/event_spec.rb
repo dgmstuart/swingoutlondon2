@@ -1,15 +1,15 @@
 require 'rails_helper'
 
-describe Event, 'Associations', :type => :model do
+RSpec.describe Event, 'Associations', :type => :model do
   it { should have_many(:event_seeds) }
   it { should have_many(:event_generators) }
   it { should have_many(:event_instances) }
 end
 
-describe Event, 'Validations', :type => :model do
+RSpec.describe Event, 'Validations', :type => :model do
   it { should validate_presence_of(:name) }
 end
 
-describe Event, :type => :model do
+RSpec.describe Event, :type => :model do
   it_should_behave_like "sortable"
 end

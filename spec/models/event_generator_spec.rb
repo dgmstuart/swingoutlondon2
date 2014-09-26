@@ -1,19 +1,19 @@
 require 'rails_helper'
 
-describe EventGenerator, 'Associations', :type => :model do
+RSpec.describe EventGenerator, 'Associations', :type => :model do
   it { should belong_to(:event_seed) }
   it { should have_one(:event) }
   it { should have_many(:event_instances) }
 end
 
-describe EventGenerator, 'Validations', :type => :model do
+RSpec.describe EventGenerator, 'Validations', :type => :model do
   it { should validate_presence_of(:event_seed) }
   it { should validate_presence_of(:frequency) }
   # it { should validate_presence_of(:date) } # Sufficiently covered by date validation?
   it "validates that date is a date"
 end
 
-describe EventGenerator, :type => :model do
+RSpec.describe EventGenerator, :type => :model do
   describe "#repeating?" do
     {
       0 => false,

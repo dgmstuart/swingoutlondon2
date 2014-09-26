@@ -1,4 +1,4 @@
-shared_examples "sortable" do
+RSpec.shared_examples "sortable" do
   describe "sorted" do
     let(:model){ described_class.name.downcase.to_sym }
     let(:model_class){ described_class }

@@ -1,13 +1,13 @@
 require 'rails_helper'
 
-describe DanceClass, 'Associations', :type => :model do
+RSpec.describe DanceClass, 'Associations', :type => :model do
   it { should belong_to(:venue) }
 end
 
-describe DanceClass, 'Validations', :type => :model do
+RSpec.describe DanceClass, 'Validations', :type => :model do
 end
 
-describe DanceClass, :type => :model do
+RSpec.describe DanceClass, :type => :model do
   # it_should_behave_like "sortable"
 
   describe ".day_name" do

@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-feature "Admin deletes an event instance", type: :feature do
+RSpec.feature "Admin deletes an event instance", type: :feature do
   given(:event_instance) { Fabricate.create(:event_instance) }
 
   before do

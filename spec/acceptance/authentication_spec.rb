@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-feature "Logged Out User tries to access a page:" do
+RSpec.feature "Logged Out User tries to access a page:" do
   let(:event) { Fabricate.create(:event) }
   {
     "event_instances" => "Event Instances",
@@ -32,7 +32,7 @@ feature "Logged Out User tries to access a page:" do
   #   cancel_event
 end
 
-feature "Logged Out User logs in" do
+RSpec.feature "Logged Out User logs in" do
   let(:user) { Fabricate.create(:user) }
   scenario "with valid details" do
     when_i_sign_in_with_valid_details
