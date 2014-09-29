@@ -1,5 +1,5 @@
 # From https://gist.github.com/dmitriy-kiriyenko/1892874
-shared_examples_for "ActiveModel" do
+RSpec.shared_examples_for "ActiveModel" do
   include ActiveModel::Lint::Tests
 
   # to_s is to support ruby-1.9
