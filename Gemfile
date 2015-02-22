@@ -40,7 +40,7 @@ gem 'jquery-rails' #, '> 3.1.1' - when it's available
 
 gem 'devise', '~> 3.3.0'
 gem 'foundation-rails', '~> 5.3.0'
-gem 'foundation_rails_helper', git: "https://github.com/dgmstuart/foundation_rails_helper.git", branch: 'master'
+gem 'foundation_rails_helper'
 gem 'foundation-icons-sass-rails'
 gem 'date_validator', '~> 0.7.0'
 gem 'haml-rails', '~> 0.5.3'
