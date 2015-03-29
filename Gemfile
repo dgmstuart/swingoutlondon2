@@ -68,7 +68,7 @@ group :test do
   gem 'shoulda-matchers', '~> 2.6', require: false
   gem 'fabrication', '~> 2.11.3'
   gem 'capybara', '~> 2.4.1'
-  gem 'poltergeist', '~> 1.5.1'
+  gem 'poltergeist', '~> 1.6.0'
   gem 'database_cleaner', '1.3'
   # gem 'email_spec', '~> 1.5.1' not used yet
   gem 'simplecov', '~> 0.9.0' # Their github says to downgrade, since 0.8 has issues
