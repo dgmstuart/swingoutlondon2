@@ -78,3 +78,7 @@ pickle-email-*.html
 
 # markdown preview
 README.html
+
+# Bowery files
+.bowery
+Dockerfile
