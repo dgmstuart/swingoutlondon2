@@ -7,6 +7,6 @@ class EventSeed < ActiveRecord::Base
   accepts_nested_attributes_for :event_generators
   accepts_nested_attributes_for :venue
 
-  validates :url, presence: true, url: true
+  validates :url, presence: true, url: { allow_blank: true }
   validates :venue, presence: true
 end

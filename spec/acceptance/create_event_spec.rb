@@ -20,9 +20,14 @@ RSpec.feature "Admin adds an event", type: :feature do
     and_an_event_instance_should_be_displayed_in_the_event_instance_list
   end
 
+  scenario "with missing data" do
+    when_i_create_an_event_with_missing_data
+    then_missing_data_errors_should_be_displayed(4,1)
+  end
+
   scenario "with invalid data" do
     when_i_create_an_event_with_invalid_data
-    then_errors_should_be_displayed
+    then_invalid_data_errors_should_be_displayed
   end
 
   scenario "which repeats weekly" do
@@ -88,9 +93,20 @@ RSpec.feature "Admin adds an event", type: :feature do
     end
   end
 
-  def then_errors_should_be_displayed
-    expect(page).to have_content "errors prevented this event from being saved"
-    expect(page).to have_content "can't be blank", count: 2 # Supposed to match on the Frequency and name fields
+  def when_i_create_an_event_with_missing_data
+    visit '/events/new'
+    within("#new_event") do
+      click_button 'Create event'
+    end
+  end
+
+  def then_missing_data_errors_should_be_displayed(n, m)
+    expect(page).to have_content "#{n+m} errors prevented this event from being saved"
+    expect(page).to have_content "can't be blank", count: n
+    expect(page).to have_content "Please select", count: m
+  end
+
+  def then_invalid_data_errors_should_be_displayed
     expect(page).to have_content "must be a valid URL" # Supposed to match on the Url field
     expect(page).to have_content "must be before" # Supposed to match on the date field
   end
