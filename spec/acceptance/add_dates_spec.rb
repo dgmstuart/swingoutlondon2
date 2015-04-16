@@ -12,9 +12,11 @@ RSpec.feature "Admin adds dates to an event:" do
     end
   end
   scenario "two non-repeating dates" do
-    given_an_event
-    when_i_add_two_dates_to_the_event
-    then_those_dates_should_display_on_the_events_page
+    Timecop.freeze(Date.new(2001, 1, 20)) do
+      given_an_event
+      when_i_add_two_dates_to_the_event
+      then_those_dates_should_display_on_the_events_page
+    end
   end
 
   scenario "an invalid date" do
@@ -33,17 +35,17 @@ RSpec.feature "Admin adds dates to an event:" do
     click_link event.name
 
     click_link "Add date"
-    fill_in "event_generator[start_date]", with: "23/12/2014"
+    fill_in "event_generator[start_date]", with: "22/01/2001"
     click_button "Done"
 
     click_link "Add date"
-    fill_in "event_generator[start_date]", with: "24/12/2014"
+    fill_in "event_generator[start_date]", with: "23/01/2001"
     click_button "Done"
   end
 
   def then_those_dates_should_display_on_the_events_page
-    expect(page).to have_content "2014-12-23"
-    expect(page).to have_content "2014-12-24"
+    expect(page).to have_content "2001-01-22"
+    expect(page).to have_content "2001-01-23"
   end
 
   def when_i_add_an_invalid_date_to_the_event
