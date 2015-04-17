@@ -27,7 +27,7 @@ RSpec.feature "Admin adds an event", type: :feature do
 
   scenario "with invalid data" do
     when_i_create_an_event_with_invalid_data
-    then_invalid_data_errors_should_be_displayed
+    then_invalid_event_data_errors_should_be_displayed
   end
 
   scenario "which repeats weekly" do
@@ -46,7 +46,19 @@ RSpec.feature "Admin adds an event", type: :feature do
     and_the_venue_should_be_displayed_in_the_venues_list
   end
 
+  scenario "with missing venue data", :js do
+    when_i_create_an_event_with_a_new_venue_with_missing_data
+    then_missing_data_errors_should_be_displayed(4)
+  end
+
+  scenario "with invalid venue data", :js do
+    when_i_create_an_event_with_a_new_venue_with_invalid_data
+    then_invalid_venue_data_errors_should_be_displayed
+  end
+
+
   # STEPS:
+  ############################################################
 
   def given_an_existing_venue
     existing_venue
@@ -100,13 +112,13 @@ RSpec.feature "Admin adds an event", type: :feature do
     end
   end
 
-  def then_missing_data_errors_should_be_displayed(n, m)
-    expect(page).to have_content "#{n+m} errors prevented this event from being saved"
-    expect(page).to have_content "can't be blank", count: n
-    expect(page).to have_content "Please select", count: m
+  def then_missing_data_errors_should_be_displayed(blanks, selects=0)
+    expect(page).to have_content "#{blanks+selects} errors prevented this event from being saved"
+    expect(page).to have_content "can't be blank", count: blanks
+    expect(page).to have_content "Please select", count: selects
   end
 
-  def then_invalid_data_errors_should_be_displayed
+  def then_invalid_event_data_errors_should_be_displayed
     expect(page).to have_content "must be a valid URL" # Supposed to match on the Url field
     expect(page).to have_content "must be before" # Supposed to match on the date field
   end
@@ -169,6 +181,42 @@ RSpec.feature "Admin adds an event", type: :feature do
       click_button 'Create event'
     end
   end
+
+  def when_i_create_an_event_with_a_new_venue_with_invalid_data
+    Fabricate.create(:venue, name: "non-unique name")
+    visit '/events/new'
+    within("#new_event") do
+      fill_event_fields_with_valid_data
+      select_todays_date
+
+      click_link 'New venue'
+
+      fill_in venue_field("name"),     with: "non-unique name"
+      fill_in venue_field("address"),  with: "bar" # Valid
+      fill_in venue_field("postcode"), with: "some nons!ense" # Valid until we check (!)
+      fill_in venue_field("url"),      with: "foo!bar.zx"
+
+      click_button 'Create event'
+    end
+  end
+
+  def then_invalid_venue_data_errors_should_be_displayed
+    expect(page).to have_content "has already been taken"
+    expect(page).to have_content "must be a valid URL"
+  end
+
+  def when_i_create_an_event_with_a_new_venue_with_missing_data
+    visit '/events/new'
+    within("#new_event") do
+      fill_event_fields_with_valid_data
+      select_todays_date
+
+      click_link 'New venue'
+
+      click_button 'Create event'
+    end
+  end
+
 
   # Tests using selenium can't just fill in a date because the datepicker makes the field readonly
   def select_todays_date

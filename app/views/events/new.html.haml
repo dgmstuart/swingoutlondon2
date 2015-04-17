@@ -7,8 +7,16 @@
     = fs.url_field :url
 
     #venue
-      = fs.collection_select :venue_id, @venues, :id, :name, prompt: "Please select a venue"
-      = link_to_add_association "New venue", fs, :venue, class: "button small radius"
+      -# FIXME - This conditional is required because Cocoon doesn't re-render the form
+      -#         when there are errors: https://github.com/nathanvda/cocoon/issues/114
+      - if @event.event_seeds.first.venue
+        = fs.fields_for :venue, @event.event_seeds.first.venue do |vf|
+          = render 'venue_fields', f: vf
+        = link_to_add_association "New venue", fs, :venue, class: "button small radius", style: "display: none;"
+      - else
+        -# FIXME - form errors don't get applied to the rendered select element because of select2
+        = fs.collection_select :venue_id, @venues, :id, :name, prompt: "Please select a venue"
+        = link_to_add_association "New venue", fs, :venue, class: "button small radius"
 
     = fs.fields_for :event_generators do |fg|
       = fg.select :frequency, [ [ "Weekly", 1 ] , [ "Intermittent", 0 ] ], include_blank: true

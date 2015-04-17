@@ -7,6 +7,13 @@ RSpec.describe Venue, 'Associations', :type => :model do
 end
 
 RSpec.describe Venue, 'Validations', :type => :model do
+  it { should validate_presence_of(:name) }
+  it { should validate_presence_of(:address) }
+  it { should validate_presence_of(:postcode) }
+  it { should validate_presence_of(:url) }
+
+  it { should validate_uniqueness_of(:name) }
+  it_should_behave_like "validates url"
 
 end
 
