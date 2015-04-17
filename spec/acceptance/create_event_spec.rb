@@ -74,25 +74,19 @@ RSpec.feature "Admin adds an event", type: :feature do
     end
   end
 
-  def fill_event_fields_with_valid_data
-    # TODO: Does this actually respect the "within" block?
-    fill_in "event[name]", with: event.name
-    fill_in url_field, with: event_seed.url
-    select 'Intermittent', from: frequency_select
-    fill_in start_date_field, with: event_generator.start_date
-  end
-
   def then_the_event_should_be_displayed
-    expect(page).to have_content "New event created"
-    expect(page).to have_content event.name
-    expect(page).to have_link(event_generator.start_date, href: event_seed.url)
+    expect(page).to have_content("New event created"
+              ).and have_content(event.name
+              ).and have_link(event_generator.start_date, href: event_seed.url
+              )
   end
 
   def and_an_event_instance_should_be_displayed_in_the_event_instance_list
     visit '/event_instances'
-    expect(page).to have_content event_generator.start_date
-    expect(page).to have_link event.name
-    expect(page).to have_link "View Site", href: event_seed.url
+    expect(page).to have_content(event_generator.start_date
+              ).and have_link(event.name
+              ).and have_link("View Site", href: event_seed.url
+              )
   end
 
   def when_i_create_an_event_with_invalid_data
@@ -113,14 +107,16 @@ RSpec.feature "Admin adds an event", type: :feature do
   end
 
   def then_missing_data_errors_should_be_displayed(blanks, selects=0)
-    expect(page).to have_content "#{blanks+selects} errors prevented this event from being saved"
-    expect(page).to have_content "can't be blank", count: blanks
-    expect(page).to have_content "Please select", count: selects
+    expect(page).to have_content("#{blanks+selects} errors prevented this event from being saved"
+              ).and have_content("can't be blank", count: blanks
+              ).and have_content("Please select", count: selects
+              )
   end
 
   def then_invalid_event_data_errors_should_be_displayed
-    expect(page).to have_content "must be a valid URL" # Supposed to match on the Url field
-    expect(page).to have_content "must be before" # Supposed to match on the date field
+    expect(page).to have_content("must be a valid URL" # Supposed to match on the Url field
+              ).and have_content("must be before" # Supposed to match on the date field
+              )
   end
 
   def when_i_create_a_weekly_repeating_event
@@ -137,18 +133,20 @@ RSpec.feature "Admin adds an event", type: :feature do
   end
 
   def then_events_for_the_next_4_weeks_should_be_displayed
-    expect(page).to have_content "New event created"
-    expect(page).to have_content "4 instances created"
+    expect(page).to have_content("New event created"
+              ).and have_content("4 instances created"
+              )
     display_4_events
   end
 
   def and_events_for_the_next_4_weeks_should_be_displayed_on_the_event_page
     visit "/events"
     click_link event.name
-    expect(page).to have_link("2001-01-03", href: event_seed.url)
-    expect(page).to have_link("2001-01-10", href: event_seed.url)
-    expect(page).to have_link("2001-01-17", href: event_seed.url)
-    expect(page).to have_link("2001-01-24", href: event_seed.url)
+    expect(page).to have_link("2001-01-03", href: event_seed.url
+              ).and have_link("2001-01-10", href: event_seed.url
+              ).and have_link("2001-01-17", href: event_seed.url
+              ).and have_link("2001-01-24", href: event_seed.url
+              )
     display_4_events
   end
 
@@ -159,10 +157,11 @@ RSpec.feature "Admin adds an event", type: :feature do
   end
 
   def display_4_events
-    expect(page).to have_content "2001-01-03"
-    expect(page).to have_content "2001-01-10"
-    expect(page).to have_content "2001-01-17"
-    expect(page).to have_content "2001-01-24"
+    expect(page).to have_content("2001-01-03"
+              ).and have_content("2001-01-10"
+              ).and have_content("2001-01-17"
+              ).and have_content("2001-01-24"
+              )
   end
 
   def when_i_create_an_event_with_a_new_venue
@@ -201,8 +200,9 @@ RSpec.feature "Admin adds an event", type: :feature do
   end
 
   def then_invalid_venue_data_errors_should_be_displayed
-    expect(page).to have_content "has already been taken"
-    expect(page).to have_content "must be a valid URL"
+    expect(page).to have_content("has already been taken"
+              ).and have_content("must be a valid URL"
+              )
   end
 
   def when_i_create_an_event_with_a_new_venue_with_missing_data
@@ -217,14 +217,6 @@ RSpec.feature "Admin adds an event", type: :feature do
     end
   end
 
-
-  # Tests using selenium can't just fill in a date because the datepicker makes the field readonly
-  def select_todays_date
-    # HACK? TODO: would be nicer to activate the datepicker directly, but
-    # => Capybara's click methods seem to only work on links and buttons
-    page.execute_script("$('[name=\"#{start_date_field}\"]').val('#{Date.today.to_s}')")
-  end
-
   def then_the_venue_should_be_displayed_with_the_event
     then_the_event_should_be_displayed
     expect(page).to have_content venue.name
@@ -235,7 +227,28 @@ RSpec.feature "Admin adds an event", type: :feature do
     expect(page).to have_content venue.name
   end
 
+
+  # HELPERS
+  ############################################################
+
+  def fill_event_fields_with_valid_data
+    # TODO: Does this actually respect the "within" block?
+    fill_in "event[name]", with: event.name
+    fill_in url_field, with: event_seed.url
+    select 'Intermittent', from: frequency_select
+    fill_in start_date_field, with: event_generator.start_date
+  end
+
+  # Tests using selenium can't just fill in a date because the datepicker makes the field readonly
+  def select_todays_date
+    # HACK? TODO: would be nicer to activate the datepicker directly, but
+    # Capybara's click methods seem to only work on links and buttons
+    page.execute_script("$('[name=\"#{start_date_field}\"]').val('#{Date.today.to_s}')")
+  end
+
+
   # FIELDS
+  ############################################################
 
   def start_date_field
     event_generator_field "start_date"
