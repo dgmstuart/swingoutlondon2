@@ -1,6 +1,6 @@
 RSpec.shared_examples "sortable" do
   describe "sorted" do
-    let(:model){ described_class.name.downcase.to_sym }
+    let(:model){ described_class.name.underscore.to_sym }
     let(:model_class){ described_class }
 
 
@@ -20,7 +20,7 @@ RSpec.shared_examples "sortable" do
       "the ",
     ]
     high_initial_strings.each do |his|
-      context "when one name begins with #{his}" do
+      context "when one name begins with '#{his}'" do
         let(:initial_high) { his }
         it "should sort events ignoring an initial '#{his}'"  do
           expect(first_item_name).to eq lowest_string
