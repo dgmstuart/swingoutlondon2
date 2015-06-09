@@ -39,7 +39,7 @@ gem 'jquery-rails' #, '> 3.1.1' - when it's available
 # gem 'debugger', group: [:development, :test]
 
 gem 'devise', '~> 3.3.0'
-gem 'foundation-rails', '~> 5.3.0'
+gem 'foundation-rails', '~> 5.0'
 gem 'foundation_rails_helper'
 gem 'foundation-icons-sass-rails'
 gem 'date_validator', '~> 0.7.0'
