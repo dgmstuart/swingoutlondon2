@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 
 ruby '2.2.0'
-gem 'rails', '4.1.10'
+gem 'rails', '4.2.1'
 
 # Use postgresql as the database for Active Record
 gem 'pg', '~> 0.17'
@@ -19,7 +19,7 @@ gem 'uglifier', '>= 1.3.0'
 # gem 'therubyracer', platforms: :ruby
 
 # Use jquery as the JavaScript library
-gem 'jquery-rails' #, '> 3.1.1' - when it's available
+gem 'jquery-rails'
 
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 # gem 'jbuilder', '~> 1.2'
@@ -59,6 +59,7 @@ gem 'select2-rails', '3.5.9.1'
 group :development do
   gem 'better_errors'
   gem 'binding_of_caller'
+  gem 'web-console', '~> 2.0'
   gem 'guard-bundler'
   gem 'guard-rspec', '~> 4.2', :require=>false
   gem 'html2haml'
