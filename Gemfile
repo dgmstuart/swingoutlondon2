@@ -1,10 +1,10 @@
 source 'https://rubygems.org'
 
 ruby '2.2.0'
-gem 'rails', '4.1.5'
+gem 'rails', '4.1.10'
 
 # Use postgresql as the database for Active Record
-gem 'pg', '~> 0.17.1'
+gem 'pg', '~> 0.17'
 
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0'
@@ -38,23 +38,28 @@ gem 'jquery-rails' #, '> 3.1.1' - when it's available
 # Use debugger
 # gem 'debugger', group: [:development, :test]
 
-gem 'devise', '~> 3.3.0'
+gem 'devise', '~> 3.5'
 gem 'foundation-rails', '~> 5.0'
 gem 'foundation_rails_helper'
 gem 'foundation-icons-sass-rails'
-gem 'date_validator', '~> 0.7.0'
-gem 'haml-rails', '~> 0.5.3'
+gem 'date_validator', '~> 0.8'
+gem 'haml-rails', '~> 0.5'
 
 # Gems to include javascript libraries:
 gem 'cocoon', '~> 1.2.6'
-gem 'pickadate-rails', '~> 3.5.3'
-gem 'select2-rails', '~> 3.5.9'
+gem 'pickadate-rails', '~> 3.5'
+gem 'select2-rails', '3.5.9.1'
+# There's some sort of breaking change in 3.5.9.2 - possibly an interaction with cocoon and/or my js code
+# to reproduce:
+# 1. select a venue
+# 2. click to create a new venue
+# 3. click cancel
+# Result: the original select dropdown gets displayed - in addition to the select2 one
 
 group :development do
   gem 'better_errors'
   gem 'binding_of_caller'
   gem 'guard-bundler'
-  gem 'guard-rails'
   gem 'guard-rspec', '~> 4.2', :require=>false
   gem 'html2haml'
   gem 'hub', :require=>nil
@@ -66,13 +71,13 @@ end
 
 group :test do
   gem 'shoulda-matchers', '~> 2.6', require: false
-  gem 'fabrication', '~> 2.11.3'
-  gem 'capybara', '~> 2.4.1'
-  gem 'poltergeist', '~> 1.6.0'
-  gem 'database_cleaner', '1.3'
-  # gem 'email_spec', '~> 1.5.1' not used yet
-  gem 'simplecov', '~> 0.9.0' # Their github says to downgrade, since 0.8 has issues
-  gem 'timecop', '~> 0.7.1'
+  gem 'fabrication', '~> 2.11'
+  gem 'capybara', '~> 2.4'
+  gem 'poltergeist', '~> 1.6'
+  gem 'database_cleaner', '~> 1.3'
+  # gem 'email_spec', '~> 1.5' not used yet
+  gem 'simplecov', '~> 0.9' # Their github says to downgrade, since 0.8 has issues
+  gem 'timecop', '~> 0.7'
 end
 
 group :development, :test do

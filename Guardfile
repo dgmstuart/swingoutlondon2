@@ -32,12 +32,6 @@ guard :rspec, cmd: "zeus rspec --tag ~js", all_after_pass: true, failed_mode: :n
   watch(%r{^spec/fabricators/.*\.rb$}) { |m| "spec" }
 end
 
-
-guard :rails, cmd: "zeus server" do
-  watch('Gemfile.lock')
-  watch(%r{^(config|lib)/.*})
-end
-
 guard :bundler do
   watch('Gemfile')
 end

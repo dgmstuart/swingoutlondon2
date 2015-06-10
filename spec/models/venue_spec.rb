@@ -12,9 +12,12 @@ RSpec.describe Venue, 'Validations', :type => :model do
   it { should validate_presence_of(:postcode) }
   it { should validate_presence_of(:url) }
 
-  it { should validate_uniqueness_of(:name) }
   it_should_behave_like "validates url"
 
+  # Validating uniqueness is a little different because it touches the database:
+  # http://matchers.shoulda.io/docs/v2.8.0/Shoulda/Matchers/ActiveRecord.html#validate_uniqueness_of-instance_method
+  subject { Fabricate.build(:venue) }
+  it { should validate_uniqueness_of(:name) }
 end
 
 RSpec.describe Venue, :type => :model do
