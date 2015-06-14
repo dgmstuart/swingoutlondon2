@@ -1,5 +1,5 @@
 Fabricator(:event_instance) do
-  date { Date.today }
+  date { Faker::Date.forward }
   venue
   event_seed
 end

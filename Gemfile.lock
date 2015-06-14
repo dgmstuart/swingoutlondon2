@@ -74,6 +74,8 @@ GEM
     eventmachine (1.0.7)
     execjs (2.5.2)
     fabrication (2.13.2)
+    faker (1.4.3)
+      i18n (~> 0.5)
     ffi (1.9.8)
     formatador (0.2.5)
     foundation-icons-sass-rails (3.0.0)
@@ -303,6 +305,7 @@ DEPENDENCIES
   date_validator (~> 0.8)
   devise (~> 3.5)
   fabrication (~> 2.11)
+  faker (~> 1.4)
   foundation-icons-sass-rails
   foundation-rails (~> 5.0)
   foundation_rails_helper

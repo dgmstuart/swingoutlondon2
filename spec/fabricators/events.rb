@@ -1,3 +1,3 @@
 Fabricator(:event) do
-  name "My Event"
+  name { Faker::Company.name } # Not ideal for generating swing event names, but close enough
 end

@@ -1,5 +1,5 @@
 Fabricator(:event_seed) do
-  url "http://foo.com"
+  url { Faker::Internet.url }
   venue
   event
 end

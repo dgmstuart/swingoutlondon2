@@ -79,6 +79,7 @@ group :test do
   # gem 'email_spec', '~> 1.5' not used yet
   gem 'simplecov', '~> 0.9' # Their github says to downgrade, since 0.8 has issues
   gem 'timecop', '~> 0.7'
+  gem 'faker', '~> 1.4'
 end
 
 group :development, :test do
