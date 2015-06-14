@@ -85,7 +85,7 @@ group :development, :test do
   gem 'rspec-rails', '~> 3.0'
   gem 'fuubar'
   gem 'thin'
-  gem 'pry', '~> 0.9'
+  gem 'pry-rails'
 end
 
 group :production do
