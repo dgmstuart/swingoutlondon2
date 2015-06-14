@@ -14,9 +14,24 @@ RSpec.feature "Admin cancels an event", type: :feature do
     and_that_date_should_be_displayed_as_cancelled_in_the_event_instance_list
   end
 
+  scenario "from the event page, for a past event" do
+    given_an_existing_event_in_the_past
+    when_i_mark_one_date_as_cancelled_on_the_event_page
+    then_that_date_should_be_displayed_as_cancelled
+    and_that_date_should_be_displayed_as_cancelled_in_the_event_instance_list
+  end
+
   # TODO: Would it be better to go through the process of creating an event explicitly?
   def given_an_existing_event
     test_instance = Fabricate.times(3, :event_instance)[1]
+
+    @event_date = test_instance.date
+    @event_name = test_instance.event.name
+  end
+
+  def given_an_existing_event_in_the_past
+    test_instance = Fabricate.build(:event_instance, date: Faker::Date.backward)
+    test_instance.save(validate: false) # need validate: false to create an event in the past
 
     @event_date = test_instance.date
     @event_name = test_instance.event.name
@@ -58,9 +73,24 @@ RSpec.feature "Admin un-cancels an event", type: :feature do
     and_that_date_should_not_be_displayed_as_cancelled_in_the_event_instance_list
   end
 
+  scenario "from the event page, for a past event" do
+    given_an_existing_cancelled_event_in_the_past
+    when_i_mark_the_cancelled_date_as_not_cancelled_on_the_event_page
+    then_that_date_should_not_be_displayed_as_cancelled
+    and_that_date_should_not_be_displayed_as_cancelled_in_the_event_instance_list
+  end
+
   # TODO: Would it be better to go through the process of creating an event explicitly?
   def given_an_existing_cancelled_event
     test_instance = Fabricate.create(:event_instance, cancelled: true)
+
+    @event_date = test_instance.date
+    @event_name = test_instance.event.name
+  end
+
+  def given_an_existing_cancelled_event_in_the_past
+    test_instance = Fabricate.build(:event_instance, cancelled: true, date: Faker::Date.backward)
+    test_instance.save(validate: false) # need validate: false to create an event in the past
 
     @event_date = test_instance.date
     @event_name = test_instance.event.name
