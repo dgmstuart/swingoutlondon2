@@ -1,13 +1,6 @@
 require 'rails_helper'
 
 RSpec.feature "Admin adds an event", type: :feature do
-  let(:event_generator) { Fabricate.build(:event_generator) }
-  let(:event_seed) { event_generator.event_seed }
-  let(:event) { event_seed.event }
-
-  let(:venue) { Fabricate.build(:venue) }
-  let(:existing_venue) { Fabricate.create(:venue, name: "Other thing") }
-
   before do
     user = Fabricate.create(:user)
     login_as(user, scope: :user)
@@ -62,14 +55,14 @@ RSpec.feature "Admin adds an event", type: :feature do
   ############################################################
 
   def given_an_existing_venue
-    existing_venue
+    @existing_venue = Fabricate.create(:venue, name: "Other thing")
   end
 
   def when_i_create_a_new_event_with_valid_data
     visit '/events/new'
     within("#new_event") do
       fill_event_fields_with_valid_data
-      select existing_venue.name, from: venue_select
+      select @existing_venue.name, from: venue_select
 
       click_button 'Create event'
     end
@@ -77,16 +70,16 @@ RSpec.feature "Admin adds an event", type: :feature do
 
   def then_the_event_should_be_displayed
     expect(page).to have_content("New event created"
-              ).and have_content(event.name
-              ).and have_link(event_generator.start_date, href: event_seed.url
+              ).and have_content(@event_name
+              ).and have_link(@event_start_date.to_s, href: @event_url
               )
   end
 
   def and_an_event_instance_should_be_displayed_in_the_event_instance_list
     visit '/event_instances'
-    expect(page).to have_content(event_generator.start_date
-              ).and have_link(event.name
-              ).and have_link("View Site", href: event_seed.url
+    expect(page).to have_content(@event_start_date
+              ).and have_link(@event_name
+              ).and have_link("View Site", href: @event_url
               )
   end
 
@@ -122,10 +115,15 @@ RSpec.feature "Admin adds an event", type: :feature do
 
   def when_i_create_a_weekly_repeating_event
     visit '/events/new'
+
+    @event_name = Faker::Company.name
+    @event_url = Faker::Internet.url
+    @event_start_date = Faker::Date.forward
+
     within("#new_event") do
-      fill_in "event[name]", with: event.name
-      fill_in url_field, with: event_seed.url
-      select existing_venue.name, from: venue_select
+      fill_in "event[name]", with: @event_name
+      fill_in url_field, with: @event_url
+      select @existing_venue.name, from: venue_select
       select 'Weekly', from: frequency_select
       fill_in start_date_field, with: Date.new(2001, 1, 3)
 
@@ -142,18 +140,18 @@ RSpec.feature "Admin adds an event", type: :feature do
 
   def and_events_for_the_next_4_weeks_should_be_displayed_on_the_event_page
     visit "/events"
-    click_link event.name
-    expect(page).to have_link("2001-01-03", href: event_seed.url
-              ).and have_link("2001-01-10", href: event_seed.url
-              ).and have_link("2001-01-17", href: event_seed.url
-              ).and have_link("2001-01-24", href: event_seed.url
+    click_link @event_name
+    expect(page).to have_link("2001-01-03", href: @event_url
+              ).and have_link("2001-01-10", href: @event_url
+              ).and have_link("2001-01-17", href: @event_url
+              ).and have_link("2001-01-24", href: @event_url
               )
     display_4_events
   end
 
   def and_events_for_the_next_4_weeks_should_show_in_the_event_instance_list
     visit '/event_instances'
-    expect(page).to have_content(event_seed.url, count: 4)
+    expect(page).to have_content(@event_url, count: 4)
     display_4_events
   end
 
@@ -173,10 +171,12 @@ RSpec.feature "Admin adds an event", type: :feature do
 
       click_link 'New venue'
 
-      fill_in venue_field("name"),     with: venue.name
-      fill_in venue_field("address"),  with: venue.address
-      fill_in venue_field("postcode"), with: venue.postcode
-      fill_in venue_field("url"),      with: venue.url
+      @venue_name = Faker::App.name
+
+      fill_in venue_field("name"),     with: @venue_name
+      fill_in venue_field("address"),  with: Faker::Address.street_address
+      fill_in venue_field("postcode"), with: Faker::Address.postcode
+      fill_in venue_field("url"),      with: Faker::Internet.url
 
       click_button 'Create event'
     end
@@ -221,12 +221,12 @@ RSpec.feature "Admin adds an event", type: :feature do
 
   def then_the_venue_should_be_displayed_with_the_event
     then_the_event_should_be_displayed
-    expect(page).to have_content venue.name
+    expect(page).to have_content @venue_name
   end
 
   def and_the_venue_should_be_displayed_in_the_venues_list
     visit "/venues"
-    expect(page).to have_content venue.name
+    expect(page).to have_content @venue_name
   end
 
 
@@ -234,15 +234,20 @@ RSpec.feature "Admin adds an event", type: :feature do
   ############################################################
 
   def fill_event_fields_with_valid_data
+    @event_name = Faker::Company.name
+    @event_url = Faker::Internet.url
+    @event_start_date = Faker::Date.forward
+
     # TODO: Does this actually respect the "within" block?
-    fill_in "event[name]", with: event.name
-    fill_in url_field, with: event_seed.url
+    fill_in "event[name]", with: @event_name
+    fill_in url_field, with: @event_url
     select 'Intermittent', from: frequency_select
-    fill_in start_date_field, with: event_generator.start_date
+    fill_in start_date_field, with: @event_start_date
   end
 
   # Tests using selenium can't just fill in a date because the datepicker makes the field readonly
   def select_todays_date
+    @event_start_date = Date.today
     # HACK? TODO: would be nicer to activate the datepicker directly, but
     # Capybara's click methods seem to only work on links and buttons
     page.execute_script("$('[name=\"#{start_date_field}\"]').val('#{Date.today.to_s}')")
