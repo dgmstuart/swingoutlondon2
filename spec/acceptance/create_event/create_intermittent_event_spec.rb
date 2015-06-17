@@ -26,10 +26,6 @@ RSpec.feature "Admin adds an event", type: :feature do
   # STEPS:
   ############################################################
 
-  def given_an_existing_venue
-    @existing_venue = Fabricate.create(:venue, name: "Other thing")
-  end
-
   def when_i_create_a_new_event_with_valid_data
     visit '/events/new'
     within("#new_event") do

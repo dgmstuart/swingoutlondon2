@@ -1,5 +1,9 @@
 require 'capybara/rspec'
 
+def given_an_existing_venue
+  @existing_venue = Fabricate.create(:venue, name: "Other thing")
+end
+
 def then_the_event_should_be_displayed
   expect(page).to have_content("New event created"
             ).and have_content(@event_name

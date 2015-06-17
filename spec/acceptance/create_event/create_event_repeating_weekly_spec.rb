@@ -1,6 +1,11 @@
 require 'rails_helper'
 
 RSpec.feature "Admin adds an event", type: :feature do
+  before do
+    user = Fabricate.create(:user)
+    login_as(user, scope: :user)
+  end
+
   scenario "which repeats weekly" do
     Timecop.freeze(Date.new(2001, 1, 1)) do
       given_an_existing_venue

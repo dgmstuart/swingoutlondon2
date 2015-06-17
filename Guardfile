@@ -13,9 +13,9 @@ guard :rspec, cmd: "zeus rspec --tag ~js", all_after_pass: true, failed_mode: :n
 
   # Test controllers through acceptance specs:
   watch('app/controllers/dates_controller.rb')           { "spec/acceptance/add_dates_spec.rb" }
-  watch('app/controllers/events_controller.rb')          { ["spec/acceptance/create_event_spec.rb", "spec/acceptance/add_date_spec.rb"] }
-  watch('app/controllers/event_instances_controller.rb') { ["spec/acceptance/create_event_spec.rb"] }
-  watch('app/controllers/venues_controller.rb')          { ["spec/acceptance/create_event_spec.rb"] }
+  watch('app/controllers/events_controller.rb')          { ["spec/acceptance/create_event", "spec/acceptance/add_date_spec.rb"] }
+  watch('app/controllers/event_instances_controller.rb') { ["spec/acceptance/create_event"] }
+  watch('app/controllers/venues_controller.rb')          { ["spec/acceptance/create_event"] }
   watch('app/controllers/cancellations_controller.rb')   { ["spec/acceptance/cancel_event_spec.rb"] }
   watch('app/controllers/dance_classes_controller.rb')   { ["spec/acceptance/create_dance_class_spec.rb"] }
 
@@ -23,7 +23,7 @@ guard :rspec, cmd: "zeus rspec --tag ~js", all_after_pass: true, failed_mode: :n
 
   # TODO: is it worth being more specific about which acceptance specs are relevant to which views?
   #   This would be a start:
-  # watch('app/views/events/show.html.haml')          { ["spec/acceptance/create_event_spec.rb", "spec/acceptance/cancel_event_spec.rb"] }
+  # watch('app/views/events/show.html.haml')          { ["spec/acceptance/create_event", "spec/acceptance/cancel_event_spec.rb"] }
   # watch('app/views/dance_classes/new.html.haml')    { ["spec/acceptance/create_dance_class_spec.rb"] }
 
   watch(['app/models/concerns/sortable.rb', 'spec/models/shared_examples/shared_examples_for_sortable.rb']) { ["spec/models/event_spec.rb", "spec/models/venue_spec.rb"] }
