@@ -1,14 +1,14 @@
 require 'rails_helper'
 
-RSpec.feature "Admin adds an event", type: :feature do
+RSpec.feature "Admin adds an intermittent event", type: :feature do
   before do
     user = Fabricate.create(:user)
     login_as(user, scope: :user)
   end
 
-  scenario "intermittent" do
+  scenario "with valid data" do
     given_an_existing_venue
-    when_i_create_a_new_event_with_valid_data
+    when_i_create_a_new_intermittent_event
     then_the_event_should_be_displayed
     and_an_event_instance_should_be_displayed_in_the_event_instance_list
   end
@@ -26,7 +26,7 @@ RSpec.feature "Admin adds an event", type: :feature do
   # STEPS:
   ############################################################
 
-  def when_i_create_a_new_event_with_valid_data
+  def when_i_create_a_new_intermittent_event
     visit '/events/new'
     within("#new_event") do
       fill_event_fields_with_valid_data
