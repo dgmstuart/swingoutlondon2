@@ -1,4 +1,8 @@
 %h1= "Event: #{@event.name}"
+
+%h2= "Periods:"
+= link_to "End period", edit_event_generator_path(@event.event_generators.last)
+
 %h2= "Instances:"
 %ul.event_instances
   - @event.event_instances.each do |event_instance|
