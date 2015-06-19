@@ -8,7 +8,8 @@ class EventGenerator < ActiveRecord::Base
   validates :start_date, presence: true, date: {
     after: Proc.new { Date.today- 6.months },
     before: Proc.new { Date.today + 1.year },
-    allow_blank: true
+    allow_blank: true,
+    on: :create,
   }
   validates :end_date, date: {
     after: :start_date,

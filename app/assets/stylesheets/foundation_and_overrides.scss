@@ -1326,3 +1326,7 @@ $input-font-size: rem-calc(16);
 .event_instances {
   @extend .no-bullet;
 }
+
+ul.event_periods {
+  @extend .no-bullet;
+}

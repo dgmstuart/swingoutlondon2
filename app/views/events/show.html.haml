@@ -1,7 +1,17 @@
 %h1= "Event: #{@event.name}"
 
 %h2= "Periods:"
-= link_to "End period", edit_event_generator_path(@event.event_generators.last)
+%ul.event_periods
+  - @event.event_generators.each do |event_generator|
+    %li
+      %strong Started:
+      = event_generator.start_date
+
+      - if event_generator.end_date
+        %strong Ended:
+        = event_generator.end_date
+      - else
+        = link_to "End period", edit_event_generator_path(event_generator), class: "button tiny alert"
 
 %h2= "Instances:"
 %ul.event_instances
