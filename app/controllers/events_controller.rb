@@ -9,6 +9,7 @@ class EventsController < ApplicationController
   # GET /events/:id
   def show
     @event = Event.find(params[:id])
+    @event_generators = @event.event_generators.order(start_date: :desc)
   end
 
   # GET /events/new

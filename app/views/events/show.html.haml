@@ -2,16 +2,7 @@
 
 %h2= "Periods:"
 %ul.event_periods
-  - @event.event_generators.each do |event_generator|
-    %li
-      %strong Started:
-      = event_generator.start_date
-
-      - if event_generator.end_date
-        %strong Ended:
-        = event_generator.end_date
-      - else
-        = link_to "End period", edit_event_generator_path(event_generator), class: "button tiny alert"
+  = render partial: :event_generator, collection: @event_generators, layout: "common/li_layout"
 
 %h2= "Instances:"
 %ul.event_instances
