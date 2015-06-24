@@ -59,7 +59,6 @@ gem 'select2-rails', '3.5.9.1'
 group :development do
   gem 'better_errors'
   gem 'binding_of_caller'
-  gem 'web-console', '~> 2.0'
   gem 'guard-bundler'
   gem 'guard-rspec', '~> 4.6', '>= 4.6.1', :require=>false
   gem 'html2haml'
