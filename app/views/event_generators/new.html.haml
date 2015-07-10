@@ -1,0 +1,8 @@
+= form_for [@event, @event_generator] do |f|
+  = f.hidden_field :event
+
+  = f.text_field :start_date
+  / DUPLICATED:
+  = f.select :frequency, [ [ "Weekly", 1 ] , [ "Intermittent", 0 ] ], include_blank: true
+
+  = f.button "Submit" # TODO: use a better name!

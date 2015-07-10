@@ -11,6 +11,8 @@ RSpec.feature "Admin schedules a break", type: :feature do
     given_an_existing_weekly_repeating_event
     when_i_schedule_an_ending
     then_the_period_is_shown_as_ended
+    when_i_schedule_a_new_period
+    then_a_new_period_is_shown_as_starting
   end
 
   def given_an_existing_weekly_repeating_event
@@ -34,14 +36,29 @@ RSpec.feature "Admin schedules a break", type: :feature do
   end
 
   def when_i_schedule_a_new_period
+    @start_date = Date.today + 56
+
     click_link 'New period'
-    fill_in "start_date_field",   with: Date.today + 56
+    fill_in start_date_field,   with: @start_date
+    select 'Weekly', from: frequency_select
     click_button 'Submit' # TODO: use a better name!
+  end
+
+  def then_a_new_period_is_shown_as_starting
+    expect(page).to have_text "Started: #{@start_date.to_s}"
   end
 
 
   def end_date_field
     "event_generator[end_date]"
+  end
+
+  def start_date_field
+    "event_generator[start_date]"
+  end
+
+  def frequency_select
+    "event_generator[frequency]"
   end
 
   def end_period_link

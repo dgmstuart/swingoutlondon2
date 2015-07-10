@@ -5,4 +5,5 @@
   %strong Ended:
   = event_generator.end_date
 - else
-  = link_to "End period", edit_event_generator_path(event_generator), class: "button tiny alert"
+  / TODO: shouldn't use @event here - should use local instead
+  = link_to "End period", edit_event_event_generator_path(@event, event_generator), class: "button tiny alert"
