@@ -10,6 +10,10 @@ class EventGenerator < ActiveRecord::Base
     before: Proc.new { Date.today + 1.year },
     allow_blank: true
   }
+  validates :end_date, date: {
+    after: :start_date,
+    allow_blank: true
+  }
 
   def repeating?
     return true if frequency == 1

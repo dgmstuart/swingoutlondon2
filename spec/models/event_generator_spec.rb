@@ -9,8 +9,22 @@ end
 RSpec.describe EventGenerator, 'Validations', :type => :model do
   it { should validate_presence_of(:event_seed) }
   it { should validate_presence_of(:frequency) }
-  # it { should validate_presence_of(:date) } # Sufficiently covered by date validation?
-  it "validates that date is a date"
+  it { should validate_presence_of(:start_date) }
+
+  it "validates that start_date is a date" do
+    generator = Fabricate.build(:event_generator, start_date: Faker::Lorem.sentence)
+    expect(generator).to be_invalid
+  end
+
+  it "validates that end_date is a date" do
+    generator = Fabricate.build(:event_generator, end_date: Faker::Lorem.sentence)
+    expect(generator).to be_invalid
+  end
+
+  it "validates that start_date is before end_date" do
+    generator = Fabricate.build(:event_generator, start_date: Date.today, end_date: Faker::Date.backward)
+    expect(generator).to be_invalid
+  end
 end
 
 RSpec.describe EventGenerator, :type => :model do

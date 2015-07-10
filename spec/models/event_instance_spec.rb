@@ -8,8 +8,11 @@ end
 
 RSpec.describe EventInstance, 'Validations', :type => :model do
   it { should validate_presence_of(:event_seed) }
-  # it { should validate_presence_of(:date) } # Sufficiently covered by date validation?
-  it "validates that date is a date"
+  it { should validate_presence_of(:date) }
+  it "validates that date is a date" do
+    generator = Fabricate.build(:event_generator, start_date: Faker::Lorem.sentence)
+    expect(generator).to be_invalid
+  end
 end
 
 RSpec.describe EventInstance, 'Inheritance', :type => :model do
