@@ -28,13 +28,27 @@ class EventGeneratorsController < ApplicationController
 
   # ??? /event/:event_id/event_generators
   def create
-    event = Event.find(params[:event_id])
+    @event = Event.find(params[:event_id])
 
     @event_generator = EventGenerator.new(event_generator_params)
-    @event_generator.event_seed = event.event_seeds.last # TODO: THIS IS WRONG!!!! TEMPORARY
-    @event_generator.save!
+    @event_generator.event_seed = @event.event_seeds.last # TODO: THIS IS WRONG!!!! TEMPORARY
 
-    redirect_to event_path(@event_generator.event)
+    old_event_generator = @event.event_generators.last # TODO: SHOULD BE BY DATE, NOT CREATED DATE
+    if old_event_generator
+      if old_event_generator.end_date
+        if old_event_generator.end_date > @event_generator.start_date
+          @event_generator.errors.add(:start_date, "can't be before the end date of the previous period")
+          render :new
+          return
+        end
+      else
+        old_event_generator.end_date = @event_generator.start_date
+        old_event_generator.save!
+      end
+    end
+
+    @event_generator.save!
+    redirect_to event_path(@event)
   end
 
 
