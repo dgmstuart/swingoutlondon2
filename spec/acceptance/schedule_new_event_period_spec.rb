@@ -23,6 +23,14 @@ RSpec.feature "Admin schedules a new period", type: :feature do
     and_the_previous_period_is_shown_as_ended
   end
 
+  scenario 'when the latest period is not finished and the date is before it starts' do
+    @current_start_date = Faker::Date.forward
+    @new_start_date = @current_start_date - 1
+    given_an_existing_weekly_repeating_event
+    when_i_schedule_a_new_period
+    then_i_should_see_an_error("can't be before the start date")
+  end
+
   # scenario 'when the latest period is not finished' is covered by schedule_event_break_spec
 
   scenario 'when the latest period finished after the new start date' do

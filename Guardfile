@@ -25,7 +25,7 @@ guard :rspec, rspec_options do
   watch('app/controllers/venues_controller.rb')          { ["spec/acceptance/create_event"] }
   watch('app/controllers/cancellations_controller.rb')   { ["spec/acceptance/cancel_event_instance"] }
   watch('app/controllers/dance_classes_controller.rb')   { ["spec/acceptance/create_dance_class_spec.rb"] }
-  watch('app/controllers/event_generators_controller.rb')   { ["spec/acceptance/schedule_event_break_spec.rb"] }
+  watch('app/controllers/event_generators_controller.rb')   { ["spec/acceptance/schedule*"] }
 
   watch(%r{^app/views/(.+)/.*\.(erb|haml|slim)$})     { |m| "spec/acceptance/" }
 
