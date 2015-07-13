@@ -61,7 +61,7 @@ group :development do
   gem 'binding_of_caller'
   gem 'web-console', '~> 2.0'
   gem 'guard-bundler'
-  gem 'guard-rspec', '~> 4.2', :require=>false
+  gem 'guard-rspec', '~> 4.6', '>= 4.6.1', :require=>false
   gem 'html2haml'
   gem 'hub', :require=>nil
   gem 'rails_layout'

@@ -1,4 +1,11 @@
-guard :rspec, cmd: "zeus rspec --tag ~js", all_after_pass: true, failed_mode: :none do
+rspec_options = {
+  results_file: 'tmp/guard_rspec_results.txt',
+  cmd: "zeus rspec --tag ~js",
+  all_after_pass: true,
+  failed_mode: :none
+}
+
+guard :rspec, rspec_options do
   watch(%r{^spec/.+_spec\.rb$})
   watch(%r{^lib/(.+)\.rb$})     { |m| "spec/lib/#{m[1]}_spec.rb" }
   watch('spec/spec_helper.rb')  { "spec" }
