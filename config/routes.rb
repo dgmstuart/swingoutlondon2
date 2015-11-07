@@ -3,6 +3,11 @@ Swingoutlondon2::Application.routes.draw do
   resources :events, only: [:index, :show, :new, :create] do
     resources :dates, only: [:new, :create]
     resources :event_periods, only: [:new, :create, :edit, :update]
+    resources :orphans, only: [:index] do
+      collection do
+        delete 'destroy_multiple'
+      end
+    end
   end
 
   resources :event_instances, only: [:index, :destroy]

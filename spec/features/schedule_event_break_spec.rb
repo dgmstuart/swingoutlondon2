@@ -28,4 +28,33 @@ RSpec.feature 'Admin schedules a break', type: :feature do
       expect(page).to have_content "can't be before start date (16/09/2016)"
     end
   end
+
+  # TODO: should this be grouped with other 'handling existing instances'
+  # specs instead of scheduling specs?
+  scenario 'in a weekly event with instances' do
+    Timecop.freeze(Date.new(1970, 1, 13)) do
+      before_date     = Time.zone.today
+      @end_date       = 3.days.from_now
+      orphaned_date_1 = 1.week.from_now
+      orphaned_date_2 = 2.weeks.from_now
+      @new_start_date = 2.weeks.from_now + 3.days
+
+      instance_dates = [
+        before_date,
+        orphaned_date_1,
+        orphaned_date_2,
+      ]
+      orphaned_dates = [
+        '20/01/1970',
+        '27/01/1970',
+      ]
+
+      given_an_existing_weekly_repeating_event
+      given_some_future_scheduled_instances(instance_dates)
+      when_i_schedule_an_ending
+      then_i_am_asked_if_i_want_to_delete_the_orphaned_instances(orphaned_dates)
+      when_i_delete_an_orphaned_instance('20/01/1970')
+      then_that_instance_does_not_display_on_the_event_page(deleted_instance_date: '20/01/1970', remaining_instance_date: '27/01/1970')
+    end
+  end
 end

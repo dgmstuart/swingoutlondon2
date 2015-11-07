@@ -1,3 +1,11 @@
+module ActiveSupport
+  class Duration
+    def from_today
+      from_now(Time.zone.today)
+    end
+  end
+end
+
 module SchedulingSteps
   def given_an_existing_weekly_repeating_event
     start_date = @current_start_date || Faker::Date.backward
@@ -5,6 +13,13 @@ module SchedulingSteps
     generator.save(validate: false)
     @event = generator.event
     visit "events/#{@event.to_param}"
+  end
+
+  def given_some_future_scheduled_instances(instance_dates)
+    event_seed = @event.event_seeds.last
+    instance_dates.each do |date|
+      Fabricate.create(:event_instance, date: date, event_seed: event_seed)
+    end
   end
 
   def given_an_event_with_no_periods
@@ -43,6 +58,28 @@ module SchedulingSteps
 
   def then_i_should_see_an_error(message)
     expect(page).to have_text message
+  end
+
+  def then_i_am_asked_if_i_want_to_delete_the_orphaned_instances(orphaned_dates)
+    expect(page).to have_text "The following event instances now don't fall within any period:"
+    expect(page).to have_text 'Would you like to delete them?'
+    orphaned_dates.each do |date|
+      expect(page).to have_text date
+    end
+    expect(page).to have_selector('input[type=checkbox]', count: 2)
+  end
+
+  def when_i_delete_an_orphaned_instance(orphaned_date)
+    check(orphaned_date)
+    click_button 'Delete'
+  end
+
+  def then_that_instance_does_not_display_on_the_event_page(deleted_instance_date:, remaining_instance_date:)
+    expect(page).to have_text "Orphaned instances deleted: #{deleted_instance_date}"
+    within '.event_instances' do
+      expect(page).to_not have_text deleted_instance_date
+      expect(page).to have_text remaining_instance_date
+    end
   end
 
   def end_date_field

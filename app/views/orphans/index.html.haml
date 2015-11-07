@@ -1,0 +1,9 @@
+The following event instances now don't fall within any period:
+= form_tag destroy_multiple_event_orphans_path, method: :delete do
+  %ul.no-bullet
+    - @orphans.each do |orphan|
+      %li
+        = check_box_tag 'orphans[]', orphan.id, false, id: "orphan_#{orphan.id}"
+        = label_tag "orphan_#{orphan.id}", l(orphan.date)
+    = button_tag "Delete"
+Would you like to delete them?

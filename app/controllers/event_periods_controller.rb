@@ -1,3 +1,5 @@
+require 'services/orphaned_events_checker'
+
 class EventPeriodsController < ApplicationController
   # TODO: Authenticate! - put in specs
   # before_action :authenticate_user!
@@ -15,7 +17,12 @@ class EventPeriodsController < ApplicationController
     event_period_params = params.require(:event_period).permit(:end_date)
 
     if @event_period.update(event_period_params)
-      redirect_to event_path(@event_period.event)
+      orphans = OrphanedEventsChecker.new.orphans(@event_period)
+      if orphans.blank?
+        redirect_to event_path(@event_period.event)
+      else
+        redirect_to controller: :orphans, action: :index, orphans: orphans
+      end
     else
       @event = Event.find(params[:event_id])
       render :edit
