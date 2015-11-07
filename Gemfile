@@ -70,7 +70,7 @@ group :development do
 end
 
 group :test do
-  gem 'shoulda-matchers', '~> 2.6', require: false
+  gem 'shoulda-matchers', '~> 3.0.1', require: false
   gem 'fabrication', '~> 2.11'
   gem 'capybara', '~> 2.4'
   gem 'poltergeist', '~> 1.6'

@@ -28,3 +28,10 @@ RSpec.configure do |config|
   # `post` in specs under `spec/controllers`.
   config.infer_spec_type_from_file_location!
 end
+
+Shoulda::Matchers.configure do |config|
+  config.integrate do |with|
+    with.test_framework :rspec
+    with.library :rails
+  end
+end
