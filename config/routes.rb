@@ -7,7 +7,7 @@ Swingoutlondon2::Application.routes.draw do
 
   resources :event_instances, only: [:index, :destroy]
 
-  resources :cancellations, only: :update
+  resources :cancellations, only: [:create, :destroy]
 
   resources :dance_classes, only: [:index, :show, :new, :create]
 

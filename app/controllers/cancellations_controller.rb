@@ -1,14 +1,26 @@
 class CancellationsController < ApplicationController
   before_action :authenticate_user!
 
-  # PATCH /cancellations/:id
-  def update
+  # POST /cancellations/:id
+  def create
+    # TODO: should I be using strong parameters here?
+    event_instance = EventInstance.find(params[:event_instance][:id])
+
+    # update_attribute skips validations, but that's probably what we want here,
+    # since we want to mark it as cancelled, even if (for some reason) it was already invalid
+    event_instance.update_attribute(:cancelled, true)
+
+    redirect_to :back
+  end
+
+  # DELETE /cancellations/:id
+  def destroy
     # TODO: should I be using strong parameters here?
     event_instance = EventInstance.find(params[:id])
 
     # update_attribute skips validations, but that's probably what we want here,
     # since we want to mark it as cancelled, even if (for some reason) it was already invalid
-    event_instance.update_attribute(:cancelled, params[:event_instance][:cancelled])
+    event_instance.update_attribute(:cancelled, false)
 
     redirect_to :back
   end

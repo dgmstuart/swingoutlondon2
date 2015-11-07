@@ -1,4 +1,3 @@
-
 RSpec.feature "Admin un-cancels an event instance", type: :feature do
   before do
     user = Fabricate.create(:user)
@@ -40,7 +39,7 @@ RSpec.feature "Admin un-cancels an event instance", type: :feature do
     click_link @event_name
 
     within event_instance_group_on_event_page(@event_date.to_s) do
-      click_button "Cancelled"
+      click_button "Uncancel"
     end
   end
 
