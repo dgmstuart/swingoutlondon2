@@ -48,7 +48,7 @@ gem 'haml-rails', '~> 0.5'
 # Gems to include javascript libraries:
 gem 'cocoon', '~> 1.2.6'
 gem 'pickadate-rails', '~> 3.5'
-gem 'select2-rails', '3.5.9.1'
+gem 'select2-rails', '< 4'
 
 group :development do
   gem 'better_errors'
