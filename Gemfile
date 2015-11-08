@@ -49,12 +49,6 @@ gem 'haml-rails', '~> 0.5'
 gem 'cocoon', '~> 1.2.6'
 gem 'pickadate-rails', '~> 3.5'
 gem 'select2-rails', '3.5.9.1'
-# There's some sort of breaking change in 3.5.9.2 - possibly an interaction with cocoon and/or my js code
-# to reproduce:
-# 1. select a venue
-# 2. click to create a new venue
-# 3. click cancel
-# Result: the original select dropdown gets displayed - in addition to the select2 one
 
 group :development do
   gem 'better_errors'
