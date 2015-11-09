@@ -1,4 +1,6 @@
-require 'capybara/rspec'
+require 'rails_helper'
+require 'support/select2_helper.rb'
+include Select2Helper
 
 def fill_event_fields_with_valid_data
   @event_name       = Faker::Company.name
@@ -12,7 +14,7 @@ end
 def fill_in_event_form
   fill_in name_field,       with: @event_name       unless @event_name.nil?
   fill_in url_field,        with: @event_url        unless @event_url.nil?
-  select @event_frequency, from: frequency_select   unless @event_frequency.nil?
+  select2(@event_frequency, from: "Frequency")      unless @event_frequency.nil?
   fill_in start_date_field, with: @event_start_date unless @event_start_date.nil?
 end
 
