@@ -33,8 +33,8 @@ RSpec.feature "Admin adds an event", type: :feature do
   def when_i_create_an_event_with_a_new_venue
     visit '/events/new'
     within("#new_event") do
-      fill_event_fields_with_valid_data
       select_todays_date
+      fill_event_fields_with_valid_data
 
       click_link 'New venue'
 

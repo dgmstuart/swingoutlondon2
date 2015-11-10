@@ -15,15 +15,19 @@ def fill_in_event_form
   fill_in name_field,       with: @event_name       unless @event_name.nil?
   fill_in url_field,        with: @event_url        unless @event_url.nil?
   select2(@event_frequency, from: "Frequency")      unless @event_frequency.nil?
-  fill_in start_date_field, with: @event_start_date unless @event_start_date.nil?
+  select_date(@event_start_date)                    unless @event_start_date.nil?
+end
+
+def select_todays_date
+  @event_start_date = Date.today
 end
 
 # Tests using selenium can't just fill in a date because the datepicker makes the field readonly
-def select_todays_date
-  @event_start_date = Date.today
+# TODO: Make this into a helper
+def select_date(date_string)
   # HACK? TODO: would be nicer to activate the datepicker directly, but
   # Capybara's click methods seem to only work on links and buttons
-  page.execute_script("$('[name=\"#{start_date_field}\"]').val('#{Date.today.to_s}')")
+  page.execute_script("$('[name=\"#{start_date_field}\"]').val('#{date_string}')")
 end
 
 def missing_data_errors(blanks, selects=0)

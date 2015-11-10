@@ -35,7 +35,10 @@ module Select2Helper
 
     private def container
       @container ||= begin
-        id = first("label", text: @select_name)[:for]
+        label = first("label", text: @select_name)
+
+        raise "couldn't find a label of #{@select_name}" if label.nil?
+        id = label[:for]
         first("#s2id_#{id}")
       end
     end

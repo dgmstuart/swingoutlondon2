@@ -6,7 +6,7 @@ RSpec.feature "Admin adds an event", type: :feature do
     login_as(user, scope: :user)
   end
 
-  scenario "which repeats weekly" do
+  scenario "which repeats weekly", js: true do
     Timecop.freeze(Date.new(2001, 1, 1)) do
       given_an_existing_venue
       when_i_create_a_weekly_repeating_event
@@ -28,7 +28,7 @@ RSpec.feature "Admin adds an event", type: :feature do
 
     within("#new_event") do
       fill_in_event_form
-      select @existing_venue.name, from: venue_select
+      select2 @existing_venue.name, from: "Venue"
       click_button 'Create event'
     end
   end

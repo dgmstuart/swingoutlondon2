@@ -6,7 +6,7 @@ RSpec.feature "Admin adds an intermittent event", type: :feature do
     login_as(user, scope: :user)
   end
 
-  scenario "with valid data" do
+  scenario "with valid data", js: true do
     given_an_existing_venue
     when_i_create_a_new_intermittent_event
     then_the_event_should_be_displayed
@@ -30,7 +30,7 @@ RSpec.feature "Admin adds an intermittent event", type: :feature do
     visit '/events/new'
     within("#new_event") do
       fill_event_fields_with_valid_data
-      select @existing_venue.name, from: venue_select
+      select2 @existing_venue.name, from: "Venue"
 
       click_button 'Create event'
     end
