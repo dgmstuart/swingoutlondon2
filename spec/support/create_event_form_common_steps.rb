@@ -7,7 +7,7 @@ end
 def then_the_event_should_be_displayed
   expect(page).to have_content("New event created"
             ).and have_content(@event_name
-            ).and have_link(@event_start_date.to_s, href: @event_url
+            ).and have_link(@event_start_date.to_s(:casual), href: @event_url
             )
 end
 

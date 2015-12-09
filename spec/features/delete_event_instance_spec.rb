@@ -22,7 +22,7 @@ RSpec.feature "Admin deletes an event instance", type: :feature do
   def when_i_delete_that_instance_from_the_events_page
     visit "/events"
     click_link event_instance.name
-    within event_instance_group_on_event_page(event_instance.date) do
+    within event_instance_group_on_event_page(event_instance.date.to_s(:casual)) do
       click_button "Bin"
     end
   end

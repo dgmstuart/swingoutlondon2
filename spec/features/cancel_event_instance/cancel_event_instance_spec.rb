@@ -41,13 +41,13 @@ RSpec.feature "Admin cancels an event instance", type: :feature do
     visit "/events"
     click_link @event_name
 
-    within event_instance_group_on_event_page(@event_date.to_s) do
+    within event_instance_group_on_event_page(@event_date.to_s(:casual)) do
       click_button "Cancel"
     end
   end
 
   def then_that_date_should_be_displayed_as_cancelled
-    within event_instance_group_on_event_page(@event_date) do
+    within event_instance_group_on_event_page(@event_date.to_s(:casual)) do
       expect(page).to have_content "Cancelled"
       expect(page).to_not have_button(/^Cancel$/)
     end

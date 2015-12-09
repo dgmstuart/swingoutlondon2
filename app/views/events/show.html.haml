@@ -13,7 +13,7 @@
   - @event.event_instances.each do |event_instance|
     %li.row
       .small-10.medium-8.columns
-        = link_to event_instance.date, event_instance.url
+        = link_to event_instance.date.to_s(:casual), event_instance.url
         %strong Venue:
         = event_instance.venue.name
         - if event_instance.cancelled?
