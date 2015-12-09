@@ -29,15 +29,11 @@ The acceptance specs which require javascript run using phantomjs. To install th
 
 
 ### Running
-    guard
-
-OR
-
     bundle exec rspec
 
-Note that javascript acceptance tests (tagged with :js) are not run in Guard. To run these individually:
+Tests involving javascript are slow. To skip these:
 
-    rspec --tag js
+    rspec --tag=~js
 
 Contributing
 ------------
