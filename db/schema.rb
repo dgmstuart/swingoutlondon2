@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150618175842) do
+ActiveRecord::Schema.define(version: 20151224130117) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -23,15 +23,6 @@ ActiveRecord::Schema.define(version: 20150618175842) do
     t.integer  "venue_id",   null: false
   end
 
-  create_table "event_generators", force: :cascade do |t|
-    t.integer  "event_seed_id", null: false
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.integer  "frequency",     null: false
-    t.date     "start_date",    null: false
-    t.date     "end_date"
-  end
-
   create_table "event_instances", force: :cascade do |t|
     t.date     "date",                                      null: false
     t.integer  "event_seed_id",                             null: false
@@ -40,6 +31,15 @@ ActiveRecord::Schema.define(version: 20150618175842) do
     t.string   "url",           limit: 255
     t.integer  "venue_id"
     t.boolean  "cancelled",                 default: false
+  end
+
+  create_table "event_periods", force: :cascade do |t|
+    t.integer  "event_seed_id", null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "frequency",     null: false
+    t.date     "start_date",    null: false
+    t.date     "end_date"
   end
 
   create_table "event_seeds", force: :cascade do |t|

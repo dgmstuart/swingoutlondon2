@@ -1,33 +1,33 @@
 require 'rails_helper'
 
-RSpec.describe EventGenerator, 'Associations', :type => :model do
+RSpec.describe EventPeriod, 'Associations', :type => :model do
   it { should belong_to(:event_seed) }
   it { should have_one(:event) }
   it { should have_many(:event_instances) }
 end
 
-RSpec.describe EventGenerator, 'Validations', :type => :model do
+RSpec.describe EventPeriod, 'Validations', :type => :model do
   it { should validate_presence_of(:event_seed) }
   it { should validate_presence_of(:frequency) }
   it { should validate_presence_of(:start_date) }
 
   it "validates that start_date is a date" do
-    generator = Fabricate.build(:event_generator, start_date: Faker::Lorem.sentence)
+    generator = Fabricate.build(:event_period, start_date: Faker::Lorem.sentence)
     expect(generator).to be_invalid
   end
 
   it "validates that end_date is a date" do
-    generator = Fabricate.build(:event_generator, end_date: Faker::Lorem.sentence)
+    generator = Fabricate.build(:event_period, end_date: Faker::Lorem.sentence)
     expect(generator).to be_invalid
   end
 
   it "validates that start_date is before end_date" do
-    generator = Fabricate.build(:event_generator, start_date: Date.today, end_date: Faker::Date.backward)
+    generator = Fabricate.build(:event_period, start_date: Date.today, end_date: Faker::Date.backward)
     expect(generator).to be_invalid
   end
 end
 
-RSpec.describe EventGenerator, :type => :model do
+RSpec.describe EventPeriod, :type => :model do
   describe "#repeating?" do
     {
       0 => false,
@@ -37,9 +37,9 @@ RSpec.describe EventGenerator, :type => :model do
       52 => false,
     }.each_pair do |frequency, result|
       context "when event frequency is #{frequency}" do
-        let(:event_generator) { Fabricate.build(:event_generator, frequency: frequency) }
+        let(:event_period) { Fabricate.build(:event_period, frequency: frequency) }
         it "returns #{result} " do
-          expect(event_generator.repeating?).to eql(result)
+          expect(event_period.repeating?).to eql(result)
         end
       end
     end
@@ -51,32 +51,32 @@ RSpec.describe EventGenerator, :type => :model do
     after { Timecop.return }
 
     context 'when an event is not repeating' do
-      let(:event_generator) { Fabricate.build(:event_generator, frequency: 0, start_date: start_date) }
+      let(:event_period) { Fabricate.build(:event_period, frequency: 0, start_date: start_date) }
 
       context 'and the start_date is in the future' do
         let(:start_date) { today + 1 }
-        let(:event_seed) { event_generator.event_seed }
+        let(:event_seed) { event_period.event_seed }
         it "generates one event instance" do
-          expect { event_generator.generate }.to change{ EventInstance.count }.from(0).to(1)
+          expect { event_period.generate }.to change{ EventInstance.count }.from(0).to(1)
         end
         it "creates a copy of the event seed" do
           # TODO - find a better way to do this equality comparison
-          event_generator.generate
+          event_period.generate
           event_instance = EventInstance.first
           expect(event_instance.url).to   eq event_seed.url
           expect(event_instance.venue).to eq event_seed.venue
         end
         it "returns the date it generated the event_instance for" do
-          expect(event_generator.generate).to eq [event_generator.start_date]
+          expect(event_period.generate).to eq [event_period.start_date]
         end
 
         context 'and an instance already exists for the same date' do
-          before { event_generator.generate }
+          before { event_period.generate }
           it "does nothing" do
-            expect { event_generator.generate }.to_not change{ EventInstance.count }
+            expect { event_period.generate }.to_not change{ EventInstance.count }
           end
           it "returns an empty array" do
-            expect(event_generator.generate).to eq []
+            expect(event_period.generate).to eq []
           end
         end
       end
@@ -84,7 +84,7 @@ RSpec.describe EventGenerator, :type => :model do
       context 'and the start_date is in the past' do
         let(:start_date) { today - 1 }
         it "doesn't generate any event_instances" do
-          expect { event_generator.generate }.to_not change{ EventInstance.count }
+          expect { event_period.generate }.to_not change{ EventInstance.count }
         end
       end
     end
@@ -94,7 +94,7 @@ RSpec.describe EventGenerator, :type => :model do
         "and the start date is far in the past but on the same day" => Date.new(2001,1,1) - (52*7),
       }.each_pair do |context, start_date|
         context context do
-          let(:event_generator) { Fabricate.build(:event_generator, frequency: 1, start_date: start_date) }
+          let(:event_period) { Fabricate.build(:event_period, frequency: 1, start_date: start_date) }
           let(:dates) { [
               today,
               Date.new(2001,1, 8),
@@ -103,14 +103,14 @@ RSpec.describe EventGenerator, :type => :model do
             ]
           }
           it "creates 4 event instances" do
-            expect { event_generator.generate }.to change{ EventInstance.count }.from(0).to(4)
+            expect { event_period.generate }.to change{ EventInstance.count }.from(0).to(4)
           end
           it "creates those event instances for the next 4 weeks" do
-            event_generator.generate
+            event_period.generate
             expect( EventInstance.all.map(&:date) ).to eq dates
           end
           it "returns the dates it generated event instances for" do
-            expect(event_generator.generate).to eq dates
+            expect(event_period.generate).to eq dates
           end
           it "creates copies of the event seed" do
             # TODO - find a better way to do this equality comparison
@@ -123,12 +123,12 @@ RSpec.describe EventGenerator, :type => :model do
           context 'and one event_instance already exists' do
             let(:existing_date) { Date.new(2001,1,15) }
             # TODO: is this sufficient, or does it need more tests?
-            before { Fabricate.create(:event_instance, date: existing_date, event_seed: event_generator.event_seed) }
+            before { Fabricate.create(:event_instance, date: existing_date, event_seed: event_period.event_seed) }
             it "skips one event" do
-              expect { event_generator.generate }.to change{ EventInstance.count }.from(1).to(4)
+              expect { event_period.generate }.to change{ EventInstance.count }.from(1).to(4)
             end
             it "returns 3 dates" do
-              expect(event_generator.generate).to eq dates - [existing_date]
+              expect(event_period.generate).to eq dates - [existing_date]
             end
           end
         end
@@ -138,7 +138,7 @@ RSpec.describe EventGenerator, :type => :model do
 
   describe "#next_date" do
     subject(:next_date) { generator.next_date }
-    let(:generator) { Fabricate.build(:event_generator, frequency: frequency, start_date: start_date) }
+    let(:generator) { Fabricate.build(:event_period, frequency: frequency, start_date: start_date) }
 
     let(:today) { Date.new(2001, 1, 23) }
     before { Timecop.freeze(today) }

@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe EventSeed, 'Associations', :type => :model do
   it { should belong_to(:event) }
-  it { should have_many(:event_generators) }
+  it { should have_many(:event_periods) }
   it { should have_many(:event_instances) }
   it { should belong_to(:venue) }
 end

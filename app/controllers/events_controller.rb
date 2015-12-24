@@ -9,14 +9,14 @@ class EventsController < ApplicationController
   # GET /events/:id
   def show
     @event = Event.find(params[:id])
-    @event_generators = @event.event_generators.order(start_date: :desc)
+    @event_periods = @event.event_periods.order(start_date: :desc)
   end
 
   # GET /events/new
   def new
     @event = Event.new
     event_seed = EventSeed.new
-    event_seed.event_generators << EventGenerator.new
+    event_seed.event_periods << EventPeriod.new
     @event.event_seeds << event_seed
 
     setup_venues
@@ -31,7 +31,7 @@ class EventsController < ApplicationController
 
       # TODO: Smelly? - it isn't clear here that @event.generate is creating event instances as well as returning dates
       # Should trigger ALL generators? Currently can only create one...
-      dates = @event.event_seeds.first.event_generators.first.generate
+      dates = @event.event_seeds.first.event_periods.first.generate
 
       date_string = dates.map(&:to_s).join(", ") # TODO: Better way of doing this - in one step?
       flash[:success] += ". #{dates.count} instances created: #{date_string}"
@@ -51,7 +51,7 @@ private
       event_seeds_attributes:
         [ :url, :venue_id, :_destroy,
           venue_attributes: [ :name, :address, :postcode, :url ],
-          event_generators_attributes: [ :frequency, :start_date, :_destroy ],
+          event_periods_attributes: [ :frequency, :start_date, :_destroy ],
         ]
     )
   end

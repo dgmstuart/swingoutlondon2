@@ -1,12 +1,12 @@
 %h1= "Event: #{@event.name}"
 
 %h2= "Periods:"
-= link_to new_event_event_generator_path(@event), class: "button tiny success" do
+= link_to new_event_event_period_path(@event), class: "button tiny success" do
   %i.fi-plus
   New period
 
 %ul.event_periods
-  = render partial: :event_generator, collection: @event_generators, locals: { event: @event }, layout: "common/li_layout"
+  = render partial: :event_period, collection: @event_periods, locals: { event: @event }, layout: "common/li_layout"
 
 %h2= "Instances:"
 %ul.event_instances

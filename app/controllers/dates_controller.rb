@@ -3,7 +3,7 @@ class DatesController < ApplicationController
 
   # GET /events/:id/dates/new
   def new
-    @event_generator = EventGenerator.new
+    @event_period = EventPeriod.new
   end
 
   # POST /events/:id/dates
@@ -12,14 +12,14 @@ class DatesController < ApplicationController
     event = Event.find(params[:event_id])
     # TODO - pick the right seed/move this logic into a model
     event_seed = event.event_seeds.last
-    @event_generator = EventGenerator.new(event_generator_params)
-    @event_generator.event_seed = event_seed
-    @event_generator.frequency = 0
-    if @event_generator.save
+    @event_period = EventPeriod.new(event_period_params)
+    @event_period.event_seed = event_seed
+    @event_period.frequency = 0
+    if @event_period.save
       # TODO: FLASH?
       # TODO: Don't generate straight away?
-      @event_generator.generate
-      redirect_to @event_generator.event
+      @event_period.generate
+      redirect_to @event_period.event
     else
       render :new
     end
@@ -27,8 +27,8 @@ class DatesController < ApplicationController
 
 private
 
-  def event_generator_params
-    params.require(:event_generator).permit(
+  def event_period_params
+    params.require(:event_period).permit(
       :start_date
     )
   end

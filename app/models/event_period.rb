@@ -1,4 +1,4 @@
-class EventGenerator < ActiveRecord::Base
+class EventPeriod < ActiveRecord::Base
   belongs_to :event_seed
   has_one :event, through: :event_seed
   has_many :event_instances, through: :event_seed

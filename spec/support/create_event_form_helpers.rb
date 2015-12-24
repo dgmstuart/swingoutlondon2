@@ -45,10 +45,10 @@ def name_field
   "event[name]"
 end
 def start_date_field
-  event_generator_field "start_date"
+  event_period_field "start_date"
 end
 def frequency_select
-  event_generator_field "frequency"
+  event_period_field "frequency"
 end
 def url_field
   event_seed_field "url"
@@ -60,8 +60,8 @@ end
 def event_seed_field(field)
   "event[event_seeds_attributes][0][#{field}]"
 end
-def event_generator_field(field)
-  "event[event_seeds_attributes][0][event_generators_attributes][0][#{field}]"
+def event_period_field(field)
+  "event[event_seeds_attributes][0][event_periods_attributes][0][#{field}]"
 end
 def venue_field(field)
   "event[event_seeds_attributes][0][venue_attributes][#{field}]"

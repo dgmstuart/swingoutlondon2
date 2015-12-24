@@ -1,0 +1,8 @@
+%strong Started:
+= event_period.start_date
+
+- if event_period.end_date
+  %strong Ended:
+  = event_period.end_date
+- else
+  = link_to "End period", edit_event_event_period_path(event, event_period), class: "button tiny alert"

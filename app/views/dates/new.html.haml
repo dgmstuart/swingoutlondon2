@@ -1,6 +1,6 @@
-= render 'forms/errors', resource: @event_generator
+= render 'forms/errors', resource: @event_period
 
-= form_for @event_generator, url: { action: "create" } do |f|
+= form_for @event_period, url: { action: "create" } do |f|
   = f.text_field :start_date, class: "date"
 
   = f.button "Done"
