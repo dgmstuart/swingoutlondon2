@@ -17,8 +17,11 @@ class EventPeriod < ActiveRecord::Base
   }
 
   def repeating?
-    return true if frequency == 1
-    return false
+    repeating_weekly?
+  end
+
+  def repeating_weekly?
+    frequency == 1
   end
 
   def generate
@@ -58,14 +61,20 @@ private
   def dates_to_generate
     return [] if next_date.nil?
     if repeating?
-      n = 4
+      WeeklyDatesToGenerateCalculator.new.dates(next_date, 4)
     else
-      n = 1
+      [next_date]
     end
-    next_n_dates(next_date, n)
   end
 
-  def next_n_dates(initial_date, n)
-    [*0..n-1].map { |m| initial_date + m.weeks }
+  class WeeklyDatesToGenerateCalculator
+    def dates(initial_date, number_of_dates)
+      return [] if initial_date.nil?
+      next_n_dates(initial_date, number_of_dates)
+    end
+
+    private def next_n_dates(initial_date, n)
+      [*0..n-1].map { |m| initial_date + m.weeks }
+    end
   end
 end
