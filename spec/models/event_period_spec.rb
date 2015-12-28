@@ -69,16 +69,6 @@ RSpec.describe EventPeriod, :type => :model do
         it "returns the date it generated the event_instance for" do
           expect(event_period.generate).to eq [event_period.start_date]
         end
-
-        context 'and an instance already exists for the same date' do
-          before { event_period.generate }
-          it "does nothing" do
-            expect { event_period.generate }.to_not change{ EventInstance.count }
-          end
-          it "returns an empty array" do
-            expect(event_period.generate).to eq []
-          end
-        end
       end
 
       context 'and the start_date is in the past' do
@@ -117,18 +107,6 @@ RSpec.describe EventPeriod, :type => :model do
             EventInstance.all.each do |e|
               e.url = event.url
               e.venue_id = event.venue_id
-            end
-          end
-
-          context 'and one event_instance already exists' do
-            let(:existing_date) { Date.new(2001,1,15) }
-            # TODO: is this sufficient, or does it need more tests?
-            before { Fabricate.create(:event_instance, date: existing_date, event_seed: event_period.event_seed) }
-            it "skips one event" do
-              expect { event_period.generate }.to change{ EventInstance.count }.from(1).to(4)
-            end
-            it "returns 3 dates" do
-              expect(event_period.generate).to eq dates - [existing_date]
             end
           end
         end
