@@ -114,29 +114,14 @@ RSpec.describe EventPeriod, :type => :model do
     end
   end
 
-  describe "#next_date" do
-    subject(:next_date) { generator.next_date }
-    let(:generator) { Fabricate.build(:event_period, frequency: frequency, start_date: start_date) }
+  describe "WeeklyNextDateCalculator#next_date" do
+    subject(:next_date) { calculator.calculate }
+    let(:calculator) { EventPeriod::WeeklyNextDateCalculator.new(event_period) }
+    let(:event_period) { instance_double("EventPeriod", start_date: start_date) }
 
     let(:today) { Date.new(2001, 1, 23) }
     before { Timecop.freeze(today) }
     after { Timecop.return }
-
-    context "when the event is not weekly" do
-      let(:frequency) { 0 }
-      context 'and the start_date is in the past' do
-        let(:start_date) { today - 10 }
-        it { is_expected.to be_nil }
-      end
-      context 'and the start_date is today' do
-        let(:start_date) { today }
-        it { is_expected.to eq today }
-      end
-      context 'and the start_date is in the future' do
-        let(:start_date) { today + 10 }
-        it { is_expected.to eq generator.start_date }
-      end
-    end
 
     context "when the event is weekly" do
       let(:frequency) { 1 }
@@ -146,7 +131,7 @@ RSpec.describe EventPeriod, :type => :model do
       end
       context 'and the start_date is in the future' do
         let(:start_date) { today + 10 }
-        it { is_expected.to eq generator.start_date }
+        it { is_expected.to eq event_period.start_date }
       end
       context 'and the start_date is one week ago today' do
         let(:start_date) { today - 7 }

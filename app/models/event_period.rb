@@ -31,47 +31,53 @@ class EventPeriod < ActiveRecord::Base
     end.map(&:date)
   end
 
-  def next_date
-    if starts_today_or_in_the_future?
-      return start_date
-    else
-      return nil unless repeating?
-    end
-
-    offset = ( start_date - Date.today ) % 7
-    Date.today + offset
-
-    # TODO: test this alternate approach for performance:
-    # offset = ( ( start_date.wday - Date.today.wday) % 7 )
-  end
-
-  def starts_today_or_in_the_future?
-    start_date >= Date.today
-  end
-
   def self.generate_all
     all.each(&:generate)
   end
 
-private
-
-  def dates_to_generate
-    return [] if next_date.nil?
+  private def dates_to_generate
     if repeating?
-      WeeklyDatesToGenerateCalculator.new.dates(next_date, 4)
+      WeeklyDatesToGenerateCalculator.new(self).dates(4)
     else
-      [next_date]
+      return [] if start_date < Date.today
+      [start_date]
+    end
+  end
+
+  class WeeklyNextDateCalculator
+    def initialize(event_period)
+      @start_date = event_period.start_date
+    end
+
+    def calculate
+      return @start_date if starts_today_or_in_the_future?
+
+      Date.today + offset
+    end
+
+    private def offset
+      (@start_date - Date.today) % 7
+
+      # TODO: test this alternate approach for performance:
+      # offset = ( ( @start_date.wday - Date.today.wday) % 7 )
+    end
+
+    private def starts_today_or_in_the_future?
+      @start_date >= Date.today
     end
   end
 
   class WeeklyDatesToGenerateCalculator
-    def dates(initial_date, number_of_dates)
-      return [] if initial_date.nil?
-      next_n_dates(initial_date, number_of_dates)
+    def initialize(event_period)
+      @next_date_calculator = WeeklyNextDateCalculator.new(event_period)
     end
 
-    private def next_n_dates(initial_date, n)
-      [*0..n-1].map { |m| initial_date + m.weeks }
+    def dates(number_of_dates)
+      [*0..number_of_dates-1].map { |m| next_date + m.weeks }
+    end
+
+    private def next_date
+      @next_date_calculator.calculate
     end
   end
 end
