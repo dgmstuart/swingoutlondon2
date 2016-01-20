@@ -26,9 +26,11 @@ class EventPeriod < ActiveRecord::Base
 
   def generate
     # TODO: SMELLY - this is a command method (does stuff) AND a query method (says what it did)
-    dates_to_generate.map do |date|
-      EventInstance.find_or_create_by!(event_seed: event_seed, date: date)
-    end.map(&:date)
+    # dates_to_generate.map do |date|
+    #   EventInstance.find_or_create_by!(event_seed: event_seed, date: date)
+    # end.map(&:date)
+    result = EventInstanceGenerator.new.call(self)
+    result.created_dates
   end
 
   def self.generate_all
@@ -37,16 +39,26 @@ class EventPeriod < ActiveRecord::Base
 
   private def dates_to_generate
     if repeating?
-      WeeklyDatesToGenerateCalculator.new(self).dates(4)
+      WeeklyDatesToGenerateCalculator.new(start_date).dates(4)
     else
-      return [] if start_date < Date.today
-      [start_date]
+      OneOffDateCalculator.new(start_date).dates
+    end
+  end
+
+  class OneOffDateCalculator
+    def initialize(date)
+      @date = date
+    end
+
+    def dates
+      return [] if @date < Date.today
+      [@date]
     end
   end
 
   class WeeklyNextDateCalculator
-    def initialize(event_period)
-      @start_date = event_period.start_date
+    def initialize(start_date)
+      @start_date = start_date
     end
 
     def calculate
@@ -68,8 +80,8 @@ class EventPeriod < ActiveRecord::Base
   end
 
   class WeeklyDatesToGenerateCalculator
-    def initialize(event_period)
-      @next_date_calculator = WeeklyNextDateCalculator.new(event_period)
+    def initialize(start_date)
+      @next_date_calculator = WeeklyNextDateCalculator.new(start_date)
     end
 
     def dates(number_of_dates)
