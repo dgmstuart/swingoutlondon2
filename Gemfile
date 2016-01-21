@@ -51,6 +51,8 @@ gem 'pickadate-rails', '~> 3.5'
 gem 'select2-rails', '< 4'
 
 group :development do
+  gem 'spring'
+  gem 'spring-commands-rspec'
   gem 'better_errors'
   gem 'binding_of_caller'
   gem 'html2haml'

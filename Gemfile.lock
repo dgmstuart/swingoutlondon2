@@ -224,6 +224,9 @@ GEM
       simplecov-html (~> 0.10.0)
     simplecov-html (0.10.0)
     slop (3.6.0)
+    spring (1.6.2)
+    spring-commands-rspec (1.0.4)
+      spring (>= 0.9.1)
     sprockets (3.5.2)
       concurrent-ruby (~> 1.0)
       rack (> 1, < 3)
@@ -292,10 +295,12 @@ DEPENDENCIES
   select2-rails (< 4)
   shoulda-matchers (~> 3.0.1)
   simplecov (~> 0.9)
+  spring
+  spring-commands-rspec
   thin
   timecop (~> 0.7)
   uglifier (>= 1.3.0)
   unicorn
 
 BUNDLED WITH
-   1.10.6
+   1.11.2
