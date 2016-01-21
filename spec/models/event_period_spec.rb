@@ -69,16 +69,6 @@ RSpec.describe EventPeriod, :type => :model do
         it "returns the date it generated the event_instance for" do
           expect(event_period.generate).to eq [event_period.start_date]
         end
-
-        context 'and an instance already exists for the same date' do
-          before { event_period.generate }
-          it "does nothing" do
-            expect { event_period.generate }.to_not change{ EventInstance.count }
-          end
-          it "returns an empty array" do
-            expect(event_period.generate).to eq []
-          end
-        end
       end
 
       context 'and the start_date is in the past' do
@@ -119,72 +109,8 @@ RSpec.describe EventPeriod, :type => :model do
               e.venue_id = event.venue_id
             end
           end
-
-          context 'and one event_instance already exists' do
-            let(:existing_date) { Date.new(2001,1,15) }
-            # TODO: is this sufficient, or does it need more tests?
-            before { Fabricate.create(:event_instance, date: existing_date, event_seed: event_period.event_seed) }
-            it "skips one event" do
-              expect { event_period.generate }.to change{ EventInstance.count }.from(1).to(4)
-            end
-            it "returns 3 dates" do
-              expect(event_period.generate).to eq dates - [existing_date]
-            end
-          end
         end
       end
-    end
-  end
-
-  describe "#next_date" do
-    subject(:next_date) { generator.next_date }
-    let(:generator) { Fabricate.build(:event_period, frequency: frequency, start_date: start_date) }
-
-    let(:today) { Date.new(2001, 1, 23) }
-    before { Timecop.freeze(today) }
-    after { Timecop.return }
-
-    context "when the event is not weekly" do
-      let(:frequency) { 0 }
-      context 'and the start_date is in the past' do
-        let(:start_date) { today - 10 }
-        it { is_expected.to be_nil }
-      end
-      context 'and the start_date is today' do
-        let(:start_date) { today }
-        it { is_expected.to eq today }
-      end
-      context 'and the start_date is in the future' do
-        let(:start_date) { today + 10 }
-        it { is_expected.to eq generator.start_date }
-      end
-    end
-
-    context "when the event is weekly" do
-      let(:frequency) { 1 }
-      context "and the start_date is today" do
-        let(:start_date) { today }
-        it { is_expected.to eq today }
-      end
-      context 'and the start_date is in the future' do
-        let(:start_date) { today + 10 }
-        it { is_expected.to eq generator.start_date }
-      end
-      context 'and the start_date is one week ago today' do
-        let(:start_date) { today - 7 }
-        it { is_expected.to eq today }
-      end
-      context 'and the start_date is one week and one day ago' do
-        let(:start_date) { today - 8 }
-        let(:six_days_in_the_future) { today + 6 }
-        it { is_expected.to eq six_days_in_the_future }
-      end
-      context 'and the start_date is one week less one day ago' do
-        let(:start_date) { today - 6 }
-        let(:tomorrow) { today + 1 }
-        it { is_expected.to eq tomorrow }
-      end
-
     end
   end
 

@@ -17,55 +17,23 @@ class EventPeriod < ActiveRecord::Base
   }
 
   def repeating?
-    return true if frequency == 1
-    return false
+    repeating_weekly?
+  end
+
+  def repeating_weekly?
+    frequency == 1
   end
 
   def generate
-    dates_to_generate.select do |date|
-      if not EventInstance.find_by(event_seed: event_seed, date: date)
-        EventInstance.create!(event_seed: event_seed, date: date)
-      else
-        false
-      end
-    end
-  end
-
-  def next_date
-    if starts_today_or_in_the_future?
-      return start_date
-    else
-      return nil unless repeating?
-    end
-
-    offset = ( start_date - Date.today ) % 7
-    Date.today + offset
-
-    # TODO: test this alternate approach for performance:
-    # offset = ( ( start_date.wday - Date.today.wday) % 7 )
-  end
-
-  def starts_today_or_in_the_future?
-    start_date >= Date.today
+    # TODO: SMELLY - this is a command method (does stuff) AND a query method (says what it did)
+    # dates_to_generate.map do |date|
+    #   EventInstance.find_or_create_by!(event_seed: event_seed, date: date)
+    # end.map(&:date)
+    result = EventInstanceGenerator.new.call(self)
+    result.created_dates
   end
 
   def self.generate_all
     all.each(&:generate)
-  end
-
-private
-
-  def dates_to_generate
-    return [] if next_date.nil?
-    if repeating?
-      n = 4
-    else
-      n = 1
-    end
-    next_n_dates(next_date, n)
-  end
-
-  def next_n_dates(initial_date, n)
-    [*0..n-1].map { |m| initial_date + m.weeks }
   end
 end
