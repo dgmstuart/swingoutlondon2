@@ -22,13 +22,13 @@ class DatesToGenerateCalculator
   end
 
   class WeeklyDatesCalculator
+    def initialize(next_date_calculator = WeeklyNextDateCalculator.new)
+      @next_date_calculator = next_date_calculator
+    end
+
     def dates(start_date, number_of_dates = 4)
-      next_date = WeeklyNextDateCalculator.new(start_date).next_date
+      next_date = @next_date_calculator.next_date(start_date)
       [*0..number_of_dates-1].map { |m| next_date + m.weeks }
     end
   end
 end
-
-
-
-

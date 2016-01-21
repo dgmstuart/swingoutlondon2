@@ -1,24 +1,23 @@
 # Given a date in the past, return the next date which falls
 # on the same day of the week
 class WeeklyNextDateCalculator
-  def initialize(start_date)
-    @start_date = start_date
+  def next_date(start_date)
+    date = OffsetDate.new(start_date)
+    return date if date.today_or_in_the_future?
+
+    Date.today + date.offset
   end
 
-  def next_date
-    return @start_date if starts_today_or_in_the_future?
+  class OffsetDate < SimpleDelegator
+    def offset
+      (self - Date.today) % 7
 
-    Date.today + offset
-  end
+      # TODO: test this alternate approach for performance:
+      # offset = ( ( @start_date.wday - Date.today.wday) % 7 )
+    end
 
-  private def offset
-    (@start_date - Date.today) % 7
-
-    # TODO: test this alternate approach for performance:
-    # offset = ( ( @start_date.wday - Date.today.wday) % 7 )
-  end
-
-  private def starts_today_or_in_the_future?
-    @start_date >= Date.today
+    def today_or_in_the_future?
+      self >= Date.today
+    end
   end
 end

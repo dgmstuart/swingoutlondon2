@@ -4,8 +4,8 @@ require 'app/services/weekly_next_date_calculator'
 
 RSpec.describe WeeklyNextDateCalculator do
   describe "#next_date" do
-    subject(:next_date) { calculator.next_date }
-    let(:calculator) { described_class.new(start_date) }
+    subject(:next_date) { calculator.next_date(start_date) }
+    let(:calculator) { described_class.new }
 
     let(:today) { Date.new(2001, 1, 23) }
     before { Timecop.freeze(today) }
