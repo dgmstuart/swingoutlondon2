@@ -23,7 +23,7 @@ Database
 Tests
 -------
 ### Phantomjs
-The acceptance specs which require javascript run using phantomjs. To install this on OSX:
+The feature specs which require javascript run using phantomjs. To install this on OSX:
 
     brew install phantomjs
 
