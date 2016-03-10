@@ -12,6 +12,7 @@ RSpec.describe Venue, 'Validations', :type => :model do
   it { should validate_presence_of(:postcode) }
   it { should validate_presence_of(:url) }
 
+  # TODO: validate correctness of postcode
   it_should_behave_like "validates url"
 
   # Validating uniqueness is a little different because it touches the database:

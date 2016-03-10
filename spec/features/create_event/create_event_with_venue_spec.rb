@@ -24,9 +24,6 @@ RSpec.feature "Admin adds an event", type: :feature do
     then_invalid_venue_data_errors_should_be_displayed
   end
 
-  scenario 'with invalid venue postcode' # Roll into the 'invalid venue data' spec
-
-
   # STEPS:
   ############################################################
 
@@ -79,7 +76,6 @@ RSpec.feature "Admin adds an event", type: :feature do
   def then_invalid_venue_data_errors_should_be_displayed
     expect(page).to have_content("has already been taken"
               ).and have_content("must be a valid URL"
-              # TODO: ).and have_content("must be a valid postcode"
               )
   end
 
