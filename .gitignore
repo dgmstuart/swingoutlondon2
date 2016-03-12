@@ -82,3 +82,6 @@ README.html
 # Bowery files
 .bowery
 Dockerfile
+
+# Ctags
+tags
