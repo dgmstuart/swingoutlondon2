@@ -26,7 +26,7 @@ RSpec.feature "Admin adds an event", type: :feature do
     @event_start_date = Date.new(2001, 1, 3)
     @event_frequency  = 'Weekly'
 
-    within("#new_event") do
+    within(new_event_form_id) do
       fill_in_event_form
       select2 @existing_venue.name, from: "Venue"
       click_button 'Create event'

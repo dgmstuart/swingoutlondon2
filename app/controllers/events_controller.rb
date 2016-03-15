@@ -14,29 +14,53 @@ class EventsController < ApplicationController
 
   # GET /events/new
   def new
-    @event = Event.new
-    event_seed = EventSeed.new
-    event_seed.event_periods << EventPeriod.new
-    @event.event_seeds << event_seed
+    @event_form = EventForm.new
 
     setup_venues
   end
 
   # POST /events
   def create
-    @event = Event.new(event_params)
+    form_params = event_form_params
 
-    if @event.save
+    @create_venue = form_params.delete(:create_venue)
+    form_params[:create_venue] = @create_venue
+
+    venue_params = form_params.delete(:venue)
+    form_params[:venue] = Venue.new(venue_params)
+
+    @event_form = EventForm.new(form_params)
+
+    if @event_form.valid?
+      @event_form.venue.save! if @create_venue
+
+      event = Event.new(
+        name: @event_form.name
+      )
+      event_seed = EventSeed.new(
+        event: event,
+        url: @event_form.url,
+        venue_id: @event_form.venue_id
+      )
+      event_period = EventPeriod.new(
+        event_seed: event_seed,
+        frequency: @event_form.frequency,
+        start_date: @event_form.start_date,
+      )
+
+      event.save!
+      event_seed.save!
+      event_period.save!
+
       flash[:success] = "New event created"
 
       # TODO: Smelly? - it isn't clear here that @event.generate is creating event instances as well as returning dates
-      # Should trigger ALL generators? Currently can only create one...
-      dates = @event.event_seeds.first.event_periods.first.generate
+      dates = event_period.generate
 
       date_string = dates.map(&:to_s).join(", ") # TODO: Better way of doing this - in one step?
       flash[:success] += ". #{dates.count} instances created: #{date_string}"
 
-      redirect_to @event
+      redirect_to event
     else
       setup_venues
       render :new
@@ -45,14 +69,15 @@ class EventsController < ApplicationController
 
 private
 
-  def event_params
-    params.require(:event).permit(
+  def event_form_params
+    params.require(:event_form).permit(
       :name,
-      event_seeds_attributes:
-        [ :url, :venue_id, :_destroy,
-          venue_attributes: [ :name, :address, :postcode, :url ],
-          event_periods_attributes: [ :frequency, :start_date, :_destroy ],
-        ]
+      :url,
+      :frequency,
+      :start_date,
+      :venue_id,
+      :create_venue,
+      venue: [ :name, :address, :postcode, :url ]
     )
   end
 

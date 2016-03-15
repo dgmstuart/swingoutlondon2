@@ -30,39 +30,31 @@ def select_date(date_string)
   page.execute_script("$('[name=\"#{start_date_field}\"]').val('#{date_string}')")
 end
 
-def missing_data_errors(blanks, selects=0)
-  expect(page).to have_content("#{blanks+selects} errors prevented this event from being saved"
-            ).and have_content("can't be blank", count: blanks
-            ).and have_content("Please select", count: selects
-            )
+# IDs
+#####
+def new_event_form_id
+  "#new_event_form"
 end
-
 
 # FIELDS
 ############################################################
 
 def name_field
-  "event[name]"
+  "event_form[name]"
 end
 def start_date_field
-  event_period_field "start_date"
+  "event_form[start_date]"
 end
 def frequency_select
-  event_period_field "frequency"
+  "event_form[frequency]"
 end
 def url_field
-  event_seed_field "url"
+  "event_form[url]"
 end
 def venue_select
-  event_seed_field "venue_id"
+  "event_form[venue_id]"
 end
 
-def event_seed_field(field)
-  "event[event_seeds_attributes][0][#{field}]"
-end
-def event_period_field(field)
-  "event[event_seeds_attributes][0][event_periods_attributes][0][#{field}]"
-end
 def venue_field(field)
-  "event[event_seeds_attributes][0][venue_attributes][#{field}]"
+  "event_form[venue][#{field}]"
 end
