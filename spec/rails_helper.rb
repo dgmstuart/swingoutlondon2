@@ -7,7 +7,6 @@ ENV["RAILS_ENV"] ||= 'test'
 require 'spec_helper'
 require File.expand_path("../../config/environment", __FILE__)
 require 'rspec/rails'
-require 'shoulda/matchers'
 require 'capybara/rspec'
 require 'capybara/poltergeist'
 
@@ -33,12 +32,5 @@ RSpec.configure do |config|
   config.include Warden::Test::Helpers
   config.before :suite do
     Warden.test_mode!
-  end
-end
-
-Shoulda::Matchers.configure do |config|
-  config.integrate do |with|
-    with.test_framework :rspec
-    with.library :rails
   end
 end
