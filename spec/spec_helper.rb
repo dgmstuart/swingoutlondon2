@@ -1,10 +1,3 @@
-require 'simplecov'
-SimpleCov.start :rails do
-  add_group "Validators", "app/validators"
-end
-
-require 'rspec/core' # Zeus won't work without this because otherwise something else (?) is defining Rspec (?) and doesn't have access to the configure method (???)
-
 RSpec.configure do |config|
   if config.files_to_run.one?
     # Use the documentation formatter for detailed output
