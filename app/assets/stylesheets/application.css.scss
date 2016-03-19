@@ -23,6 +23,11 @@ button.warn {
   background-color: $colour-jaffa;
 }
 
+// Remove padding between select2 box and form error
+.select2-container.error {
+  margin: 0;
+}
+
 // Remove rounded corners - particularly from iOS. Without this prefix labels won't work
 input {
   border-radius: 0;
