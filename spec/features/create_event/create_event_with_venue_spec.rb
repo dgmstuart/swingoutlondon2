@@ -19,7 +19,7 @@ RSpec.feature "Admin adds an event", type: :feature do
     then_missing_data_errors_should_be_displayed
   end
 
-  scenario "with invalid venue data", :js do
+  fscenario "with invalid venue data", :js do
     when_i_create_an_event_with_a_new_venue_with_invalid_data
     then_invalid_venue_data_errors_should_be_displayed
   end
@@ -29,7 +29,7 @@ RSpec.feature "Admin adds an event", type: :feature do
 
   def when_i_create_an_event_with_a_new_venue
     visit '/events/new'
-    within("#new_event") do
+    within(new_event_form_id) do
       select_todays_date
       fill_event_fields_with_valid_data
 
@@ -58,7 +58,7 @@ RSpec.feature "Admin adds an event", type: :feature do
   def when_i_create_an_event_with_a_new_venue_with_invalid_data
     Fabricate.create(:venue, name: "non-unique name")
     visit '/events/new'
-    within("#new_event") do
+    within(new_event_form_id) do
       fill_event_fields_with_valid_data
       select_todays_date
 
@@ -81,7 +81,7 @@ RSpec.feature "Admin adds an event", type: :feature do
 
   def when_i_create_an_event_with_a_new_venue_with_missing_data
     visit '/events/new'
-    within("#new_event") do
+    within(new_event_form_id) do
       fill_event_fields_with_valid_data
       select_todays_date
 
@@ -93,6 +93,7 @@ RSpec.feature "Admin adds an event", type: :feature do
 
 
   def then_missing_data_errors_should_be_displayed
-    missing_data_errors(4)
+    expect(page).to have_content("1 error prevented this event from being saved")
+      .and have_content("can't be blank", count: 4)
   end
 end

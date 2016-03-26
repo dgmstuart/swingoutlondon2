@@ -1,5 +1,6 @@
 .nested-fields.panel
   %h3 New Venue
-  %p=link_to_remove_association "Cancel", f
+  -# %p=link_to_remove_association "Cancel", f
+  =link_to "Cancel", "#"
 
   =render "venues/venue_fields", f: f
