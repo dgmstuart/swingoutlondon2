@@ -30,36 +30,10 @@ class EventsController < ApplicationController
 
     @event_form = EventForm.new(form_params)
 
-    if @event_form.valid?
-      @event_form.venue.save! if @create_venue
-
-      event = Event.new(
-        name: @event_form.name
-      )
-      event_seed = EventSeed.new(
-        event: event,
-        url: @event_form.url,
-        venue_id: @event_form.venue_id
-      )
-      event_period = EventPeriod.new(
-        event_seed: event_seed,
-        frequency: @event_form.frequency,
-        start_date: @event_form.start_date,
-      )
-
-      event.save!
-      event_seed.save!
-      event_period.save!
-
-      flash[:success] = "New event created"
-
-      result = EventInstanceGenerator.new.call(event_period)
-      dates = result.created_dates
-
-      date_string = dates.map(&:to_s).join(", ") # TODO: Better way of doing this - in one step?
-      flash[:success] += ". #{dates.count} instances created: #{date_string}"
-
-      redirect_to event
+    result = EventCreator.new.call(@event_form, @create_venue)
+    if result.success?
+      flash[:success] = result.message
+      redirect_to result.event
     else
       setup_venues
       render :new
