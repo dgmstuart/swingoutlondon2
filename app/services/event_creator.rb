@@ -1,12 +1,26 @@
 class EventCreator
   def call(event_form, create_venue)
-    event = Event.create!(name: event_form.name)
-    Result.new(true, event)
+    if event_form.valid?
+      event = Event.create!(name: event_form.name)
+      Success.new(event)
+    else
+      Failure.new
+    end
   end
 
-  Result = Struct.new(:success?, :event) do
+  Success = Struct.new(:event) do
+    def success?
+      true
+    end
+
     def message
-      "Event was successfully created"
+      "New event created"
+    end
+  end
+
+  class Failure
+    def success?
+      false
     end
   end
 end
