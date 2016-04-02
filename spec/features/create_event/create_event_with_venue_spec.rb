@@ -19,7 +19,7 @@ RSpec.feature "Admin adds an event", type: :feature do
     then_missing_data_errors_should_be_displayed
   end
 
-  fscenario "with invalid venue data", :js do
+  scenario "with invalid venue data", :js do
     when_i_create_an_event_with_a_new_venue_with_invalid_data
     then_invalid_venue_data_errors_should_be_displayed
   end
