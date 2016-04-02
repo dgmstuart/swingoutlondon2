@@ -23,16 +23,16 @@ class EventsController < ApplicationController
   def create
     form_params = event_form_params
 
-    @create_venue = form_params.delete(:create_venue)
-    form_params[:create_venue] = @create_venue
-
     venue_params = form_params.delete(:venue)
-    form_params[:venue] = Venue.new(venue_params)
+    venue_form = VenueForm.new(venue_params)
+    form_params[:venue] = venue_form
+    @create_venue = venue_form.create_venue
 
     @event_form = EventForm.new(form_params)
 
     if @event_form.valid?
-      @event_form.venue.save! if @create_venue
+      venue_result = VenueCreator.new.call(@event_form.venue)
+      venue_id = venue_result.venue_id
 
       event = Event.new(
         name: @event_form.name
@@ -40,7 +40,7 @@ class EventsController < ApplicationController
       event_seed = EventSeed.new(
         event: event,
         url: @event_form.url,
-        venue_id: @event_form.venue_id
+        venue_id: venue_id
       )
       event_period = EventPeriod.new(
         event_seed: event_seed,
@@ -77,7 +77,7 @@ private
       :start_date,
       :venue_id,
       :create_venue,
-      venue: [ :name, :address, :postcode, :url ]
+      venue: [ :id, :name, :address, :postcode, :url ]
     )
   end
 

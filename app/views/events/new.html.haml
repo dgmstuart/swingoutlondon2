@@ -5,17 +5,17 @@
   = f.url_field :url
 
   #venue
-    .select
-      -# FIXME - form errors don't get applied to the rendered select element because of select2
-      = f.collection_select :venue_id, @venues, :id, :name, prompt: "Please select a venue"
-      = link_to "New venue", "#", class: "js-new-venue"
+    = f.fields_for :venue, @event_form.venue do |fv|
+      .select
+        -# FIXME - form errors don't get applied to the rendered select element because of select2
+        = fv.collection_select :id, @venues, :id, :name, label: "Venue", prompt: "Please select a venue"
+        = link_to "New venue", "#", class: "js-new-venue"
 
-    .nested-fields.panel{ style: "display: none" }
-      = f.fields_for :venue, @event_form.venue do |fv|
+      .nested-fields.panel{ style: "display: none" }
         %h3 New Venue
         = link_to "Cancel", "#", class: "js-cancel-new-venue"
         = render "venues/venue_fields", f: fv
-        = f.hidden_field 'create_venue', value: "foo" if @create_venue
+        = fv.hidden_field 'create_venue', value: "foo" if @create_venue
 
   = f.select :frequency, [ [ "Weekly", 1 ] , [ "Intermittent", 0 ] ], include_blank: true
 
