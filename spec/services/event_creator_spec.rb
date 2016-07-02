@@ -10,7 +10,7 @@ RSpec.describe EventCreator do
       stub_const("Event", event_klass)
       form = fake_event_form(name: "The Razmatazz club")
 
-      described_class.new.call(form, anything)
+      described_class.new.call(form, false)
 
       expect(event_klass).to have_received(:create!).with(name: "The Razmatazz club")
     end
@@ -22,7 +22,7 @@ RSpec.describe EventCreator do
         url: "http://consider.com/phlebas",
         venue_id: 17
 
-      described_class.new.call(form, anything)
+      described_class.new.call(form, false)
 
       expect(event_seed_klass).to have_received(:create!)
         .with \
@@ -36,7 +36,7 @@ RSpec.describe EventCreator do
       stub_const("EventInstance", event_instance_klass)
       form = fake_event_form(start_date: Date.new(2012, 12, 23))
 
-      described_class.new.call(form, anything)
+      described_class.new.call(form, false)
 
       expect(event_instance_klass).to have_received(:create!)
         .with \
@@ -44,13 +44,22 @@ RSpec.describe EventCreator do
           date: Date.new(2012, 12, 23)
     end
 
+    it "creates a venue object if requested" do
+      fake_venue = spy('Venue')
+      form = fake_event_form(venue: fake_venue)
+
+      described_class.new.call(form, true)
+
+      expect(fake_venue).to have_received(:save!)
+    end
+
     describe "result" do
       it "is successful" do
-        expect(described_class.new.call(fake_event_form, anything).success?).to eq true
+        expect(described_class.new.call(fake_event_form, false).success?).to eq true
       end
 
       it "returns a success message" do
-        expect(described_class.new.call(fake_event_form, anything).message).to eq "New event created"
+        expect(described_class.new.call(fake_event_form, false).message).to eq "New event created"
       end
 
       it "returns the created event" do
@@ -59,7 +68,7 @@ RSpec.describe EventCreator do
         allow(event_klass).to receive(:create!).and_return(created_event)
         stub_const("Event", event_klass)
 
-        expect(described_class.new.call(fake_event_form, anything).event).to eq created_event
+        expect(described_class.new.call(fake_event_form, false).event).to eq created_event
       end
     end
   end
@@ -68,7 +77,7 @@ RSpec.describe EventCreator do
     describe "result" do
       it "is a failure" do
         fake_invalid_event_form = instance_double("EventForm", valid?: false)
-        expect(described_class.new.call(fake_invalid_event_form, anything).success?).to eq false
+        expect(described_class.new.call(fake_invalid_event_form, false).success?).to eq false
       end
     end
   end
@@ -77,13 +86,15 @@ RSpec.describe EventCreator do
     name: "The Black Cotton Club",
     start_date: Date.today,
     url: "https://google.com",
-    venue_id: 34
+    venue_id: 34,
+    venue: nil
   )
     instance_double("EventForm",
                     name: name,
                     start_date: start_date,
                     url: url,
                     venue_id: venue_id,
+                    venue: venue,
                     valid?: true,
                    )
   end

@@ -1,6 +1,7 @@
 class EventCreator
   def call(event_form, create_venue)
     if event_form.valid?
+      event_form.venue.save! if create_venue
       event = Event.create!(name: event_form.name)
       event_seed = EventSeed.create! \
         event: event,
