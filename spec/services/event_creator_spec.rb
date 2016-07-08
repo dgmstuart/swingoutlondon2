@@ -2,8 +2,14 @@ require 'spec_helper'
 require 'app/services/event_creator'
 
 RSpec.describe EventCreator do
-  context "when the event was intermittent and successfully created" do
-    before { stub_models }
+  context "when the event was successfully created" do
+    before do
+      stub_const("Event", fake_event_klass)
+      stub_const("EventSeed", fake_event_seed_klass)
+      stub_const("EventPeriod", fake_event_period_klass)
+      stub_const("EventInstanceGenerator", fake_event_instance_generator_klass)
+    end
+
 
     it "creates an event with the given name" do
       event_klass = fake_event_klass
@@ -31,17 +37,32 @@ RSpec.describe EventCreator do
           venue_id: 17
     end
 
-    it "creates an event instance with the given date" do
-      event_instance_klass = fake_event_instance_klass
-      stub_const("EventInstance", event_instance_klass)
-      form = fake_event_form(start_date: Date.new(2012, 12, 23))
+    it "creates an event period based on the given frequency and start date" do
+      event_period_klass = fake_event_period_klass
+      stub_const("EventPeriod", event_period_klass)
+      form = fake_event_form \
+        frequency: 4,
+        start_date: Date.new(2012, 12, 23)
 
       described_class.new.call(form, false)
 
-      expect(event_instance_klass).to have_received(:create!)
+      expect(event_period_klass).to have_received(:create!)
         .with \
           event_seed: anything, # too complicated to test the specific value?
-          date: Date.new(2012, 12, 23)
+          frequency: 4,
+          start_date: Date.new(2012, 12, 23)
+    end
+
+    it "generates some event instances based on the event period" do
+      event_instance_generator = instance_double("EventInstanceGenerator")
+      allow(event_instance_generator).to receive(:call)
+
+      fake_event_period = instance_double("EventPeriod")
+      allow(EventPeriod).to receive(:create!).and_return fake_event_period
+
+      described_class.new(event_instance_generator).call(fake_event_form, false)
+
+      expect(event_instance_generator).to have_received(:call).with(fake_event_period)
     end
 
     it "creates a venue object if requested" do
@@ -77,7 +98,7 @@ RSpec.describe EventCreator do
     describe "result" do
       it "is a failure" do
         fake_invalid_event_form = instance_double("EventForm", valid?: false)
-        expect(described_class.new.call(fake_invalid_event_form, false).success?).to eq false
+        expect(described_class.new(double).call(fake_invalid_event_form, false).success?).to eq false
       end
     end
   end
@@ -85,6 +106,7 @@ RSpec.describe EventCreator do
   def fake_event_form(
     name: "The Black Cotton Club",
     start_date: Date.today,
+    frequency: 0,
     url: "https://google.com",
     venue_id: 34,
     venue: nil
@@ -92,17 +114,12 @@ RSpec.describe EventCreator do
     instance_double("EventForm",
                     name: name,
                     start_date: start_date,
+                    frequency: frequency,
                     url: url,
                     venue_id: venue_id,
                     venue: venue,
                     valid?: true,
                    )
-  end
-
-  def stub_models
-    stub_const("Event", fake_event_klass)
-    stub_const("EventSeed", fake_event_seed_klass)
-    stub_const("EventInstance", fake_event_instance_klass)
   end
 
   def fake_event_klass(created_event: nil)
@@ -117,9 +134,18 @@ RSpec.describe EventCreator do
     end
   end
 
-  def fake_event_instance_klass
-    class_double("EventInstance").tap do |event_instance_klass|
-      allow(event_instance_klass).to receive(:create!)
+  def fake_event_period_klass
+    class_double("EventPeriod").tap do |event_period_klass|
+      allow(event_period_klass).to receive(:create!)
+    end
+  end
+
+  def fake_event_instance_generator_klass
+    class_double("EventInstanceGenerator").tap do |event_instance_generator_klass|
+      fake_event_instance_generator = instance_double("EventInstanceGenerator")
+      allow(fake_event_instance_generator).to receive(:call)
+      allow(event_instance_generator_klass).to receive(:new)
+        .and_return fake_event_instance_generator
     end
   end
 end

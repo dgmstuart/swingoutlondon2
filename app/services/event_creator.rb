@@ -1,4 +1,8 @@
 class EventCreator
+  def initialize(event_instance_generator = EventInstanceGenerator.new)
+    @event_instance_generator = event_instance_generator
+  end
+
   def call(event_form, create_venue)
     if event_form.valid?
       event_form.venue.save! if create_venue
@@ -7,9 +11,11 @@ class EventCreator
         event: event,
         url: event_form.url,
         venue_id: event_form.venue_id
-      EventInstance.create! \
+      event_period = EventPeriod.create! \
         event_seed: event_seed,
-        date: event_form.start_date
+        frequency: event_form.frequency,
+        start_date: event_form.start_date
+      @event_instance_generator.call(event_period)
       Success.new(event)
     else
       Failure.new
