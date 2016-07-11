@@ -55,7 +55,7 @@ RSpec.describe EventCreator do
 
     it "generates some event instances based on the event period" do
       event_instance_generator = instance_double("EventInstanceGenerator")
-      allow(event_instance_generator).to receive(:call)
+      allow(event_instance_generator).to receive(:call).and_return Struct.new(:created_dates).new
 
       fake_event_period = instance_double("EventPeriod")
       allow(EventPeriod).to receive(:create!).and_return fake_event_period
@@ -79,8 +79,45 @@ RSpec.describe EventCreator do
         expect(described_class.new.call(fake_event_form, false).success?).to eq true
       end
 
-      it "returns a success message" do
-        expect(described_class.new.call(fake_event_form, false).message).to eq "New event created"
+      context "when no instances were created" do
+        it "returns a success message" do
+          event_instance_generator = instance_double("EventInstanceGenerator")
+          result = Struct.new(:created_dates).new([])
+          allow(event_instance_generator).to receive(:call).and_return(result)
+
+          result = described_class.new(event_instance_generator).call(fake_event_form, false)
+
+          expect(result.message).to eq "New event created. No instances created."
+        end
+      end
+
+      context "when one instance was created" do
+        it "returns a success message" do
+          event_instance_generator = instance_double("EventInstanceGenerator")
+          result = Struct.new(:created_dates).new([Date.new(2012,12,22)])
+          allow(event_instance_generator).to receive(:call).and_return(result)
+
+          result = described_class.new(event_instance_generator).call(fake_event_form, false)
+
+          expect(result.message).to eq "New event created. 1 instance created: 2012-12-22"
+        end
+      end
+
+      context "when four instances were created" do
+        it "returns a success message" do
+          event_instance_generator = instance_double("EventInstanceGenerator")
+          result = Struct.new(:created_dates).new([
+            Date.new(2012,12,17),
+            Date.new(2012,12,22),
+            Date.new(2013,01,07),
+            Date.new(2013,01,14),
+          ])
+          allow(event_instance_generator).to receive(:call).and_return(result)
+
+          result = described_class.new(event_instance_generator).call(fake_event_form, false)
+
+          expect(result.message).to eq "New event created. 4 instances created: 2012-12-17, 2012-12-22, 2013-01-07, 2013-01-14"
+        end
       end
 
       it "returns the created event" do
@@ -143,7 +180,8 @@ RSpec.describe EventCreator do
   def fake_event_instance_generator_klass
     class_double("EventInstanceGenerator").tap do |event_instance_generator_klass|
       fake_event_instance_generator = instance_double("EventInstanceGenerator")
-      allow(fake_event_instance_generator).to receive(:call)
+      fake_result = Struct.new(:created_dates).new
+      allow(fake_event_instance_generator).to receive(:call).and_return fake_result
       allow(event_instance_generator_klass).to receive(:new)
         .and_return fake_event_instance_generator
     end

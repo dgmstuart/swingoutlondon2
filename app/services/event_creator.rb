@@ -15,20 +15,41 @@ class EventCreator
         event_seed: event_seed,
         frequency: event_form.frequency,
         start_date: event_form.start_date
-      @event_instance_generator.call(event_period)
-      Success.new(event)
+      instance_creation_result = @event_instance_generator.call(event_period)
+      Success.new(event, instance_creation_result.created_dates)
     else
       Failure.new
     end
   end
 
-  Success = Struct.new(:event) do
+  class Success
+    attr_reader :event
+
+    def initialize(event, dates)
+      @event = event
+      @dates = dates || []
+    end
+
     def success?
       true
     end
 
     def message
-      "New event created"
+      "New event created. #{dates_message}"
+    end
+
+  private
+
+    def dates_message
+      case @dates.count
+      when 0 then 'No instances created.'
+      when 1 then "1 instance created: #{date_string}"
+      else "#{@dates.count} instances created: #{date_string}"
+      end
+    end
+
+    def date_string
+      @dates.map(&:to_s).join(", ") # TODO: Better way of doing this - in one step?
     end
   end
 
