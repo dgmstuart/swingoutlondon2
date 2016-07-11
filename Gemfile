@@ -68,6 +68,7 @@ group :test do
   gem 'shoulda-matchers', require: false
   gem 'fabrication'
   gem 'capybara'
+  gem 'launchy'
   gem 'poltergeist'
   gem 'database_cleaner'
   gem 'simplecov'

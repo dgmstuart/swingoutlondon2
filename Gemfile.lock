@@ -117,6 +117,8 @@ GEM
       thor (>= 0.14, < 2.0)
     json (1.8.3)
     kgio (2.10.0)
+    launchy (2.4.3)
+      addressable (~> 2.3)
     loofah (2.0.3)
       nokogiri (>= 1.5.9)
     mail (2.6.3)
@@ -283,6 +285,7 @@ DEPENDENCIES
   html2haml
   hub
   jquery-rails
+  launchy
   pg
   pickadate-rails
   poltergeist
