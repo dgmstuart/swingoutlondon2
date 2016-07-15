@@ -38,7 +38,7 @@ gem 'jquery-rails'
 # Use debugger
 # gem 'debugger', group: [:development, :test]
 
-gem 'devise'
+gem 'devise', '>= 4.2.0'
 gem 'foundation-rails', '< 6'
 gem 'foundation_rails_helper'
 gem 'foundation-icons-sass-rails'
