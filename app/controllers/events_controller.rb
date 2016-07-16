@@ -23,8 +23,7 @@ class EventsController < ApplicationController
   def create
     form_params = event_form_params
 
-    @create_venue = form_params.delete(:create_venue)
-    form_params[:create_venue] = @create_venue
+    @create_venue = form_params[:create_venue]
 
     venue_params = form_params.delete(:venue)
     form_params[:venue] = Venue.new(venue_params)
