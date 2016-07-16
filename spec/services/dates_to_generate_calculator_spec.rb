@@ -6,19 +6,9 @@ require 'app/services/weekly_next_date_calculator' # because it's not possible t
 RSpec.describe DatesToGenerateCalculator do
   describe "#dates" do
     context "when the period is a one-off" do
-      it "returns the start date if it is in the future" do
-        event_period = one_off_event_period(start_date: Date.today + 1)
-        expect(described_class.new.dates(event_period)).to eq [Date.today + 1]
-      end
-
-      it "returns the start date if it is today" do
-        event_period = one_off_event_period(start_date: Date.today)
-        expect(described_class.new.dates(event_period)).to eq [Date.today]
-      end
-
-      it "returns no dates if the start date has already passed" do
+      it "returns just the one date (even if it's in the past)" do
         event_period = one_off_event_period(start_date: Date.today - 1)
-        expect(described_class.new.dates(event_period)).to eq []
+        expect(described_class.new.dates(event_period)).to eq [Date.today - 1]
       end
 
       def one_off_event_period(start_date:)

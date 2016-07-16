@@ -13,15 +13,15 @@ RSpec.describe EventInstanceGenerator do
 
       context 'and the start_date is in the future' do
         let(:start_date) { today + 1 }
-        it "generates one event_instance" do
+        it "generates one event instance" do
           expect { EventInstanceGenerator.new.call(event_period) }.to change{ EventInstance.count }.by(1)
         end
       end
 
       context 'and the start_date is in the past' do
         let(:start_date) { today - 1 }
-        it "doesn't generate any event_instances" do
-          expect { EventInstanceGenerator.new.call(event_period) }.to_not change{ EventInstance.count }
+        it "generates one event instance" do
+          expect { EventInstanceGenerator.new.call(event_period) }.to change{ EventInstance.count }.by(1)
         end
       end
     end
