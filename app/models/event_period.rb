@@ -25,10 +25,6 @@ class EventPeriod < ActiveRecord::Base
   end
 
   def generate
-    # TODO: SMELLY - this is a command method (does stuff) AND a query method (says what it did)
-    # dates_to_generate.map do |date|
-    #   EventInstance.find_or_create_by!(event_seed: event_seed, date: date)
-    # end.map(&:date)
     result = EventInstanceGenerator.new.call(self)
     result.created_dates
   end

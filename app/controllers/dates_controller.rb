@@ -3,23 +3,20 @@ class DatesController < ApplicationController
 
   # GET /events/:id/dates/new
   def new
-    @event_period = EventPeriod.new
+    @event_instance = EventInstance.new
   end
 
   # POST /events/:id/dates
   def create
-    # TODO: needs strong params here?
-    event = Event.find(params[:event_id])
+    event = Event.find(params.require(:event_id))
     # TODO - pick the right seed/move this logic into a model
     event_seed = event.event_seeds.last
-    @event_period = EventPeriod.new(event_period_params)
-    @event_period.event_seed = event_seed
-    @event_period.frequency = 0
-    if @event_period.save
-      # TODO: FLASH?
-      # TODO: Don't generate straight away?
-      @event_period.generate
-      redirect_to @event_period.event
+    @event_instance = EventInstance.new(
+      event_seed: event_seed,
+      date: event_instance_params[:date],
+    )
+    if @event_instance.save
+      redirect_to event
     else
       render :new
     end
@@ -27,9 +24,9 @@ class DatesController < ApplicationController
 
 private
 
-  def event_period_params
-    params.require(:event_period).permit(
-      :start_date
+  def event_instance_params
+    params.require(:event_instance).permit(
+      :date
     )
   end
 end

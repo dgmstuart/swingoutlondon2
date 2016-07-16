@@ -23,8 +23,7 @@ class EventsController < ApplicationController
   def create
     form_params = event_form_params
 
-    @create_venue = form_params.delete(:create_venue)
-    form_params[:create_venue] = @create_venue
+    @create_venue = form_params[:create_venue]
 
     venue_params = form_params.delete(:venue)
     form_params[:venue] = Venue.new(venue_params)
@@ -54,8 +53,8 @@ class EventsController < ApplicationController
 
       flash[:success] = "New event created"
 
-      # TODO: Smelly? - it isn't clear here that @event.generate is creating event instances as well as returning dates
-      dates = event_period.generate
+      result = EventInstanceGenerator.new.call(event_period)
+      dates = result.created_dates
 
       date_string = dates.map(&:to_s).join(", ") # TODO: Better way of doing this - in one step?
       flash[:success] += ". #{dates.count} instances created: #{date_string}"

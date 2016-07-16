@@ -35,11 +35,11 @@ RSpec.feature "Admin adds dates to an event:" do
     click_link event.name
 
     click_link "Add date"
-    fill_in "event_period[start_date]", with: "22/01/2001"
+    fill_in "event_instance[date]", with: "22/01/2001"
     click_button "Done"
 
     click_link "Add date"
-    fill_in "event_period[start_date]", with: "23/01/2001"
+    fill_in "event_instance[date]", with: "23/01/2001"
     click_button "Done"
   end
 
@@ -53,7 +53,7 @@ RSpec.feature "Admin adds dates to an event:" do
     click_link event.name
 
     click_link "Add date"
-    fill_in "event_period[start_date]", with: "12/23/2014"
+    fill_in "event_instance[date]", with: "12/23/2014"
     click_button "Done"
   end
 
