@@ -55,29 +55,19 @@ RSpec.describe EventPeriod, :type => :model do
 
       context 'and the start_date is in the future' do
         let(:start_date) { today + 1 }
-        let(:event_seed) { event_period.event_seed }
         it "generates one event instance" do
-          expect { event_period.generate }.to change{ EventInstance.count }.from(0).to(1)
-        end
-        it "creates a copy of the event seed" do
-          # TODO - find a better way to do this equality comparison
-          event_period.generate
-          event_instance = EventInstance.first
-          expect(event_instance.url).to   eq event_seed.url
-          expect(event_instance.venue).to eq event_seed.venue
-        end
-        it "returns the date it generated the event_instance for" do
-          expect(event_period.generate).to eq [event_period.start_date]
+          expect { event_period.generate }.to change{ EventInstance.count }.by(1)
         end
       end
 
       context 'and the start_date is in the past' do
         let(:start_date) { today - 1 }
-        it "doesn't generate any event_instances" do
-          expect { event_period.generate }.to_not change{ EventInstance.count }
+        it "generates one event instance" do
+          expect { event_period.generate }.to change{ EventInstance.count }.by(1)
         end
       end
     end
+
     context 'when an event repeats weekly' do
       {
         "and the start date is today" => Date.new(2001,1,1),

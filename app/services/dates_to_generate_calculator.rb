@@ -15,9 +15,8 @@ class DatesToGenerateCalculator
   private
 
   class OneOffDateCalculator
-    def dates(date)
-      return [] if date < Date.today
-      [date]
+    def dates(one_date)
+      [one_date]
     end
   end
 
