@@ -11,6 +11,6 @@ class EventInstancesController < ApplicationController
 
     flash[:info] = "Event instance deleted: #{event_instance.name} on #{l event_instance.date}"
 
-    redirect_to :back
+    redirect_back(fallback_location: root_path)
   end
 end
