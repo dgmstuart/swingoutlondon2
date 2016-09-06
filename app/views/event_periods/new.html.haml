@@ -1,7 +1,7 @@
 = form_for [@event, @event_period] do |f|
   = f.hidden_field :event
 
-  = f.text_field :start_date
+  = f.text_field :start_date, class: "date"
   / DUPLICATED:
   = f.select :frequency, [ [ "Weekly", 1 ] , [ "Intermittent", 0 ] ], include_blank: true
 
