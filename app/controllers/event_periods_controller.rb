@@ -13,11 +13,13 @@ class EventPeriodsController < ApplicationController
     @event_period = EventPeriod.find(params[:id])
 
     event_period_params = params.require(:event_period).permit(:end_date)
-    # TODO - failure case
 
-    @event_period.update!(event_period_params)
-
-    redirect_to event_path(@event_period.event)
+    if @event_period.update(event_period_params)
+      redirect_to event_path(@event_period.event)
+    else
+      @event = Event.find(params[:event_id])
+      render :edit
+    end
   end
 
   # GET /event/:event_id/event_periods/new
