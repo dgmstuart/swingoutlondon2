@@ -57,4 +57,26 @@ RSpec.feature 'Admin schedules a break', type: :feature do
       then_that_instance_does_not_display_on_the_event_page(deleted_instance_date: '20/01/1970', remaining_instance_date: '27/01/1970')
     end
   end
+
+  xscenario 'in a weekly event with instances within a new period' do
+    Timecop.freeze(Date.new(1970, 1, 13)) do
+      before_date     = Time.zone.today
+      @end_date       = 3.days.from_now
+      @new_start_date = 10.days.from_now
+      after_date      = 20.days.from_now
+
+      instance_dates = [
+        before_date,
+        after_date,
+      ]
+      overlapping_dates = [
+        after_date,
+      ]
+
+      given_an_existing_weekly_repeating_event
+      given_some_future_scheduled_instances(instance_dates)
+      when_i_schedule_a_new_period
+      then_i_am_asked_if_i_want_to_associate_the_overlapping_instances(overlapping_dates)
+    end
+  end
 end
