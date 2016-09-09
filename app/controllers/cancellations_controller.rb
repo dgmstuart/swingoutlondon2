@@ -10,7 +10,7 @@ class CancellationsController < ApplicationController
     # since we want to mark it as cancelled, even if (for some reason) it was already invalid
     event_instance.update_attribute(:cancelled, true)
 
-    redirect_to :back
+    redirect_back(fallback_location: root_path)
   end
 
   # DELETE /cancellations/:id
@@ -22,6 +22,6 @@ class CancellationsController < ApplicationController
     # since we want to mark it as cancelled, even if (for some reason) it was already invalid
     event_instance.update_attribute(:cancelled, false)
 
-    redirect_to :back
+    redirect_back(fallback_location: root_path)
   end
 end
