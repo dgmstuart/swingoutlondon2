@@ -6,7 +6,7 @@ class PeriodsDoNotOverlap < ActiveModel::Validator
 
   private def validate_after_date(date, reference_date, description, errors)
     unless reference_date.nil? || date > reference_date
-      errors[:start_date] << "can't be before #{description} (#{reference_date})"
+      errors[:start_date] << "can't be before #{description} (#{I18n.l reference_date})"
     end
   end
 end

@@ -49,7 +49,7 @@ class EventCreator
     end
 
     def date_string
-      @dates.map(&:to_s).join(", ") # TODO: Better way of doing this - in one step?
+      @dates.map{|d| I18n.l(d)}.join(", ") # TODO: Better way of doing this - in one step?
     end
   end
 

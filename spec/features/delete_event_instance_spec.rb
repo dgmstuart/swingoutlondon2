@@ -28,7 +28,7 @@ RSpec.feature "Admin deletes an event instance", type: :feature do
   end
 
   def then_that_event_does_not_display_on_the_events_page
-    expect(page).to have_text "Event instance deleted: #{event_instance.name} on #{event_instance.date}"
+    expect(page).to have_text "Event instance deleted: #{event_instance.name} on #{I18n.l event_instance.date}"
     within ".event_instances" do
       expect(page).to_not have_text event_instance.date.to_s
     end

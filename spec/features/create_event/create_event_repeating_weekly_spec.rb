@@ -34,20 +34,20 @@ RSpec.feature "Admin adds an event", type: :feature do
   end
 
   def then_events_for_the_next_4_weeks_should_be_displayed
-    expect(page).to have_content("New event created"
-              ).and have_content("4 instances created"
-              )
+    expect(page)
+      .to have_content("New event created")
+      .and have_content("4 instances created")
     display_4_events
   end
 
   def and_events_for_the_next_4_weeks_should_be_displayed_on_the_event_page
     visit "/events"
     click_link @event_name
-    expect(page).to have_link("2001-01-03", href: @event_url
-              ).and have_link("2001-01-10", href: @event_url
-              ).and have_link("2001-01-17", href: @event_url
-              ).and have_link("2001-01-24", href: @event_url
-              )
+    expect(page)
+      .to have_link("03/01/2001", href: @event_url)
+      .and have_link("10/01/2001", href: @event_url)
+      .and have_link("17/01/2001", href: @event_url)
+      .and have_link("24/01/2001", href: @event_url)
     display_4_events
   end
 
@@ -61,11 +61,11 @@ RSpec.feature "Admin adds an event", type: :feature do
   ############################################################
 
   def display_4_events
-    expect(page).to have_content("2001-01-03"
-              ).and have_content("2001-01-10"
-              ).and have_content("2001-01-17"
-              ).and have_content("2001-01-24"
-              )
+    expect(page)
+      .to have_content("03/01/2001")
+      .and have_content("10/01/2001")
+      .and have_content("17/01/2001")
+      .and have_content("24/01/2001")
   end
 
 end

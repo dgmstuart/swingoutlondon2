@@ -4,7 +4,7 @@
   - @event_instances.each do |instance|
     %li.row
       .small-10.medium-8.columns
-        =instance.date
+        =l instance.date
         =link_to instance.name, instance.event
         - if instance.cancelled?
           Cancelled

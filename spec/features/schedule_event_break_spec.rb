@@ -25,7 +25,7 @@ RSpec.feature "Admin schedules a break", type: :feature do
       @end_date = Date.today + 2
       given_an_existing_weekly_repeating_event
       when_i_schedule_an_ending
-      expect(page).to have_content 'must be after 2016-09-16'
+      expect(page).to have_content "can't be before start date (16/09/2016)"
     end
   end
 end

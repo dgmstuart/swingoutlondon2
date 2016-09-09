@@ -99,7 +99,7 @@ RSpec.describe EventCreator do
 
           result = described_class.new(event_instance_generator).call(fake_event_form, false)
 
-          expect(result.message).to eq "New event created. 1 instance created: 2012-12-22"
+          expect(result.message).to eq "New event created. 1 instance created: 22/12/2012"
         end
       end
 
@@ -116,7 +116,7 @@ RSpec.describe EventCreator do
 
           result = described_class.new(event_instance_generator).call(fake_event_form, false)
 
-          expect(result.message).to eq "New event created. 4 instances created: 2012-12-17, 2012-12-22, 2013-01-07, 2013-01-14"
+          expect(result.message).to eq "New event created. 4 instances created: 17/12/2012, 22/12/2012, 07/01/2013, 14/01/2013"
         end
       end
 

@@ -22,7 +22,7 @@ module SchedulingSteps
   end
 
   def then_the_period_is_shown_as_ended
-    expect(page).to have_text "Ended: #{@end_date.to_s}"
+    expect(page).to have_text "Ended: #{I18n.l(@end_date)}"
     expect(page).to_not have_link(end_period_link)
   end
 
@@ -38,13 +38,12 @@ module SchedulingSteps
   end
 
   def and_the_previous_period_is_shown_as_ended
-    expect(page).to have_text "Ended: #{@new_start_date.to_s}"
+    expect(page).to have_text "Ended: #{I18n.l @new_start_date}"
   end
 
   def then_i_should_see_an_error(message)
     expect(page).to have_text message
   end
-
 
   def end_date_field
     "event_period[end_date]"

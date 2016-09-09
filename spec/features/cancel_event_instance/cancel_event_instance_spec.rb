@@ -21,7 +21,6 @@ RSpec.feature "Admin cancels an event instance", type: :feature do
     and_that_date_should_be_displayed_as_cancelled_in_the_event_instance_list
   end
 
-  # TODO: Would it be better to go through the process of creating an event explicitly?
   def given_an_existing_event_instance
     test_instance = Fabricate.times(3, :event_instance)[1]
 
@@ -41,7 +40,7 @@ RSpec.feature "Admin cancels an event instance", type: :feature do
     visit "/events"
     click_link @event_name
 
-    within event_instance_group_on_event_page(@event_date.to_s) do
+    within event_instance_group_on_event_page(@event_date) do
       click_button "Cancel"
     end
   end

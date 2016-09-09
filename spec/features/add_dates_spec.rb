@@ -44,8 +44,8 @@ RSpec.feature "Admin adds dates to an event:" do
   end
 
   def then_those_dates_should_display_on_the_events_page
-    expect(page).to have_content "2001-01-22"
-    expect(page).to have_content "2001-01-23"
+    expect(page).to have_content "22/01/2001"
+    expect(page).to have_content "23/01/2001"
   end
 
   def when_i_add_an_invalid_date_to_the_event

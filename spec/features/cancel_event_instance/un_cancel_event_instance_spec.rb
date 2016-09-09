@@ -38,7 +38,7 @@ RSpec.feature "Admin un-cancels an event instance", type: :feature do
     visit "/events"
     click_link @event_name
 
-    within event_instance_group_on_event_page(@event_date.to_s) do
+    within event_instance_group_on_event_page(@event_date) do
       click_button "Uncancel"
     end
   end
