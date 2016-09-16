@@ -17,7 +17,7 @@ gem 'jquery-rails'
 
 gem 'devise', '>= 4.2.0'
 gem 'foundation-rails', '< 6'
-gem 'foundation_rails_helper'
+gem 'foundation_rails_helper', '< 3'
 gem 'foundation-icons-sass-rails'
 gem 'date_validator'
 gem 'haml-rails'
