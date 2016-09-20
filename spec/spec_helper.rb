@@ -24,4 +24,4 @@ RSpec.configure do |config|
   config.example_status_persistence_file_path = '/tmp/rspec_failures'
 end
 
-$LOAD_PATH << File.expand_path("../../", __FILE__)
+$LOAD_PATH << File.expand_path('../../', __FILE__)

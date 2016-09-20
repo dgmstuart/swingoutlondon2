@@ -23,19 +23,18 @@ class DanceClassesController < ApplicationController
     @dance_class = DanceClass.new(dance_class_params)
 
     # if @dance_class.save
-      @dance_class.save
-      flash[:success] = "New dance class created"
-      redirect_to @dance_class
+    @dance_class.save
+    flash[:success] = 'New dance class created'
+    redirect_to @dance_class
     # else
     #   setup_venues
     #   render :new
     # end
   end
 
-private
+  private
 
   def dance_class_params
     params.require(:dance_class).permit(:day, :venue_id)
   end
-
 end

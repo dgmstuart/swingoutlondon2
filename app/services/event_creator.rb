@@ -38,7 +38,7 @@ class EventCreator
       "New event created. #{dates_message}"
     end
 
-  private
+    private
 
     def dates_message
       case @dates.count
@@ -49,7 +49,7 @@ class EventCreator
     end
 
     def date_string
-      @dates.map{|d| I18n.l(d)}.join(", ") # TODO: Better way of doing this - in one step?
+      @dates.map { |d| I18n.l(d) }.join(', ') # TODO: Better way of doing this - in one step?
     end
   end
 

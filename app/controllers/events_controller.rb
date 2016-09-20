@@ -40,7 +40,7 @@ class EventsController < ApplicationController
     end
   end
 
-private
+  private
 
   def event_form_params
     params.require(:event_form).permit(
@@ -50,8 +50,7 @@ private
       :start_date,
       :venue_id,
       :create_venue,
-      venue: [ :name, :address, :postcode, :url ]
+      venue: [:name, :address, :postcode, :url]
     )
   end
-
 end

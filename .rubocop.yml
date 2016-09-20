@@ -1,0 +1,23 @@
+inherit_from: .rubocop_todo.yml
+
+AllCops:
+  TargetRubyVersion: 2.3
+  Include:
+    - Rakefile
+    - config.ru
+    - lib/**/*.rake
+  Exclude:
+    - db/schema.rb
+    - db/migrate/*.rb
+
+Rails:
+    Enabled: true
+
+Style/FrozenStringLiteralComment:
+    Enabled: false
+
+Style/TrailingCommaInLiteral:
+    EnforcedStyleForMultiline: comma
+
+Style/Documentation:
+    Enabled: false

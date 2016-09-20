@@ -10,34 +10,34 @@ require 'date_validator'
 require 'timecop'
 
 RSpec.describe EventForm, type: :model do
-  describe ".name" do
+  describe '.name' do
     it "returns the value of the 'name' attribute" do
       name = double
       expect(EventForm.new(name: name).name).to eq name
     end
   end
 
-  describe ".url" do
+  describe '.url' do
     it "returns the value of the 'url' attribute" do
       url = double
       expect(EventForm.new(url: url).url).to eq url
     end
   end
 
-  describe ".frequency" do
+  describe '.frequency' do
     it "returns the value of the 'frequency' attribute" do
       frequency = double
       expect(EventForm.new(frequency: frequency).frequency).to eq frequency
     end
   end
 
-  describe ".start_date" do
+  describe '.start_date' do
     it "returns a date based on the 'start_date' attribute" do
-      expect(EventForm.new(start_date: "13 March, 2016").start_date).to eq Date.new(2016, 03, 13)
+      expect(EventForm.new(start_date: '13 March, 2016').start_date).to eq Date.new(2016, 03, 13)
     end
 
     it "returns nil if the start date couldn't be parsed" do
-      expect(EventForm.new(start_date: "130th jubevember, 20frumpteen").start_date).to eq nil
+      expect(EventForm.new(start_date: '130th jubevember, 20frumpteen').start_date).to eq nil
     end
   end
 
@@ -48,87 +48,87 @@ RSpec.describe EventForm, type: :model do
   #   end
   # end
 
-  describe ".venue_id" do
+  describe '.venue_id' do
     it "returns the value of the 'venue_id' attribute as an integer" do
-      expect(EventForm.new(venue_id: "123").venue_id).to eq 123
+      expect(EventForm.new(venue_id: '123').venue_id).to eq 123
     end
 
     it "returns nil if 'venue_id' is blank" do
-      expect(EventForm.new(venue_id: "").venue_id).to eq nil
+      expect(EventForm.new(venue_id: '').venue_id).to eq nil
     end
 
     it "returns the venue's ID id a venue is present and create_venue is true" do
-      params = { venue: instance_double("Venue", id: 456), create_venue: true }
+      params = { venue: instance_double('Venue', id: 456), create_venue: true }
       expect(EventForm.new(params).venue_id)
         .to eq 456
     end
   end
 
-  describe "Validations:" do
-    shared_examples_for "validates presence of" do |attribute|
-      it "validates presence of #{attribute.to_s}" do
+  describe 'Validations:' do
+    shared_examples_for 'validates presence of' do |attribute|
+      it "validates presence of #{attribute}" do
         form = EventForm.new
         form.valid?
         expect(form.errors.messages).to include(attribute => ["can't be blank"])
       end
     end
 
-    it_behaves_like "validates presence of", :name
-    it_behaves_like "validates presence of", :url
-    it_behaves_like "validates presence of", :frequency
-    it_behaves_like "validates presence of", :start_date
+    it_behaves_like 'validates presence of', :name
+    it_behaves_like 'validates presence of', :url
+    it_behaves_like 'validates presence of', :frequency
+    it_behaves_like 'validates presence of', :start_date
 
-    it "is invalid if the url is not valid" do
-      form = EventForm.new(url: "nonsense.qux")
+    it 'is invalid if the url is not valid' do
+      form = EventForm.new(url: 'nonsense.qux')
       form.valid?
-      expect(form.errors.messages).to include(:url => ["must be a valid URL"])
+      expect(form.errors.messages).to include(url: ['must be a valid URL'])
     end
 
     it "validates that start_date isn't too obviously old" do
-      Timecop.freeze(Date.new(2016,01,01)) do
-        form = EventForm.new(start_date: "13 April 2015")
+      Timecop.freeze(Date.new(2016, 01, 01)) do
+        form = EventForm.new(start_date: '13 April 2015')
         form.valid?
-        expect(form.errors.messages).to include(:start_date => ["can't be more than 6 months in the past"])
+        expect(form.errors.messages).to include(start_date: ["can't be more than 6 months in the past"])
       end
     end
 
     it "validates that start_date isn't clearly too far in the future" do
-      Timecop.freeze(Date.new(2016,01,01)) do
-        form = EventForm.new(start_date: "13 April 2017")
+      Timecop.freeze(Date.new(2016, 01, 01)) do
+        form = EventForm.new(start_date: '13 April 2017')
         form.valid?
-        expect(form.errors.messages).to include(:start_date => ["can't be more than one year in the future"])
+        expect(form.errors.messages).to include(start_date: ["can't be more than one year in the future"])
       end
     end
 
     context "if a new venue isn't being created" do
-      it "is valid if there is a venue_id" do
-        form = EventForm.new(venue_id: "23")
+      it 'is valid if there is a venue_id' do
+        form = EventForm.new(venue_id: '23')
         form.valid?
         expect(form.errors.messages.keys).to_not include(:venue_id)
         expect(form.errors.messages.keys).to_not include(:venue)
       end
 
-      it "is invalid if there is no venue_id and no venue details" do
+      it 'is invalid if there is no venue_id and no venue details' do
         form = EventForm.new
         form.valid?
-        expect(form.errors.messages).to include(:venue_id => ["can't be blank"])
+        expect(form.errors.messages).to include(venue_id: ["can't be blank"])
       end
     end
 
-    context "if a new venue IS being created" do
-      it "is invalid if the venue details are invalid" do
+    context 'if a new venue IS being created' do
+      it 'is invalid if the venue details are invalid' do
         form = EventForm.new(venue: double(id: 17, valid?: false), create_venue: true)
         form.valid?
-        expect(form.errors.messages).to include(:venue => ["is invalid"])
+        expect(form.errors.messages).to include(venue: ['is invalid'])
       end
 
-      it "is invalid if there is a venue_id but no venue details" do
-        form = EventForm.new(venue_id: "14", create_venue: true)
+      it 'is invalid if there is a venue_id but no venue details' do
+        form = EventForm.new(venue_id: '14', create_venue: true)
         form.valid?
-        expect(form.errors.messages).to include(:venue => ["is invalid"])
+        expect(form.errors.messages).to include(venue: ['is invalid'])
       end
 
-      it "is valid if there is a valid venue" do
+      it 'is valid if there is a valid venue' do
         form = EventForm.new(venue: double(id: 17, valid?: true), create_venue: true)
         form.valid?
         expect(form.errors.messages.keys).to_not include(:venue_id)
@@ -141,7 +141,6 @@ RSpec.describe EventForm, type: :model do
     #   form.valid?
     #   expect(form.errors.messages).to include(venue: ["You must choose a venue id OR new venue details, but not both"])
     # end
-
 
     # TODO: Validate whether the venue_id is real or not.
     # Not sure this can be done without requiring Rails
@@ -160,16 +159,15 @@ RSpec.describe EventForm, type: :model do
     # end
   end
 
-  describe ".errors" do
+  describe '.errors' do
     it "responds to 'any?'" do
-      expect{ EventForm.new.errors.any? }.to_not raise_error
+      expect { EventForm.new.errors.any? }.to_not raise_error
     end
   end
 
-  describe "#model_name" do
-    it "returns the name of the form" do
-      expect(EventForm.new.model_name.name).to eq "EventForm"
+  describe '#model_name' do
+    it 'returns the name of the form' do
+      expect(EventForm.new.model_name.name).to eq 'EventForm'
     end
   end
 end
-

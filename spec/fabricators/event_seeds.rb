@@ -3,4 +3,3 @@ Fabricator(:event_seed) do
   venue
   event
 end
-

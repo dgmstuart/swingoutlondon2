@@ -1,5 +1,4 @@
 module CancellationHelper
-
   def cancel_button_for(record, content_or_options = nil, options = nil, &block)
     form_for record, url: cancellations_path, method: :post do |f|
       concat f.hidden_field :id, value: record.id

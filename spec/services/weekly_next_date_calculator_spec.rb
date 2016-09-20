@@ -3,7 +3,7 @@ require 'timecop'
 require 'app/services/weekly_next_date_calculator'
 
 RSpec.describe WeeklyNextDateCalculator do
-  describe "#next_date" do
+  describe '#next_date' do
     subject(:next_date) { calculator.next_date(start_date) }
     let(:calculator) { described_class.new }
 
@@ -11,7 +11,7 @@ RSpec.describe WeeklyNextDateCalculator do
     before { Timecop.freeze(today) }
     after { Timecop.return }
 
-    context "and the start_date is today" do
+    context 'and the start_date is today' do
       let(:start_date) { today }
       it { is_expected.to eq today }
     end

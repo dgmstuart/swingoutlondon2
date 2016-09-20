@@ -6,12 +6,12 @@ class EventPeriod < ActiveRecord::Base
   validates :event_seed, presence: true
   validates :frequency, presence: true
   validates :start_date, presence: true,
-    date: {
-      after: Proc.new { Date.today- 6.months },
-      before: Proc.new { Date.today + 1.year },
-      allow_blank: true,
-      on: :create,
-    }
+                         date: {
+                           after: proc { Time.zone.today - 6.months },
+                           before: proc { Time.zone.today + 1.year },
+                           allow_blank: true,
+                           on: :create,
+                         }
   validates :end_date, date: { allow_blank: true }
   validate :end_date_is_after_start_date
 
@@ -34,6 +34,6 @@ class EventPeriod < ActiveRecord::Base
   end
 
   def self.generate_all
-    all.each(&:generate)
+    all.find_each(&:generate)
   end
 end

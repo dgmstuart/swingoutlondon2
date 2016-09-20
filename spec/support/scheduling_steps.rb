@@ -17,7 +17,7 @@ module SchedulingSteps
   def when_i_schedule_an_ending
     click_link end_period_link
 
-    fill_in end_date_field,     with: @end_date
+    fill_in end_date_field, with: @end_date
     click_button 'Submit' # TODO: use a better name!
   end
 
@@ -28,13 +28,13 @@ module SchedulingSteps
 
   def when_i_schedule_a_new_period
     click_link 'New period'
-    fill_in start_date_field,   with: @new_start_date
+    fill_in start_date_field, with: @new_start_date
     select 'Weekly', from: frequency_select
     click_button 'Submit' # TODO: use a better name!
   end
 
   def then_a_new_period_is_shown_as_starting
-    expect(page).to have_text "Started: #{@new_start_date.to_s}"
+    expect(page).to have_text "Started: #{@new_start_date}"
   end
 
   def and_the_previous_period_is_shown_as_ended
@@ -46,15 +46,15 @@ module SchedulingSteps
   end
 
   def end_date_field
-    "event_period[end_date]"
+    'event_period[end_date]'
   end
 
   def start_date_field
-    "event_period[start_date]"
+    'event_period[start_date]'
   end
 
   def frequency_select
-    "event_period[frequency]"
+    'event_period[frequency]'
   end
 
   def end_period_link

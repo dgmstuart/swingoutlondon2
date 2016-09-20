@@ -27,7 +27,6 @@ gem 'cocoon'
 gem 'pickadate-rails'
 gem 'select2-rails', '< 4'
 
-
 group :development do
   gem 'spring'
   gem 'spring-commands-rspec'
@@ -39,6 +38,7 @@ group :development do
   gem 'rb-fchange', require: false
   gem 'rb-fsevent', require: false
   gem 'rb-inotify', require: false
+  gem 'rubocop', require: false
 end
 
 group :test do
@@ -64,6 +64,3 @@ group :production do
   gem 'unicorn'
   gem 'rails_12factor' # To enable heroku logging and static assets
 end
-
-
-

@@ -47,7 +47,6 @@ class EventPeriodsController < ApplicationController
     end
   end
 
-
   private def event_period_params
     params.require(:event_period).permit(
       :start_date,

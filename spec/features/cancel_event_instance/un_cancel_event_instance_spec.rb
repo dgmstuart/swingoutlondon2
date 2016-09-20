@@ -1,17 +1,17 @@
-RSpec.feature "Admin un-cancels an event instance", type: :feature do
+RSpec.feature 'Admin un-cancels an event instance', type: :feature do
   before do
     user = Fabricate.create(:user)
     login_as(user, scope: :user)
   end
 
-  scenario "from the event page" do
+  scenario 'from the event page' do
     given_an_existing_cancelled_event_instance
     when_i_mark_the_cancelled_date_as_not_cancelled_on_the_event_page
     then_that_date_should_not_be_displayed_as_cancelled
     and_that_date_should_not_be_displayed_as_cancelled_in_the_event_instance_list
   end
 
-  scenario "from the event page, for a past event instance" do
+  scenario 'from the event page, for a past event instance' do
     given_an_existing_cancelled_event_instance_in_the_past
     when_i_mark_the_cancelled_date_as_not_cancelled_on_the_event_page
     then_that_date_should_not_be_displayed_as_cancelled
@@ -35,23 +35,23 @@ RSpec.feature "Admin un-cancels an event instance", type: :feature do
   end
 
   def when_i_mark_the_cancelled_date_as_not_cancelled_on_the_event_page
-    visit "/events"
+    visit '/events'
     click_link @event_name
 
     within event_instance_group_on_event_page(@event_date) do
-      click_button "Uncancel"
+      click_button 'Uncancel'
     end
   end
 
   def then_that_date_should_not_be_displayed_as_cancelled
     within event_instance_group_on_event_page(@event_date) do
-      expect(page).to_not have_content "Cancelled"
-      expect(page).to have_button "Cancel"
+      expect(page).to_not have_content 'Cancelled'
+      expect(page).to have_button 'Cancel'
     end
   end
 
   def and_that_date_should_not_be_displayed_as_cancelled_in_the_event_instance_list
-    visit "/event_instances"
-    expect(event_instance_group_in_event_instances_list(@event_date)).to_not have_content "Cancelled"
+    visit '/event_instances'
+    expect(event_instance_group_in_event_instances_list(@event_date)).to_not have_content 'Cancelled'
   end
 end

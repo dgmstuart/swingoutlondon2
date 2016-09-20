@@ -5,19 +5,19 @@ class WeeklyNextDateCalculator
     date = OffsetDate.new(start_date)
     return date if date.today_or_in_the_future?
 
-    Date.today + date.offset
+    Time.zone.today + date.offset
   end
 
   class OffsetDate < SimpleDelegator
     def offset
-      (self - Date.today) % 7
+      (self - Time.zone.today) % 7
 
       # TODO: test this alternate approach for performance:
-      # offset = ( ( @start_date.wday - Date.today.wday) % 7 )
+      # offset = ( ( @start_date.wday - Time.zone.today.wday) % 7 )
     end
 
     def today_or_in_the_future?
-      self >= Date.today
+      self >= Time.zone.today
     end
   end
 end

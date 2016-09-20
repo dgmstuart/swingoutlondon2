@@ -11,10 +11,12 @@ class EventInstanceGenerator
   end
 end
 
-class EventInstanceGenerator::Result
-  attr_reader :created_dates
+class EventInstanceGenerator
+  class Result
+    attr_reader :created_dates
 
-  def initialize(created_dates)
-    @created_dates = created_dates
+    def initialize(created_dates)
+      @created_dates = created_dates
+    end
   end
 end

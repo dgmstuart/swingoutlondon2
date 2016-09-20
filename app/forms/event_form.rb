@@ -19,27 +19,28 @@ class EventForm
   validate :start_date_isnt_too_old
   validate :start_date_isnt_too_far_future
 
-  validates :venue_id, presence: true,  if: "!create_venue"
-  validate :venue_is_valid, if: "create_venue"
+  validates :venue_id, presence: true, if: '!create_venue'
+  validate :venue_is_valid, if: 'create_venue'
 
   def venue_is_valid
-    errors.add(:venue, "is invalid") unless venue && venue.valid?
+    errors.add(:venue, 'is invalid') unless venue && venue.valid?
   end
 
   def start_date_isnt_too_old
     return if start_date.nil?
-    errors.add(:start_date, "can't be more than 6 months in the past") if start_date < Date.today - 183
+    errors.add(:start_date, "can't be more than 6 months in the past") if start_date < Time.zone.today - 183
   end
 
   def start_date_isnt_too_far_future
     return if start_date.nil?
-    errors.add(:start_date, "can't be more than one year in the future") if start_date > Date.today + 365
+    errors.add(:start_date, "can't be more than one year in the future") if start_date > Time.zone.today + 365
   end
 
   def start_date
     return nil if @start_date.nil?
     Date.parse(@start_date)
   rescue ArgumentError
+    nil
   end
 
   def venue_id

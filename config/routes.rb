@@ -11,7 +11,7 @@ Swingoutlondon2::Application.routes.draw do
 
   resources :dance_classes, only: [:index, :show, :new, :create]
 
-  resources :venues, only: [ :index ]
+  resources :venues, only: [:index]
 
-  root to: "event_instances#index"
+  root to: 'event_instances#index'
 end

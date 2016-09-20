@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.feature "Admin deletes an event instance", type: :feature do
+RSpec.feature 'Admin deletes an event instance', type: :feature do
   given(:event_instance) { Fabricate.create(:event_instance) }
 
   before do
@@ -8,7 +8,7 @@ RSpec.feature "Admin deletes an event instance", type: :feature do
     login_as(user, scope: :user)
   end
 
-  scenario "from the event page" do
+  scenario 'from the event page' do
     given_an_event_instance
     when_i_delete_that_instance_from_the_events_page
     then_that_event_does_not_display_on_the_events_page
@@ -20,22 +20,22 @@ RSpec.feature "Admin deletes an event instance", type: :feature do
   end
 
   def when_i_delete_that_instance_from_the_events_page
-    visit "/events"
+    visit '/events'
     click_link event_instance.name
     within event_instance_group_on_event_page(event_instance.date) do
-      click_button "Bin"
+      click_button 'Bin'
     end
   end
 
   def then_that_event_does_not_display_on_the_events_page
     expect(page).to have_text "Event instance deleted: #{event_instance.name} on #{I18n.l event_instance.date}"
-    within ".event_instances" do
+    within '.event_instances' do
       expect(page).to_not have_text event_instance.date.to_s
     end
   end
 
   def and_that_event_does_not_display_in_the_event_instances_list
-    visit "/event_instances"
+    visit '/event_instances'
     expect(page).to_not have_text event_instance.date.to_s
   end
 end

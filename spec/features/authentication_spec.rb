@@ -1,9 +1,9 @@
 require 'rails_helper'
 
-RSpec.feature "Logged Out User tries to access a page:" do
+RSpec.feature 'Logged Out User tries to access a page:' do
   let(:event) { Fabricate.create(:event) }
   {
-    "event_instances" => "Event Instances",
+    'event_instances' => 'Event Instances',
   }.each do |path, text|
     scenario path do
       visit path
@@ -11,16 +11,16 @@ RSpec.feature "Logged Out User tries to access a page:" do
     end
   end
 
-  # TODO - find a better way to do this
+  # TODO: - find a better way to do this
   {
-    "new_event_date" => ->(id) { "/events/#{id}/dates/new" },
-    "list_events"    => ->(id) { "/events" },
-    "new_event"      => ->(id) { "/events/new" },
-    "show_event"     => ->(id) { "/events/#{id}" },
+    'new_event_date' => ->(id) { "/events/#{id}/dates/new" },
+    'list_events'    => ->(_id) { '/events' },
+    'new_event'      => ->(_id) { '/events/new' },
+    'show_event'     => ->(id) { "/events/#{id}" },
     # "list_dance_classes"    => ->(id) { "/dance_classes" },
-    "new_dance_class"      => ->(id) { "/dance_classes/new" },
+    'new_dance_class' => ->(_id) { '/dance_classes/new' },
     # "show_dance_class"     => ->(id) { "/dance_classes/#{id}" },
-    "list_venues"    => ->(id) { "/venues" },
+    'list_venues' => ->(_id) { '/venues' },
   }.each do |name, path|
     scenario name do
       visit path.call(event.to_param)
@@ -32,14 +32,14 @@ RSpec.feature "Logged Out User tries to access a page:" do
   #   cancel_event
 end
 
-RSpec.feature "Logged Out User logs in" do
+RSpec.feature 'Logged Out User logs in' do
   let(:user) { Fabricate.create(:user) }
-  scenario "with valid details" do
+  scenario 'with valid details' do
     when_i_sign_in_with_valid_details
     then_i_should_be_logged_in
   end
 
-  scenario "with an invalid password" do
+  scenario 'with an invalid password' do
     when_i_sign_in_with_an_invalid_password
     then_i_should_not_be_logged_in
   end
@@ -49,11 +49,11 @@ RSpec.feature "Logged Out User logs in" do
   end
 
   def when_i_sign_in_with_an_invalid_password
-    sign_in_with(user.email, "nonsense")
+    sign_in_with(user.email, 'nonsense')
   end
 
   def when_i_sign_in_with_an_invalid_email_address
-    sign_in_with("foo@bar.com", user.password)
+    sign_in_with('foo@bar.com', user.password)
   end
 
   def then_i_should_not_be_logged_in
@@ -66,10 +66,9 @@ RSpec.feature "Logged Out User logs in" do
   end
 
   def sign_in_with(email, password)
-    visit "/users/sign_in"
+    visit '/users/sign_in'
     fill_in 'Email', with: email
     fill_in 'Password', with: password
     click_button 'Log in'
   end
 end
-

@@ -8,5 +8,5 @@ class Event < ActiveRecord::Base
   accepts_nested_attributes_for :event_seeds
 
   validates :name, presence: true
-  # TODO - need to separately reject totally missing generators/seeds?
+  # TODO: - need to separately reject totally missing generators/seeds?
 end
