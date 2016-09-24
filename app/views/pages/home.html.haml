@@ -21,4 +21,4 @@
             %ul
               - date.socials.each do |social|
                 %li
-                  = social.name
+                  = link_to social.name, social.url

@@ -47,15 +47,24 @@ RSpec.feature 'Homepage' do
 
         within '#1983-04-03' do
           expect(page).to have_content('TODAY: Sunday 3rd April')
-          expect(page).to have_content(today_event.event_seed.event.name)
+          expect(page).to have_link(
+            today_event.event_seed.event.name,
+            href: today_event.url
+          )
         end
         within '#1983-04-04' do
           expect(page).to have_content('TOMORROW: Monday 4th April')
-          expect(page).to have_content(tomorrow_event.event_seed.event.name)
+          expect(page).to have_link(
+            tomorrow_event.event_seed.event.name,
+            href: tomorrow_event.url
+          )
         end
         within '#1983-04-08' do
           expect(page).to have_content('Friday 8th April')
-          expect(page).to have_content(future_event.event_seed.event.name)
+          expect(page).to have_link(
+            future_event.event_seed.event.name,
+            href: future_event.url
+          )
         end
 
         expect(page).to_not have_content('Saturday 2nd April')
