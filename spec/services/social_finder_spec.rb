@@ -19,5 +19,16 @@ RSpec.describe SocialFinder do
       }
       expect(described_class.new.by_date).to eq(expected_result)
     end
+
+    it 'only returns socials for the next 14 days' do
+      _social_yesterday = Fabricate.create(:event_instance, date: Time.zone.yesterday)
+      social_in_14_days = Fabricate.create(:event_instance, date: Time.zone.today + 13)
+      _social_in_15_days = Fabricate.create(:event_instance, date: Time.zone.today + 14)
+
+      expected_result = {
+        Time.zone.today + 13 => [social_in_14_days],
+      }
+      expect(described_class.new.by_date).to eq(expected_result)
+    end
   end
 end

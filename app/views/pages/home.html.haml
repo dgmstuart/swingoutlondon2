@@ -1,21 +1,24 @@
-%ul
-  - @listing_dance_classes.days.each do |day|
-    %li{ id: day.as_id }
-      = day.title
-      - if day.classes.any?
-        %ul
-          - day.classes.each do |dance_class|
-            %li
-              = dance_class.venue.postcode
-      - else
-        = t('classes.none')
+.row
+  .columns.small-12.large-6
+    %ul.no-bullet
+      - @listing_dance_classes.days.each do |day|
+        %li{ id: day.as_id }
+          %h3= day.title
+          - if day.classes.any?
+            %ul
+              - day.classes.each do |dance_class|
+                %li
+                  = dance_class.venue.postcode
+          - else
+            = t('classes.none')
 
-%ul
-  - @listing_socials.dates.each do |date|
-    - if date.socials.any?
-      %li{ id: date.as_id }
-        = date.title
-        %ul
-          - date.socials.each do |social|
-            %li
-              = social.name
+  .columns.small-12.large-6
+    %ul.no-bullet
+      - @listing_socials.dates.each do |date|
+        - if date.socials.any?
+          %li{ id: date.as_id }
+            %h3= date.title
+            %ul
+              - date.socials.each do |social|
+                %li
+                  = social.name

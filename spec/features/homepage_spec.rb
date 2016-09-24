@@ -8,10 +8,11 @@ RSpec.feature 'Homepage' do
       tuesday_class = Fabricate.create(:dance_class, day: 2)
       wednesday_class = Fabricate.create(:dance_class, day: 3)
 
-      _past_event = Fabricate.create(:event_instance, date: Date.yesterday)
+      past_event = Fabricate.create(:event_instance, date: Date.yesterday)
       today_event = Fabricate.create(:event_instance, date: Time.zone.today)
       tomorrow_event = Fabricate.create(:event_instance, date: Date.tomorrow)
       future_event = Fabricate.create(:event_instance, date: Time.zone.today + 5)
+      far_future_event = Fabricate.create(:event_instance, date: Time.zone.today + 15)
 
       visit '/'
       aggregate_failures do
@@ -56,6 +57,12 @@ RSpec.feature 'Homepage' do
           expect(page).to have_content('Friday 8th April')
           expect(page).to have_content(future_event.event_seed.event.name)
         end
+
+        expect(page).to_not have_content('Saturday 2nd April')
+        expect(page).to_not have_content(past_event.event_seed.event.name)
+
+        expect(page).to_not have_content('Monday 18th April')
+        expect(page).to_not have_content(far_future_event.event_seed.event.name)
       end
     end
   end
