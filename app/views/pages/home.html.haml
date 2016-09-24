@@ -16,7 +16,7 @@
     %ul.no-bullet
       - @listing_socials.dates.each do |date|
         - if date.socials.any?
-          %li{ id: date.as_id }
+          %li{ id: date.as_id, class: ('panel' if date.today?) }
             %h3= date.title
             %ul
               - date.socials.each do |social|
