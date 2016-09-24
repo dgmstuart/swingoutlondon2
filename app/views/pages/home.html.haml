@@ -1,0 +1,11 @@
+%ul
+  - @listing_dance_classes.days.each do |day|
+    %li{ id: day.as_id }
+      = day.title
+      - if day.classes.any?
+        %ul
+          - day.classes.each do |dance_class|
+            %li
+              = dance_class.venue.postcode
+      - else
+        = t('classes.none')

@@ -28,5 +28,6 @@ module Swingoutlondon2
     config.i18n.load_path += Dir[Rails.root.join('vendor', 'date_validator', 'locales', '*.{rb,yml}').to_s]
 
     config.autoload_paths += [Rails.root.join('app', 'validators').to_s]
+    config.autoload_paths += [Rails.root.join('app', 'facades').to_s]
   end
 end
