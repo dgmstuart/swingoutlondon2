@@ -52,8 +52,8 @@ RSpec.feature 'Homepage' do
           expect(page).to have_content('TOMORROW: Monday 4th April')
           expect(page).to have_content(tomorrow_event.event_seed.event.name)
         end
-        within '#1983-04-09' do
-          expect(page).to have_content('Friday 9th April')
+        within '#1983-04-08' do
+          expect(page).to have_content('Friday 8th April')
           expect(page).to have_content(future_event.event_seed.event.name)
         end
       end

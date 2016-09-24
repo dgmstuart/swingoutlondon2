@@ -9,3 +9,13 @@
               = dance_class.venue.postcode
       - else
         = t('classes.none')
+
+%ul
+  - @listing_socials.dates.each do |date|
+    - if date.socials.any?
+      %li{ id: date.as_id }
+        = date.title
+        %ul
+          - date.socials.each do |social|
+            %li
+              = social.name
