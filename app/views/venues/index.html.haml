@@ -2,4 +2,4 @@
 = render partial: "common/sieve_search_box"
 %ul.no-bullet.sieve
   - @venues.each do | venue |
-    %li= venue.name
+    %li= "#{venue.postcode} - #{venue.name}"
