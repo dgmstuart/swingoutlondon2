@@ -21,9 +21,17 @@ class ListingSocials
     end
 
     def title
-      return "TODAY: #{formatted_date}" if @date == Time.zone.today
-      return "TOMORROW: #{formatted_date}" if @date == Time.zone.tomorrow
+      return "TODAY: #{formatted_date}" if today?
+      return "TOMORROW: #{formatted_date}" if tomorrow?
       formatted_date
+    end
+
+    def today?
+      @date == Time.zone.today
+    end
+
+    def tomorrow?
+      @date == Time.zone.tomorrow
     end
 
     private

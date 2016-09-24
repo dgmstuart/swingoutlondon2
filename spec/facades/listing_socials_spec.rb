@@ -38,6 +38,8 @@ RSpec.describe ListingSocials do
         item = described_class.new(fake_social_finder).dates.first
         expect(item.as_id).to eq '1983-12-23'
         expect(item.title).to eq 'TODAY: Friday 23rd December'
+        expect(item.today?).to eq true
+        expect(item.tomorrow?).to eq false
       end
     end
 
@@ -62,6 +64,8 @@ RSpec.describe ListingSocials do
         item = described_class.new(fake_social_finder).dates.first
         expect(item.as_id).to eq '1983-12-24'
         expect(item.title).to eq 'TOMORROW: Saturday 24th December'
+        expect(item.today?).to eq false
+        expect(item.tomorrow?).to eq true
       end
     end
 
@@ -86,6 +90,8 @@ RSpec.describe ListingSocials do
         item = described_class.new(fake_social_finder).dates.first
         expect(item.as_id).to eq '1983-12-30'
         expect(item.title).to eq 'Friday 30th December'
+        expect(item.today?).to eq false
+        expect(item.tomorrow?).to eq false
       end
     end
   end
