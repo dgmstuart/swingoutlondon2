@@ -16,6 +16,7 @@ class ListingDanceClasses
 
   class Day
     def initialize(day_number, dance_classes)
+      @day_number = day_number
       @day_name = Date::DAYNAMES[day_number]
       @dance_classes = dance_classes
     end
@@ -30,6 +31,10 @@ class ListingDanceClasses
 
     def classes
       @dance_classes
+    end
+
+    def today?
+      Time.zone.today.wday == @day_number
     end
   end
 end

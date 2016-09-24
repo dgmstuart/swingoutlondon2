@@ -2,7 +2,7 @@
   .columns.small-12.large-6
     %ul.no-bullet
       - @listing_dance_classes.days.each do |day|
-        %li{ id: day.as_id }
+        %li{ id: day.as_id, class: ('panel' if day.today?) }
           %h3= day.title
           - if day.classes.any?
             %ul

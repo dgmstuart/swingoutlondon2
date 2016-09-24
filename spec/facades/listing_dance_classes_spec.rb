@@ -1,4 +1,6 @@
 require 'spec_helper'
+require 'timecop'
+require 'active_support/core_ext/time' # So we can use Time.zone.today
 require 'app/facades/listing_dance_classes'
 
 RSpec.describe ListingDanceClasses do
@@ -9,6 +11,7 @@ RSpec.describe ListingDanceClasses do
   end
 
   before do
+    Time.zone = 'Europe/London'
     stub_const('DanceClassFinder', FakeDanceClassFinder)
   end
 
@@ -137,6 +140,22 @@ RSpec.describe ListingDanceClasses do
       )
       item = described_class.new(fake_dance_class_finder).days[6]
       expect(item.classes).to eq sunday_dance_classes
+    end
+
+    it 'exposes when the day is today' do
+      black_monday = Date.new(1987, 10, 19)
+      Timecop.freeze(black_monday) do
+        item = described_class.new.days.first
+        expect(item.today?).to eq true
+      end
+    end
+
+    it 'exposes when the day is not today' do
+      black_monday = Date.new(1987, 10, 19)
+      Timecop.freeze(black_monday) do
+        item = described_class.new.days[1]
+        expect(item.today?).to eq false
+      end
     end
   end
 end
