@@ -1,7 +1,10 @@
 require 'spec_helper'
+require 'active_support/core_ext/time/zones' # So that we can use Time.zone.now
 require 'app/services/event_creator'
 
 RSpec.describe EventCreator do
+  before { Time.zone = 'London' }
+
   context 'when the event was successfully created' do
     before do
       stub_const('Event', fake_event_klass)
