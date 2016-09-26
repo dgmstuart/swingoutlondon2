@@ -7,6 +7,7 @@ class EventSeed < ActiveRecord::Base
   accepts_nested_attributes_for :event_periods
   accepts_nested_attributes_for :venue
 
+  validates :name, presence: true
   validates :url, presence: true, url: { allow_blank: true }
   validates :event, presence: true
   validates :venue, presence: true

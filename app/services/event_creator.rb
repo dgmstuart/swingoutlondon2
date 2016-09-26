@@ -6,7 +6,7 @@ class EventCreator
   def call(event_form, create_venue)
     if event_form.valid?
       event_form.venue.save! if create_venue
-      event                    = create_event(event_form)
+      event                    = create_event
       event_seed               = create_event_seed(event, event_form)
       event_period             = create_event_period(event_seed, event_form)
       instance_creation_result = @event_instance_generator.call(event_period)
@@ -18,13 +18,14 @@ class EventCreator
 
   private
 
-  def create_event(event_form)
-    Event.create!(name: event_form.name)
+  def create_event
+    Event.create!
   end
 
   def create_event_seed(event, event_form)
     EventSeed.create! \
       event: event,
+      name: event_form.name,
       url: event_form.url,
       venue_id: event_form.venue_id
   end

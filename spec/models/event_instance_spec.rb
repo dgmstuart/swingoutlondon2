@@ -20,6 +20,7 @@ RSpec.describe EventInstance, 'Inheritance', type: :model do
   let(:event_seed_attribute) { event_instance.event_seed.public_send(attribute) }
   let(:event_attribute) { event_instance.event_seed.event.public_send(attribute) }
   [
+    :name,
     :url,
     :venue,
   ].each do |attrib|
@@ -28,19 +29,6 @@ RSpec.describe EventInstance, 'Inheritance', type: :model do
       let(:event_instance) { Fabricate.build(:event_instance, attribute => nil) }
       it "should inherit #{attrib} from the event seed" do
         expect(event_instance_attribute).to eq event_seed_attribute
-      end
-    end
-  end
-
-  [
-    :name,
-  ].each do |attrib|
-    context "when #{attrib} is nil" do
-      let(:attribute) { attrib }
-      # The has_many :through relationship doesn't work with built Fabricators, so it has to be created in the db
-      let(:event_instance) { Fabricate.create(:event_instance) }
-      it "should inherit #{attrib} from the event" do
-        expect(event_instance_attribute).to eq event_attribute
       end
     end
   end

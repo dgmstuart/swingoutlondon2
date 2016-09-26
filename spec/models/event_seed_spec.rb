@@ -8,6 +8,7 @@ RSpec.describe EventSeed, 'Associations', type: :model do
 end
 
 RSpec.describe EventSeed, 'Validations', type: :model do
+  it { should validate_presence_of :name }
   it { should validate_presence_of :url }
   it { should validate_presence_of :venue }
   it { should validate_presence_of :event }

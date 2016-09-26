@@ -17,17 +17,18 @@ RSpec.describe EventCreator do
     it 'creates an event with the given name' do
       event_klass = fake_event_klass
       stub_const('Event', event_klass)
-      form = fake_event_form(name: 'The Razmatazz club')
+      form = fake_event_form
 
       described_class.new.call(form, false)
 
-      expect(event_klass).to have_received(:create!).with(name: 'The Razmatazz club')
+      expect(event_klass).to have_received(:create!).with(no_args)
     end
 
-    it 'creates an event seed with the given url and venue_id' do
+    it 'creates an event seed with the given name, url and venue_id' do
       event_seed_klass = fake_event_seed_klass
       stub_const('EventSeed', event_seed_klass)
       form = fake_event_form \
+        name: 'The Razmatazz club',
         url: 'http://consider.com/phlebas',
         venue_id: 17
 
@@ -35,6 +36,7 @@ RSpec.describe EventCreator do
 
       expect(event_seed_klass).to have_received(:create!)
         .with \
+          name: 'The Razmatazz club',
           url: 'http://consider.com/phlebas',
           event: anything, # too complicated to test the specific value?
           venue_id: 17
