@@ -4,6 +4,7 @@ require 'app/services/event_creator'
 
 RSpec.describe EventCreator do
   before { Time.zone = 'London' }
+  before { I18n.load_path << 'config/locales/en.yml' }
 
   context 'when the event was successfully created' do
     before do
