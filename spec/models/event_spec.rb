@@ -7,7 +7,9 @@ RSpec.describe Event, 'Associations', type: :model do
 end
 
 RSpec.describe Event, type: :model do
-  describe '#name' do
+  it_should_behave_like 'sortable by association', EventSeed
+
+  describe 'name' do
     it 'delegates to the latest event seed' do
       event = Event.create!
       Fabricate.create(:event_seed, name: 'Swing Deluxe', event: event)

@@ -4,7 +4,7 @@ module Sortable
   extend ActiveSupport::Concern
 
   included do
-    scope :sorted, -> { order("regexp_replace(LOWER(name), E'#{non_sort_strings_regex}', '')") }
+    scope :sorted, ->(field = 'name') { order("regexp_replace(LOWER(#{field}), E'#{non_sort_strings_regex}', '')") }
 
     # Matches on initial characters which are irrelevant for sorting
     def self.non_sort_strings_regex

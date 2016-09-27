@@ -7,6 +7,8 @@ class Event < ActiveRecord::Base
 
   # TODO: - need to separately reject totally missing generators/seeds?
 
+  scope :sorted_by_name, -> { joins(:event_seeds).sorted('event_seeds.name') }
+
   def name
     event_seeds.last.name
   end
