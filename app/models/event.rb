@@ -8,10 +8,30 @@ class Event < ActiveRecord::Base
   # TODO: - need to separately reject totally missing generators/seeds?
 
   def name
-    event_seeds.last.name
+    describing_event_seed.name
   end
 
   def self.sorted_by_name
     all.includes(:event_seeds).sort_by(&:name)
   end
+
+  private
+
+  def describing_event_seed
+    describing_event_period.event_seed
+  end
+
+  def describing_event_period
+    current_event_period || latest_event_period
+  end
+
+  def current_event_period
+    event_periods.find_by('start_date >= ? AND end_date >= ?', Time.zone.today, Time.zone.today)
+  end
+
+  def latest_event_period
+    event_periods.find_by('end_date >= ?', Time.zone.today).maximum(:end_date)
+  end
+
+  # approach: if we're in one, use that, else look for the next one if there is one, else look for the last one if there is one
 end
