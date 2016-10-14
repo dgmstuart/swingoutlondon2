@@ -1,7 +1,7 @@
 class DatesToGenerateCalculator
   def dates(event_period)
     calculator = dates_calculator(event_period.repeating?)
-    calculator.dates(event_period.start_date)
+    calculator.dates(event_period.start_date, event_period.end_date)
   end
 
   private
@@ -15,7 +15,7 @@ class DatesToGenerateCalculator
   end
 
   class OneOffDateCalculator
-    def dates(one_date)
+    def dates(one_date, _end_date)
       [one_date]
     end
   end
@@ -25,9 +25,9 @@ class DatesToGenerateCalculator
       @next_date_calculator = next_date_calculator
     end
 
-    def dates(start_date, number_of_dates = 4)
+    def dates(start_date, end_date, number_of_dates = 4)
       next_date = @next_date_calculator.next_date(start_date)
-      [*0..number_of_dates - 1].map { |m| next_date + m.weeks }
+      [*0..number_of_dates - 1].map { |m| next_date + m.weeks }.reject { |d| d > end_date if end_date }
     end
   end
 end

@@ -12,7 +12,7 @@ RSpec.describe DatesToGenerateCalculator do
       end
 
       def one_off_event_period(start_date:)
-        instance_double('EventPeriod', start_date: start_date, repeating?: false)
+        instance_double('EventPeriod', start_date: start_date, end_date: nil?, repeating?: false)
       end
     end
 
@@ -31,8 +31,32 @@ RSpec.describe DatesToGenerateCalculator do
         end
       end
 
-      def weekly_event_period(start_date:)
-        instance_double('EventPeriod', start_date: start_date, repeating?: true)
+      it 'returns 4 dates when the start date is in the past and the end date is in the far future' do
+        Timecop.freeze(today) do
+          event_period = weekly_event_period(start_date: today - 7, end_date: today + 365)
+          expect(described_class.new.dates(event_period).map(&:day))
+            .to eq [1, 8, 15, 22]
+        end
+      end
+
+      it "doesn't generate anything if the end date is in the past" do
+        Timecop.freeze(today) do
+          event_period = weekly_event_period(start_date: today - 365, end_date: today - 7)
+          expect(described_class.new.dates(event_period).map(&:day))
+            .to eq []
+        end
+      end
+
+      it 'generates two dates if the end date is in two weeks' do
+        Timecop.freeze(today) do
+          event_period = weekly_event_period(start_date: today, end_date: today + 13)
+          expect(described_class.new.dates(event_period).map(&:day))
+            .to eq [1, 8]
+        end
+      end
+
+      def weekly_event_period(start_date:, end_date: nil)
+        instance_double('EventPeriod', start_date: start_date, end_date: end_date, repeating?: true)
       end
     end
   end
