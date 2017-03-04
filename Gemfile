@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 
 ruby '2.4.0'
-gem 'rails', '~> 5.0'
+gem 'rails', '< 6'
 
 # Use postgresql as the database for Active Record
 gem 'pg'
@@ -38,7 +38,7 @@ group :development do
   gem 'rb-fchange', require: false
   gem 'rb-fsevent', require: false
   gem 'rb-inotify', require: false
-  gem 'rubocop', require: false
+  gem 'rubocop', '~> 0.38.0', require: false
 end
 
 group :test do
