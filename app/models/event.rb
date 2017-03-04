@@ -12,6 +12,6 @@ class Event < ActiveRecord::Base
   end
 
   def self.sorted_by_name
-    all.sort_by(&:name)
+    all.includes(:event_seeds).sort_by(&:name)
   end
 end
