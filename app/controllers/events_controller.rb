@@ -3,7 +3,7 @@ class EventsController < ApplicationController
 
   # GET /events
   def index
-    @events = Event.all.sorted
+    @events = Event.sorted_by_name
   end
 
   # GET /events/:id

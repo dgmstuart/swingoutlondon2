@@ -1,6 +1,4 @@
 class Event < ActiveRecord::Base
-  include Sortable
-
   has_many :event_seeds, inverse_of: :event
   has_many :event_periods, through: :event_seeds
   has_many :event_instances, through: :event_seeds
@@ -11,5 +9,9 @@ class Event < ActiveRecord::Base
 
   def name
     event_seeds.last.name
+  end
+
+  def self.sorted_by_name
+    all.sort_by(&:name)
   end
 end
