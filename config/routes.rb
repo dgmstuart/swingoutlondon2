@@ -13,5 +13,9 @@ Swingoutlondon2::Application.routes.draw do
 
   resources :venues, only: [:index]
 
-  root to: 'event_instances#index'
+  authenticated :user do
+    root 'event_instances#index', as: :authenticated_root
+  end
+
+  root to: 'pages#home'
 end

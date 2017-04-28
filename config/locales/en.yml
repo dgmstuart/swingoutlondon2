@@ -8,3 +8,5 @@ en:
   errors:
     messages:
       after_start_date: "must be after the start date (%{l date})"
+  classes:
+    none: 'There are no classes on this day'
