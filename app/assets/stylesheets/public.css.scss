@@ -1,16 +1,60 @@
-/*
- * This is a manifest file that'll be compiled into application.css, which will include all the files
- * listed below.
- *
- * Any CSS and SCSS file within this directory, lib/assets/stylesheets, vendor/assets/stylesheets,
- * or vendor/assets/stylesheets of plugins, if any, can be referenced here using a relative path.
- *
- * You're free to add application-wide styles to this file and they'll appear at the top of the
- * compiled file, but it's generally better to create a new file per style scope.
- *
- *= require_self
- *= require foundation_and_overrides
- */
+@import '_colours.scss';
+@import '_fonts.scss';
+
+$border-standard: solid 3px;
+
+$body-font-family: $font-primary;
+
+@import 'foundation/components/grid';
+@import 'foundation/components/type';
+
 
 // Prevent iOS resizing text
 body { -webkit-text-size-adjust:100%; }
+
+body {
+  font-family: $font-primary;
+}
+
+header.billboard {
+  text-align: center;
+  h1 {
+    text-transform: uppercase;
+    font-size: 65px;
+  }
+  p {
+    font-size: 20px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+}
+
+header.listing {
+  text-align: center;
+  h1 {
+    text-transform: uppercase;
+    font-size: 41px;
+  }
+  p {
+    font-size: 22px;
+  }
+}
+
+header.social-date {
+  h3 {
+    text-align: center;
+  }
+}
+
+hr {
+  border-bottom: $border-standard;
+}
+
+#classes>ul {
+  border-right: $border-standard;
+}
+
+.container {
+  background-color: $background-colour;
+}
+

@@ -1,5 +1,16 @@
-.row
-  .columns.small-12.large-6
+.row.container
+  .columns.small-12
+    %header.billboard
+      %h1 Swing Out London
+      %p Listings of Lindy Hop classes and socials in London
+    %hr
+
+
+.row.container
+  #classes.columns.small-12.large-6
+    %header.listing
+      %h1 Learn!
+      %p Weekly classes
     %ul.no-bullet
       - @listing_dance_classes.days.each do |day|
         %li{ id: day.as_id, class: ('panel' if day.today?) }
@@ -12,12 +23,16 @@
           - else
             = t('classes.none')
 
-  .columns.small-12.large-6
+  #socials.columns.small-12.large-6
+    %header.listing
+      %h1 Dance!
+      %p Clubs and Social dancing
     %ul.no-bullet
       - @listing_socials.dates.each do |date|
         - if date.socials.any?
           %li{ id: date.as_id, class: ('panel' if date.today?) }
-            %h3= date.title
+            %header.social-date
+              %h3= date.title
             %ul
               - date.socials.each do |social|
                 %li

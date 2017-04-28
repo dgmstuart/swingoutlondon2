@@ -1,6 +1,6 @@
 class SocialFinder
   def by_date
-    EventInstance.where(date: date_range).group_by(&:date)
+    EventInstance.where(date: date_range).includes(:event_seed).group_by(&:date)
   end
 
   private
