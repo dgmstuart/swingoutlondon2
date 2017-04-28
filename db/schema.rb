@@ -23,13 +23,13 @@ ActiveRecord::Schema.define(version: 20151224130117) do
   end
 
   create_table "event_instances", force: :cascade do |t|
-    t.date     "date",                                      null: false
-    t.integer  "event_seed_id",                             null: false
+    t.date     "date",                          null: false
+    t.integer  "event_seed_id",                 null: false
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "url",           limit: 255
+    t.string   "url"
     t.integer  "venue_id"
-    t.boolean  "cancelled",                 default: false
+    t.boolean  "cancelled",     default: false
   end
 
   create_table "event_periods", force: :cascade do |t|
@@ -42,26 +42,26 @@ ActiveRecord::Schema.define(version: 20151224130117) do
   end
 
   create_table "event_seeds", force: :cascade do |t|
-    t.string   "url",        limit: 255
+    t.string   "url"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "event_id",               null: false
-    t.integer  "venue_id",               null: false
+    t.integer  "event_id",   null: false
+    t.integer  "venue_id",   null: false
   end
 
   create_table "events", force: :cascade do |t|
+    t.string   "name",       null: false
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "name",       limit: 255, null: false
   end
 
   create_table "users", force: :cascade do |t|
-    t.string   "email",                  limit: 255, default: "", null: false
-    t.string   "encrypted_password",     limit: 255, default: "", null: false
-    t.string   "reset_password_token",   limit: 255
+    t.string   "email",                  default: "", null: false
+    t.string   "encrypted_password",     default: "", null: false
+    t.string   "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
-    t.integer  "sign_in_count",                      default: 0,  null: false
+    t.integer  "sign_in_count",          default: 0,  null: false
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
     t.inet     "current_sign_in_ip"
@@ -73,10 +73,10 @@ ActiveRecord::Schema.define(version: 20151224130117) do
   end
 
   create_table "venues", force: :cascade do |t|
-    t.string   "name",       limit: 255, null: false
-    t.text     "address",                null: false
-    t.string   "postcode",   limit: 255, null: false
-    t.string   "url",        limit: 255, null: false
+    t.string   "name",       null: false
+    t.text     "address",    null: false
+    t.string   "postcode",   null: false
+    t.string   "url",        null: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
