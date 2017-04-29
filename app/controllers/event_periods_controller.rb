@@ -35,14 +35,9 @@ class EventPeriodsController < ApplicationController
     @event_period = EventPeriod.new(event_period_params)
     @event_period.event_seed = @event.event_seeds.last # TODO: THIS IS WRONG!!!! TEMPORARY
 
-    previous_period = @event.event_periods.last || NullEventPeriod.new
-    event_period_adder = EventPeriodAdder.new(@event_period, previous_period)
-
-    if event_period_adder.add
+    if @event_period.save
       redirect_to event_path(@event)
     else
-      @event_period = event_period_adder.new_period
-
       render :new
     end
   end
