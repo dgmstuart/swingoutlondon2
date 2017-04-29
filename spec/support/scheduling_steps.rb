@@ -14,18 +14,6 @@ module SchedulingSteps
     visit "events/#{@event.to_param}"
   end
 
-  def when_i_schedule_an_ending
-    click_link end_period_link
-
-    fill_in end_date_field, with: @end_date
-    click_button 'Submit' # TODO: use a better name!
-  end
-
-  def then_the_period_is_shown_as_ended
-    expect(page).to have_text "Ended: #{I18n.l(@end_date)}"
-    expect(page).to_not have_link(end_period_link)
-  end
-
   def when_i_schedule_a_new_period
     click_link 'New period'
     fill_in start_date_field, with: @new_start_date

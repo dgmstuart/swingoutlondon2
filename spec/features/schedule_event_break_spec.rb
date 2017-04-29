@@ -13,8 +13,15 @@ RSpec.feature 'Admin schedules a break', type: :feature do
     @end_date = Time.zone.today + 7
     @new_start_date = Time.zone.today + 56
     given_an_existing_weekly_repeating_event
-    when_i_schedule_an_ending
-    then_the_period_is_shown_as_ended
+
+    click_link end_period_link
+
+    fill_in end_date_field, with: @end_date
+    click_button 'Submit'
+
+    expect(page).to have_text "Ended: #{I18n.l(@end_date)}"
+    expect(page).to_not have_link(end_period_link)
+
     when_i_schedule_a_new_period
     then_a_new_period_is_shown_as_starting
   end
@@ -24,7 +31,12 @@ RSpec.feature 'Admin schedules a break', type: :feature do
       @current_start_date = Time.zone.today + 10
       @end_date = Time.zone.today + 2
       given_an_existing_weekly_repeating_event
-      when_i_schedule_an_ending
+
+      click_link end_period_link
+
+      fill_in end_date_field, with: @end_date
+      click_button 'Submit'
+
       expect(page).to have_content "can't be before start date (16/09/2016)"
     end
   end
