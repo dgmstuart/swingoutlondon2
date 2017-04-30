@@ -33,13 +33,20 @@ RSpec.feature 'Admin adds dates to an event:' do
     visit '/events'
     click_link event.name
 
-    click_link 'Add date'
-    fill_in 'event_instance[date]', with: '12/23/2014'
-    click_button 'Done'
+    Timecop.freeze(Date.new(2014, 12, 1)) do
+      click_link 'Add date'
+      fill_in 'event_instance[date]', with: '12/23/2014'
+      click_button 'Done'
 
-    expect(page).to have_content 'errors prevented this event from being saved'
-    expect(page).to have_content 'is not a date'
-    expect(page).to have_content "can't be blank" # Should be the date field
+      expect(page).to have_content 'errors prevented this event from being saved'
+      expect(page).to have_content 'is not a date'
+      expect(page).to have_content "can't be blank" # Should be the date field
+
+      fill_in 'event_instance[date]', with: '23/12/2014'
+      click_button 'Done'
+    end
+
+    expect(page).to have_content '23/12/2014'
   end
 
   def non_repeating_event
