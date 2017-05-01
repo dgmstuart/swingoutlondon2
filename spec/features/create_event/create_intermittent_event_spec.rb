@@ -7,10 +7,36 @@ RSpec.feature 'Admin adds an intermittent event', type: :feature do
   end
 
   scenario 'with valid data', js: true do
-    given_an_existing_venue
-    when_i_create_a_new_intermittent_event
-    then_the_event_should_be_displayed
-    and_an_event_instance_should_be_displayed_in_the_event_instance_list
+    existing_venue = Fabricate(:venue)
+
+    visit '/events/new'
+
+    event_name = Faker::Company.name
+    event_url = Faker::Internet.url
+    event_start_date = Faker::Date.forward
+
+    within(new_event_form_id) do
+      fill_in name_field,       with: event_name
+      fill_in url_field,        with: event_url
+      select2('Intermittent', from: 'Frequency')
+      select_date(event_start_date)
+
+      select2 existing_venue.name, from: 'Venue'
+
+      click_button 'Create event'
+    end
+
+    expect(page)
+      .to have_content('New event created')
+      .and have_content(event_name)
+      .and have_link(I18n.l(event_start_date), href: event_url)
+
+    visit '/event_instances'
+
+    expect(page)
+      .to have_content(I18n.l(event_start_date))
+      .and have_link(event_name)
+      .and have_link('View Site', href: event_url)
   end
 
   scenario 'with missing data' do
@@ -25,16 +51,6 @@ RSpec.feature 'Admin adds an intermittent event', type: :feature do
 
   # STEPS:
   ############################################################
-
-  def when_i_create_a_new_intermittent_event
-    visit '/events/new'
-    within(new_event_form_id) do
-      fill_event_fields_with_valid_data
-      select2 @existing_venue.name, from: 'Venue'
-
-      click_button 'Create event'
-    end
-  end
 
   def when_i_create_an_event_with_invalid_data
     visit '/events/new'
