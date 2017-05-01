@@ -34,7 +34,7 @@ module SchedulingSteps
   end
 
   def end_date_field
-    'event_period[end_date]'
+    'event_period_ending[end_date]'
   end
 
   def start_date_field

@@ -2,7 +2,9 @@ Swingoutlondon2::Application.routes.draw do
   devise_for :users
   resources :events, only: [:index, :show, :new, :create] do
     resources :dates, only: [:new, :create]
-    resources :event_periods, only: [:new, :create, :edit, :update]
+    resources :event_periods, only: [:new, :create] do
+      resources :endings, only: [:new, :create], controller: :event_period_endings
+    end
   end
 
   resources :event_instances, only: [:index, :destroy]

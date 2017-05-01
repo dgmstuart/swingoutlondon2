@@ -4,6 +4,8 @@
 = link_to new_event_event_period_path(@event), class: "button tiny success" do
   %i.fi-plus
   New period
+- if @event.last_event_period&.repeating?
+  = link_to "End period", new_event_event_period_ending_path(@event, @event.last_event_period), class: "button tiny alert"
 
 %ul.event_periods
   = render partial: :event_period, collection: @event_periods, locals: { event: @event }, layout: "common/li_layout"

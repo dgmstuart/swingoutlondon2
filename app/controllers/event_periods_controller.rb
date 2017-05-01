@@ -2,26 +2,6 @@ class EventPeriodsController < ApplicationController
   # TODO: Authenticate! - put in specs
   # before_action :authenticate_user!
 
-  # GET /event/:event_id/event_periods/:id/edit
-  def edit
-    @event = Event.find(params[:event_id])
-    @event_period = EventPeriod.find(params[:id])
-  end
-
-  # PATCH /event/:event_id/event_periods/:id
-  def update
-    @event_period = EventPeriod.find(params[:id])
-
-    event_period_params = params.require(:event_period).permit(:end_date)
-
-    if @event_period.update(event_period_params)
-      redirect_to event_path(@event_period.event)
-    else
-      @event = Event.find(params[:event_id])
-      render :edit
-    end
-  end
-
   # GET /event/:event_id/event_periods/new
   def new
     @event = Event.find(params[:event_id])

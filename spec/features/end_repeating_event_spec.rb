@@ -19,11 +19,8 @@ RSpec.feature 'Admin schedules a break', type: :feature do
     fill_in end_date_field, with: @end_date
     click_button 'Submit'
 
-    expect(page).to have_text "Ended: #{I18n.l(@end_date)}"
+    expect(page).to have_text "Started: #{I18n.l(@end_date + 1)}"
     expect(page).to_not have_link(end_period_link)
-
-    when_i_schedule_a_new_period
-    then_a_new_period_is_shown_as_starting
   end
 
   scenario 'ending before it starts' do

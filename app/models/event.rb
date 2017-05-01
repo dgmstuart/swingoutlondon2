@@ -9,4 +9,8 @@ class Event < ActiveRecord::Base
 
   validates :name, presence: true
   # TODO: - need to separately reject totally missing generators/seeds?
+
+  def last_event_period
+    event_periods.order(start_date: :desc).first
+  end
 end
