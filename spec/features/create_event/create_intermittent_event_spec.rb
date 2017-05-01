@@ -31,6 +31,12 @@ RSpec.feature 'Admin adds an intermittent event', type: :feature do
       .and have_content(event_name)
       .and have_link(I18n.l(event_start_date), href: event_url)
 
+    within('.event_periods') do
+      expect(page)
+        .to have_content(I18n.l(event_start_date))
+        .and have_content('Intermittent')
+    end
+
     visit '/event_instances'
 
     expect(page)

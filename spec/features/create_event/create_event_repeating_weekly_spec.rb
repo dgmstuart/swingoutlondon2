@@ -26,6 +26,11 @@ RSpec.feature 'Admin adds an event', type: :feature do
         click_button 'Create event'
       end
 
+      within('.event_periods') do
+        expect(page)
+          .to have_content(I18n.l(event_start_date))
+          .and have_content('Weekly')
+      end
 
       expect(page)
         .to have_content(event_name)

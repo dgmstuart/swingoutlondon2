@@ -10,6 +10,7 @@ class EventsController < ApplicationController
   def show
     @event = Event.find(params[:id])
     @event_periods = @event.event_periods.order(start_date: :desc)
+                           .map { |ep| EventPeriodPresenter.new(ep) }
   end
 
   # GET /events/new

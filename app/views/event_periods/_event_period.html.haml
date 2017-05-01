@@ -1,5 +1,7 @@
 %strong Started:
-= event_period.start_date
+= I18n.l(event_period.start_date)
+\-
+= event_period.frequency_name
 
 - if event_period.end_date
   %strong Ended:

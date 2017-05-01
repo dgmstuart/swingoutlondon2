@@ -22,7 +22,7 @@ module SchedulingSteps
   end
 
   def then_a_new_period_is_shown_as_starting
-    expect(page).to have_text "Started: #{@new_start_date}"
+    expect(page).to have_text "Started: #{I18n.l @new_start_date}"
   end
 
   def and_the_previous_period_is_shown_as_ended
