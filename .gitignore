@@ -85,3 +85,6 @@ Dockerfile
 
 # Ctags
 tags
+
+# https://github.com/voormedia/rails-erd
+erd.pdf
