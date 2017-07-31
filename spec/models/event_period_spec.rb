@@ -15,16 +15,6 @@ RSpec.describe EventPeriod, 'Validations', type: :model do
     generator = Fabricate.build(:event_period, start_date: Faker::Lorem.sentence)
     expect(generator).to be_invalid
   end
-
-  it 'validates that end_date is a date' do
-    generator = Fabricate.build(:event_period, end_date: Faker::Lorem.sentence)
-    expect(generator).to be_invalid
-  end
-
-  it 'validates that start_date is before end_date' do
-    generator = Fabricate.build(:event_period, start_date: Time.zone.today, end_date: Faker::Date.backward)
-    expect(generator).to be_invalid
-  end
 end
 
 RSpec.describe EventPeriod, type: :model do

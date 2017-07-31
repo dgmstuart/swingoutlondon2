@@ -12,13 +12,6 @@ class EventPeriod < ActiveRecord::Base
                            allow_blank: true,
                            on: :create,
                          }
-  validates :end_date, date: { allow_blank: true }
-  validate :end_date_is_after_start_date
-
-  def end_date_is_after_start_date
-    return unless start_date && end_date
-    errors.add(:end_date, "can't be before start date (#{I18n.l start_date})") if end_date < start_date
-  end
 
   def repeating?
     repeating_weekly?
