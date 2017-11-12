@@ -155,6 +155,8 @@ GEM
       pry (>= 0.9.10)
     public_suffix (2.0.5)
     rack (2.0.1)
+    rack-proxy (0.6.2)
+      rack
     rack-test (0.6.3)
       rack (>= 1.0)
     rails (5.0.2)
@@ -275,6 +277,10 @@ GEM
       raindrops (~> 0.7)
     warden (1.2.7)
       rack (>= 1.0)
+    webpacker (3.0.2)
+      activesupport (>= 4.2)
+      rack-proxy (>= 0.6.1)
+      railties (>= 4.2)
     websocket-driver (0.6.5)
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.2)
@@ -326,9 +332,10 @@ DEPENDENCIES
   timecop
   uglifier
   unicorn
+  webpacker (~> 3.0)
 
 RUBY VERSION
    ruby 2.4.0p0
 
 BUNDLED WITH
-   1.14.2
+   1.16.0

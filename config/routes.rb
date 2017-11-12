@@ -18,4 +18,6 @@ Swingoutlondon2::Application.routes.draw do
   end
 
   root to: 'pages#home'
+
+  get '/test', to: 'pages#test'
 end

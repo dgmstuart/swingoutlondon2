@@ -88,3 +88,7 @@ tags
 
 # https://github.com/voormedia/rails-erd
 erd.pdf
+/public/packs
+/public/packs-test
+/elm-stuff
+/node_modules
