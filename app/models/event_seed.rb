@@ -1,4 +1,4 @@
-class EventSeed < ActiveRecord::Base
+class EventSeed < ApplicationRecord
   belongs_to :event, inverse_of: :event_seeds
   has_many :event_periods, inverse_of: :event_seed
   has_many :event_instances

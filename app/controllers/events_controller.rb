@@ -54,7 +54,7 @@ class EventsController < ApplicationController
       :start_date,
       :venue_id,
       :create_venue,
-      venue: [:name, :address, :postcode, :url]
+      venue: %i[name address postcode url]
     )
   end
 end

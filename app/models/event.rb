@@ -1,4 +1,4 @@
-class Event < ActiveRecord::Base
+class Event < ApplicationRecord
   include Sortable
 
   has_many :event_seeds, inverse_of: :event

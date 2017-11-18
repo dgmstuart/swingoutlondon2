@@ -1,4 +1,4 @@
-class Venue < ActiveRecord::Base
+class Venue < ApplicationRecord
   include Sortable
 
   has_many :event_instances, inverse_of: :venue

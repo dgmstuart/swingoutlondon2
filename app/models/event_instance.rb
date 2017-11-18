@@ -1,4 +1,4 @@
-class EventInstance < ActiveRecord::Base
+class EventInstance < ApplicationRecord
   belongs_to :event_seed, inverse_of: :event_instances
   has_one :event, through: :event_seed
   belongs_to :venue, inverse_of: :event_instances

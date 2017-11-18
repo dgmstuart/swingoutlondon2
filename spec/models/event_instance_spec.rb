@@ -19,9 +19,9 @@ RSpec.describe EventInstance, 'Inheritance', type: :model do
   let(:event_instance_attribute) { event_instance.public_send(attribute) }
   let(:event_seed_attribute) { event_instance.event_seed.public_send(attribute) }
   let(:event_attribute) { event_instance.event_seed.event.public_send(attribute) }
-  [
-    :url,
-    :venue,
+  %i[
+    url
+    venue
   ].each do |attrib|
     context "when #{attrib} is nil" do
       let(:attribute) { attrib }

@@ -47,9 +47,8 @@ RSpec.feature 'Admin adds an intermittent event', type: :feature do
   end
 
   def then_invalid_event_data_errors_should_be_displayed
-    expect(page).to have_content('must be a valid URL' # Supposed to match on the Url field
-                                ).and have_content("can't be more than one year in the future" # Supposed to match on the date field
-                                                  )
+    expect(page).to have_content('must be a valid URL') # Supposed to match on the Url field
+      .and have_content("can't be more than one year in the future") # Supposed to match on the date field
   end
 
   def when_i_create_an_event_with_missing_data

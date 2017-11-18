@@ -23,7 +23,7 @@ class EventForm
   validate :venue_is_valid, if: 'create_venue'
 
   def venue_is_valid
-    errors.add(:venue, 'is invalid') unless venue && venue.valid?
+    errors.add(:venue, 'is invalid') unless venue&.valid?
   end
 
   def start_date_isnt_too_old
@@ -45,7 +45,7 @@ class EventForm
 
   def venue_id
     return venue.id if create_venue && venue
-    return nil if @venue_id.nil? || @venue_id.empty?
+    return nil if @venue_id.blank?
     @venue_id.to_i
   end
 end

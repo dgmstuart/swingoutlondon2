@@ -74,9 +74,8 @@ RSpec.feature 'Admin adds an event', type: :feature do
   end
 
   def then_invalid_venue_data_errors_should_be_displayed
-    expect(page).to have_content('has already been taken'
-                                ).and have_content('must be a valid URL'
-                                                  )
+    expect(page).to have_content('has already been taken')
+      .and have_content('must be a valid URL')
   end
 
   def when_i_create_an_event_with_a_new_venue_with_missing_data

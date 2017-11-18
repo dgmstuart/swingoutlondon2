@@ -33,7 +33,7 @@ RSpec.describe EventForm, type: :model do
 
   describe '.start_date' do
     it "returns a date based on the 'start_date' attribute" do
-      expect(EventForm.new(start_date: '13 March, 2016').start_date).to eq Date.new(2016, 03, 13)
+      expect(EventForm.new(start_date: '13 March, 2016').start_date).to eq Date.new(2016, 3, 13)
     end
 
     it "returns nil if the start date couldn't be parsed" do
@@ -85,7 +85,7 @@ RSpec.describe EventForm, type: :model do
     end
 
     it "validates that start_date isn't too obviously old" do
-      Timecop.freeze(Date.new(2016, 01, 01)) do
+      Timecop.freeze(Date.new(2016, 1, 1)) do
         form = EventForm.new(start_date: '13 April 2015')
         form.valid?
         expect(form.errors.messages).to include(start_date: ["can't be more than 6 months in the past"])
@@ -93,7 +93,7 @@ RSpec.describe EventForm, type: :model do
     end
 
     it "validates that start_date isn't clearly too far in the future" do
-      Timecop.freeze(Date.new(2016, 01, 01)) do
+      Timecop.freeze(Date.new(2016, 1, 1)) do
         form = EventForm.new(start_date: '13 April 2017')
         form.valid?
         expect(form.errors.messages).to include(start_date: ["can't be more than one year in the future"])

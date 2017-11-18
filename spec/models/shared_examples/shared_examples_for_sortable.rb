@@ -27,11 +27,11 @@ RSpec.shared_examples 'sortable' do
       end
     end
 
-    low_initial_strings = %W(
+    low_initial_strings = %W[
       \"
       \'
       \(
-    )
+    ]
     low_initial_strings.each do |lis|
       context "when one name begins with #{lis}" do
         let(:initial_low) { lis }

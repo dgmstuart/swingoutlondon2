@@ -112,8 +112,8 @@ RSpec.describe EventCreator do
           result = Struct.new(:created_dates).new([
                                                     Date.new(2012, 12, 17),
                                                     Date.new(2012, 12, 22),
-                                                    Date.new(2013, 01, 07),
-                                                    Date.new(2013, 01, 14),
+                                                    Date.new(2013, 1, 7),
+                                                    Date.new(2013, 1, 14),
                                                   ])
           allow(event_instance_generator).to receive(:call).and_return(result)
 
@@ -158,8 +158,7 @@ RSpec.describe EventCreator do
                     url: url,
                     venue_id: venue_id,
                     venue: venue,
-                    valid?: true
-                   )
+                    valid?: true)
   end
 
   def fake_event_klass

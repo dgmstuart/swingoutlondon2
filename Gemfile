@@ -15,11 +15,11 @@ gem 'uglifier'
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
 
+gem 'date_validator'
 gem 'devise', '>= 4.2.0'
+gem 'foundation-icons-sass-rails'
 gem 'foundation-rails', '< 6'
 gem 'foundation_rails_helper', '< 3'
-gem 'foundation-icons-sass-rails'
-gem 'date_validator'
 gem 'haml-rails'
 
 # Gems to include javascript libraries:
@@ -28,40 +28,40 @@ gem 'pickadate-rails'
 gem 'select2-rails', '< 4'
 
 group :development do
-  gem 'spring'
-  gem 'spring-commands-rspec'
   gem 'better_errors'
   gem 'binding_of_caller'
   gem 'html2haml'
   gem 'hub'
+  gem 'rails-erd', require: false
   gem 'rails_layout'
   gem 'rb-fchange', require: false
   gem 'rb-fsevent', require: false
   gem 'rb-inotify', require: false
   gem 'rubocop', require: false
-  gem 'rails-erd', require: false
+  gem 'spring'
+  gem 'spring-commands-rspec'
 end
 
 group :test do
-  gem 'shoulda-matchers', require: false
-  gem 'fabrication'
   gem 'capybara'
+  gem 'database_cleaner'
+  gem 'fabrication'
+  gem 'faker'
   gem 'launchy'
   gem 'poltergeist'
-  gem 'database_cleaner'
+  gem 'shoulda-matchers', require: false
   gem 'simplecov'
   gem 'timecop'
-  gem 'faker'
 end
 
 group :development, :test do
-  gem 'rspec-rails'
   gem 'fuubar'
-  gem 'thin'
   gem 'pry-rails'
+  gem 'rspec-rails'
+  gem 'thin'
 end
 
 group :production do
-  gem 'unicorn'
   gem 'rails_12factor' # To enable heroku logging and static assets
+  gem 'unicorn'
 end

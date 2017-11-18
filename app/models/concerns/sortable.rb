@@ -8,11 +8,11 @@ module Sortable
 
     # Matches on initial characters which are irrelevant for sorting
     def self.non_sort_strings_regex
-      initial_chars = %W(
+      initial_chars = %W[
         \\\"
         \\\'
         \\\(
-      ).join
+      ].join
 
       "^the |[#{initial_chars}]"
     end

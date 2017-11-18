@@ -1,15 +1,15 @@
 Swingoutlondon2::Application.routes.draw do
   devise_for :users
-  resources :events, only: [:index, :show, :new, :create] do
-    resources :dates, only: [:new, :create]
-    resources :event_periods, only: [:new, :create, :edit, :update]
+  resources :events, only: %i[index show new create] do
+    resources :dates, only: %i[new create]
+    resources :event_periods, only: %i[new create edit update]
   end
 
-  resources :event_instances, only: [:index, :destroy]
+  resources :event_instances, only: %i[index destroy]
 
-  resources :cancellations, only: [:create, :destroy]
+  resources :cancellations, only: %i[create destroy]
 
-  resources :dance_classes, only: [:index, :show, :new, :create]
+  resources :dance_classes, only: %i[index show new create]
 
   resources :venues, only: [:index]
 
