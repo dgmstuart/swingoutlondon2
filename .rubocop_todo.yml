@@ -11,11 +11,6 @@ Lint/RescueWithoutErrorClass:
   Exclude:
     - 'app/validators/url_validator.rb'
 
-# Offense count: 44
-# Configuration parameters: CountComments, ExcludedMethods.
-Metrics/BlockLength:
-  Max: 150
-
 # Offense count: 165
 # Configuration parameters: AllowHeredoc, AllowURI, URISchemes, IgnoreCopDirectives, IgnoredPatterns.
 # URISchemes: http, https
