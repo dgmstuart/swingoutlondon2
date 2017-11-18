@@ -33,3 +33,8 @@ Metrics/MethodLength:
 Metrics/BlockLength:
   Exclude:
     - spec/**/*
+
+Naming/FileName:
+    Exclude:
+      - 'Gemfile'
+
