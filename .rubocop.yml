@@ -21,3 +21,7 @@ Style/TrailingCommaInLiteral:
 
 Style/Documentation:
     Enabled: false
+
+Metrics/AbcSize:
+  Exclude:
+    - spec/**/*

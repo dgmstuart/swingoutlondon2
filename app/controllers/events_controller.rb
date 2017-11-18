@@ -21,14 +21,9 @@ class EventsController < ApplicationController
 
   # POST /events
   def create
-    form_params = event_form_params
+    @create_venue = event_form_params[:create_venue]
 
-    @create_venue = form_params[:create_venue]
-
-    venue_params = form_params.delete(:venue)
-    form_params[:venue] = Venue.new(venue_params)
-
-    @event_form = EventForm.new(form_params)
+    @event_form = EventWithVenueFormBuilder.new.build(event_form_params)
 
     result = EventCreator.new.call(@event_form, @create_venue)
     if result.success?
@@ -37,6 +32,15 @@ class EventsController < ApplicationController
     else
       setup_venues
       render :new
+    end
+  end
+
+  class EventWithVenueFormBuilder
+    def build(form_params)
+      venue_params = form_params.delete(:venue)
+      form_params[:venue] = Venue.new(venue_params)
+
+      EventForm.new(form_params)
     end
   end
 

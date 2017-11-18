@@ -32,18 +32,41 @@ class EventPeriodsController < ApplicationController
   def create
     @event = Event.find(params[:event_id])
 
-    @event_period = EventPeriod.new(event_period_params)
-    @event_period.event_seed = @event.event_seeds.last # TODO: THIS IS WRONG!!!! TEMPORARY
+    result = EventPeriodCreator.new.call(event_period_params, @event)
+    @event_period = result.event_period
 
-    previous_period = @event.event_periods.last || NullEventPeriod.new
-    event_period_adder = EventPeriodAdder.new(@event_period, previous_period)
-
-    if event_period_adder.add
+    if result.success?
       redirect_to event_path(@event)
     else
-      @event_period = event_period_adder.new_period
-
       render :new
+    end
+  end
+
+  class EventPeriodCreator
+    def call(event_period_params, event)
+      event_period = EventPeriod.new(event_period_params)
+      event_period.event_seed = event.event_seeds.last # TODO: THIS IS WRONG!!!! TEMPORARY
+
+      previous_period = event.event_periods.last || NullEventPeriod.new
+      adder = EventPeriodAdder.new(event_period, previous_period)
+
+      if adder.add
+        Success.new(event_period)
+      else
+        Failure.new(adder.new_period)
+      end
+    end
+
+    Success = Struct.new(:event_period) do
+      def success?
+        true
+      end
+    end
+
+    Failure = Struct.new(:event_period) do
+      def success?
+        false
+      end
     end
   end
 
