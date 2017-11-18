@@ -22,6 +22,9 @@ gem 'foundation-icons-sass-rails'
 gem 'date_validator'
 gem 'haml-rails'
 
+# Use webpacker so that we include elm as part of the project
+gem 'webpacker', '~> 3.0'
+
 # Gems to include javascript libraries:
 gem 'cocoon'
 gem 'pickadate-rails'

@@ -18,4 +18,7 @@ Swingoutlondon2::Application.routes.draw do
   end
 
   root to: 'pages#home'
+
+  # test page to show that Main.elm displays
+  get '/test', to: 'pages#test'
 end
