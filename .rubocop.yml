@@ -25,3 +25,7 @@ Style/Documentation:
 Metrics/AbcSize:
   Exclude:
     - spec/**/*
+
+Metrics/MethodLength:
+  Exclude:
+    - spec/**/*

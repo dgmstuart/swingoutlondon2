@@ -9,10 +9,8 @@ class DatesController < ApplicationController
   # POST /events/:id/dates
   def create
     event = Event.find(params.require(:event_id))
-    # TODO: - pick the right seed/move this logic into a model
-    event_seed = event.event_seeds.last
     @event_instance = EventInstance.new(
-      event_seed: event_seed,
+      event_seed: event.event_seeds.last, # TODO: - pick the right seed/move this logic into a model
       date: event_instance_params[:date]
     )
     if @event_instance.save
