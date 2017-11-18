@@ -38,7 +38,7 @@ group :development do
   gem 'rb-fchange', require: false
   gem 'rb-fsevent', require: false
   gem 'rb-inotify', require: false
-  gem 'rubocop', '~> 0.38.0', require: false
+  gem 'rubocop', require: false
   gem 'rails-erd', require: false
 end
 
