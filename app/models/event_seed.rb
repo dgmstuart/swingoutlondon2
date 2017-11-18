@@ -1,7 +1,7 @@
 class EventSeed < ApplicationRecord
   belongs_to :event, inverse_of: :event_seeds
-  has_many :event_periods, inverse_of: :event_seed
-  has_many :event_instances
+  has_many :event_periods, inverse_of: :event_seed, dependent: :destroy
+  has_many :event_instances, dependent: :destroy
   belongs_to :venue, inverse_of: :event_seeds
 
   accepts_nested_attributes_for :event_periods

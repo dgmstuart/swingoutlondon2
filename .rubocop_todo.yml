@@ -29,15 +29,6 @@ Rails/FilePath:
   Exclude:
     - 'spec/rails_helper.rb'
 
-# Offense count: 6
-# Configuration parameters: Include.
-# Include: app/models/**/*.rb
-Rails/HasManyOrHasOneDependent:
-  Exclude:
-    - 'app/models/event.rb'
-    - 'app/models/event_seed.rb'
-    - 'app/models/venue.rb'
-
 # Offense count: 2
 # Configuration parameters: Include.
 # Include: app/**/*.rb, config/**/*.rb, db/**/*.rb, lib/**/*.rb
