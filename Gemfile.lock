@@ -134,7 +134,7 @@ GEM
     mini_portile2 (2.3.0)
     minitest (5.10.1)
     nio4r (2.0.0)
-    nokogiri (1.8.1)
+    nokogiri (1.8.2)
       mini_portile2 (~> 2.3.0)
     orm_adapter (0.5.0)
     parser (2.4.0.0)
@@ -331,4 +331,4 @@ RUBY VERSION
    ruby 2.4.0p0
 
 BUNDLED WITH
-   1.14.2
+   1.15.4
